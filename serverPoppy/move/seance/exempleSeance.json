@@ -1,0 +1,13 @@
+{
+    "nb_fichiers": 2, 
+    "fichier1": {
+        "pause": 2, 
+        "namefile": "impatient"
+    },
+   "fichier2": {
+        "pause": 0, 
+        "namefile": "nageur"
+    },     
+    "type": "seance", 
+    "nb_temps": 271
+}

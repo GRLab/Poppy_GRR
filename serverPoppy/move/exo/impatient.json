@@ -1,0 +1,20 @@
+{
+    "nb_fichiers": 3, 
+    "fichier2": {
+        "pause": 1, 
+        "vitesse": 2, 
+        "namefile": "pointedevant"
+    }, 
+    "nb_temps": 110, 
+    "fichier1": {
+        "pause": 1, 
+        "vitesse": 2, 
+        "namefile": "coucou"
+    }, 
+    "fichier3": {
+        "pause": 0, 
+        "vitesse": 2, 
+        "namefile": "montreheurestab"
+    }, 
+    "type": "exo"
+}

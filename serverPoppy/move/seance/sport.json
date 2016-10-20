@@ -1,0 +1,17 @@
+{
+    "nb_fichiers": 3, 
+    "fichier2": {
+        "pause": 2, 
+        "namefile": "bow2"
+    }, 
+    "fichier3": {
+        "pause": 0, 
+        "namefile": "salut2"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "namefile": "nageur"
+    }, 
+    "type": "seance", 
+    "nb_temps": 307
+}

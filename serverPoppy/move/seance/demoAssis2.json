@@ -1,0 +1,49 @@
+{
+    "nb_fichiers": 11, 
+    "fichier8": {
+        "pause": 2, 
+        "namefile": "salutD"
+    }, 
+    "fichier9": {
+        "pause": 2, 
+        "namefile": "demoAssis"
+    }, 
+    "fichier2": {
+        "pause": 2, 
+        "namefile": "salutG"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "namefile": "demoAssis"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "namefile": "demoAssis"
+    }, 
+    "fichier6": {
+        "pause": 2, 
+        "namefile": "salutG"
+    }, 
+    "fichier7": {
+        "pause": 2, 
+        "namefile": "demoAssis"
+    }, 
+    "fichier4": {
+        "pause": 2, 
+        "namefile": "salutD"
+    }, 
+    "fichier5": {
+        "pause": 2, 
+        "namefile": "demoAssis"
+    }, 
+    "fichier10": {
+        "pause": 2, 
+        "namefile": "demoAssis"
+    }, 
+    "fichier11": {
+        "pause": 2, 
+        "namefile": "salutG"
+    }, 
+    "type": "seance", 
+    "nb_temps": 928
+}

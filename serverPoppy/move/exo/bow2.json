@@ -1,0 +1,15 @@
+{
+    "fichier2": {
+        "pause": 0, 
+        "vitesse": 9, 
+        "namefile": "bowSym"
+    }, 
+    "nb_fichiers": 2, 
+    "fichier1": {
+        "pause": 1, 
+        "vitesse": 8, 
+        "namefile": "bow"
+    }, 
+    "type": "exo", 
+    "nb_temps": 101
+}

@@ -1,0 +1,20 @@
+{
+    "nb_fichiers": 3, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 8, 
+        "namefile": "brasse"
+    }, 
+    "fichier3": {
+        "pause": 0, 
+        "vitesse": 8, 
+        "namefile": "papbras"
+    }, 
+    "fichier1": {
+        "pause": 0, 
+        "vitesse": 5, 
+        "namefile": "inittete"
+    }, 
+    "type": "exo", 
+    "nb_temps": 171
+}

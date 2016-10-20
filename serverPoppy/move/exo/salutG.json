@@ -1,0 +1,10 @@
+{
+    "nb_fichiers": 1, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "salutAssisG"
+    }, 
+    "type": "exo", 
+    "nb_temps": 44
+}

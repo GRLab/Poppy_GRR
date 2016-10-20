@@ -1,0 +1,10 @@
+{
+    "nb_fichiers": 1, 
+    "fichier1": {
+        "pause": 5, 
+        "vitesse": 5, 
+        "namefile": "bow"
+    }, 
+    "type": "exo", 
+    "nb_temps": 55
+}

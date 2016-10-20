@@ -1,0 +1,10 @@
+{
+    "nb_fichiers": 1, 
+    "fichier1": {
+        "pause": 0, 
+        "vitesse": 6, 
+        "namefile": "baisseteteRev"
+    }, 
+    "type": "exo", 
+    "nb_temps": 12
+}
