@@ -1,5 +1,34 @@
 {
     "list_seance": {
+        "bowi": [
+            "bras_gauche", 
+            "tete", 
+            "bras_droit"
+        ], 
+        "demoDeboutJ2": [
+            "tete", 
+            "bras_gauche", 
+            "jambe_droite", 
+            "jambe_gauche", 
+            "bras_droit"
+        ], 
+        "demoDeboutJ3": [
+            "tete", 
+            "bras_gauche", 
+            "jambe_droite", 
+            "jambe_gauche", 
+            "bras_droit"
+        ], 
+        "demoDebout3": [
+            "tete", 
+            "bras_gauche", 
+            "bras_droit"
+        ], 
+        "demoDebout2": [
+            "tete", 
+            "bras_gauche", 
+            "bras_droit"
+        ], 
         "demoAssis2": [
             "tete", 
             "colonne", 
@@ -22,15 +51,10 @@
             "tete", 
             "bras_gauche", 
             "bras_droit"
-        ], 
-        "bowi": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit"
         ]
     }, 
-    "nb_seance": 5, 
-    "nb_mov": 54, 
+    "nb_seance": 9, 
+    "nb_mov": 57, 
     "list_mov": {
         "up": [
             "bras_gauche", 
@@ -40,6 +64,9 @@
             "bras_gauche", 
             "bras_droit", 
             "tete"
+        ], 
+        "leveJG": [
+            "jambe_gauche"
         ], 
         "pencheagearriere": [
             "colonne"
@@ -65,7 +92,8 @@
             "bras_droit", 
             "bras_gauche"
         ], 
-        "giveG2": [
+        "brasseRev": [
+            "bras_droit", 
             "bras_gauche"
         ], 
         "bowSym": [
@@ -101,8 +129,7 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "brasseRev": [
-            "bras_droit", 
+        "giveG2": [
             "bras_gauche"
         ], 
         "demo": [
@@ -174,9 +201,8 @@
         "desesperecol": [
             "colonne"
         ], 
-        "testd": [
-            "bras_droit", 
-            "bras_gauche"
+        "leveJD": [
+            "jambe_droite"
         ], 
         "testeb": [
             "bras_droit"
@@ -224,12 +250,19 @@
         "montreheuretete": [
             "tete"
         ], 
+        "coucouBGdown": [
+            "bras_gauche"
+        ], 
         "papbras": [
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "testd": [
+            "bras_droit", 
+            "bras_gauche"
         ]
     }, 
-    "nb_exo": 12, 
+    "nb_exo": 15, 
     "list_exo": {
         "giveCard": [
             "bras_gauche"
@@ -239,9 +272,18 @@
             "bras_gauche", 
             "bras_droit"
         ], 
+        "demoAssis": [
+            "tete", 
+            "colonne"
+        ], 
         "salut2": [
             "bras_gauche", 
             "tete", 
+            "bras_droit"
+        ], 
+        "demoDebout": [
+            "tete", 
+            "bras_gauche", 
             "bras_droit"
         ], 
         "levetete": [
@@ -257,18 +299,26 @@
             "tete", 
             "colonne"
         ], 
-        "demoAssis": [
+        "bowexo": [
+            "bras_gauche", 
             "tete", 
-            "colonne"
+            "bras_droit"
         ], 
         "bow2": [
             "bras_gauche", 
             "tete", 
             "bras_droit"
         ], 
-        "bowexo": [
-            "bras_gauche", 
+        "demoDeboutJ": [
             "tete", 
+            "bras_gauche", 
+            "jambe_droite", 
+            "jambe_gauche", 
+            "bras_droit"
+        ], 
+        "demodebout": [
+            "tete", 
+            "bras_gauche", 
             "bras_droit"
         ], 
         "salutG": [

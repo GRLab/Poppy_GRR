@@ -1,0 +1,65 @@
+{
+    "nb_fichiers": 12, 
+    "fichier8": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "papbras"
+    }, 
+    "fichier9": {
+        "pause": 2, 
+        "vitesse": 8, 
+        "namefile": "bowSym"
+    }, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regardRev"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "coucouBG"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regard"
+    }, 
+    "fichier6": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regardRev"
+    }, 
+    "fichier7": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "brasse"
+    }, 
+    "fichier4": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "coucouBGdown"
+    }, 
+    "fichier5": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regard"
+    }, 
+    "fichier10": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "down"
+    }, 
+    "fichier11": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regard"
+    }, 
+    "fichier12": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regardRev"
+    }, 
+    "type": "exo", 
+    "nb_temps": 479
+}

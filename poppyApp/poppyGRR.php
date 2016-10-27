@@ -20,7 +20,14 @@ include "includes/header.php";
 	<div id='application'>
 		<section id="movelist">
 		</section>
+		<!-- TODO !!!!!!!!!! -->
 		<section id="boutons">
+			<section id="poppy">
+				<img src="includes/images/notconnected.png" id="poppyConnected">
+				Poppy : 
+				<txt id="poppyName"></txt>
+			</section>
+			<br>
 			<section class="power">
 			<section id="title">Alimentation</section>
 			<table id="compliantTable"> 

@@ -1,0 +1,70 @@
+{
+    "nb_fichiers": 13, 
+    "fichier8": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "brasse"
+    }, 
+    "fichier9": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "papbras"
+    }, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regardRev"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "coucouBG"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regard"
+    }, 
+    "fichier6": {
+        "pause": 1, 
+        "vitesse": 5, 
+        "namefile": "leveJD"
+    }, 
+    "fichier7": {
+        "pause": 1, 
+        "vitesse": 5, 
+        "namefile": "leveJG"
+    }, 
+    "fichier4": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "coucouBGdown"
+    }, 
+    "fichier5": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "regardRev"
+    }, 
+    "fichier10": {
+        "pause": 2, 
+        "vitesse": 8, 
+        "namefile": "bowSym"
+    }, 
+    "fichier11": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "down"
+    }, 
+    "fichier12": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "leveJG"
+    }, 
+    "fichier13": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "leveJD"
+    }, 
+    "type": "exo", 
+    "nb_temps": 499
+}

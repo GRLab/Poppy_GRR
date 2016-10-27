@@ -1,0 +1,21 @@
+{
+    "nb_fichiers": 4, 
+    "fichier2": {
+        "pause": 2, 
+        "namefile": "demoDebout"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "namefile": "demoDebout"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "namefile": "demoDebout"
+    }, 
+    "fichier4": {
+        "pause": 2, 
+        "namefile": "demoDebout"
+    }, 
+    "type": "seance", 
+    "nb_temps": 1924
+}

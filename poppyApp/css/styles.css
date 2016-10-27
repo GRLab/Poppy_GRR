@@ -121,6 +121,16 @@ body {
 	background:#00acc1;
 	color:#000000; /*A CHANGER EN BLANC ?*/
 }
+#poppy{
+    color:#ffffdf;
+    font-size:17px;
+    font-weight:bold;
+}
+#poppyName{
+    color:#ffffff;
+    font-size:17px;
+    font-weight:normal;
+}
 
 #contenu{
 	clear:both;

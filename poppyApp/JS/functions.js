@@ -896,6 +896,9 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 						AfficheMovelist();
 					});
 				}
+				$('#poppyName').html('poppygr.local');
+				document.getElementById('poppyConnected').src="includes/images/connected.png";
+
 			},
 			200:function(data){
 				console.log("does not exist");

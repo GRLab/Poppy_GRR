@@ -20,9 +20,11 @@ temperature=range(nbmoteurs)			#variable temperature
 couple=range(nbmoteurs)				#variable pourcentage of couple
 #Ivalue=0					#variable intensite
 TIME_LIMIT = 10
-SEUIL_ANGLE = 5
-SEUIL_ANGLE_MAX = 20
+SEUIL_ANGLE = 5						# angle min de detection enregistrement et pour bouger
+SEUIL_ANGLE_MAX = 20				# angle max a l'initialisation de la pos avant mvt
+LIMITE_ANGLE = 40					# amplitude de mouvement : angle max de deplacement
 SEMI_MOU = list()					# liste des parties Poppy en mode semi-mou
+PLAYING_MOVE = False				# mouvement ou partie de mouvement en cours
 MOVING_ENABLE = False				# autorisation mouvement (False = stop mouvement)
 PLAYING_EXO = False				# exercice en cours ou non
 EXO_ENABLE = False					# autorise exercice (False = stop exercice)
@@ -252,6 +254,8 @@ class miseEnPosPrimitive(pypot.primitive.Primitive):
 
 	def run(self):
 		global SCANNING
+		global SEUIL_ANGLE
+		global LIMITE_ANGLE
 		timeMultiplier = 2
 		self.robot.scanPosition.start()
 		time.sleep(0.1)
@@ -267,71 +271,198 @@ class miseEnPosPrimitive(pypot.primitive.Primitive):
 		#print self.speed.keys()	
 		if "jambe_gauche" in self.speed.keys() and "11" in positionFin:
 			if abs(positionFin["11"]-positionActu["11"])>SEUIL_ANGLE :
+				if abs(positionFin["11"]-positionActu["11"])>LIMITE_ANGLE:
+					if positionFin["11"]-positionActu["11"]>0:
+						positionFin["11"]=positionActu["11"]+LIMITE_ANGLE
+					else:
+						positionFin["11"]=positionActu["11"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_hip_x':positionFin["11"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
 			if abs(positionFin["12"]-positionActu["12"])>SEUIL_ANGLE :
+				if abs(positionFin["12"]-positionActu["12"])>LIMITE_ANGLE:
+					if positionFin["12"]-positionActu["12"]>0:
+						positionFin["12"]=positionActu["12"]+LIMITE_ANGLE
+					else:
+						positionFin["12"]=positionActu["12"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_hip_z':positionFin["12"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
 			if abs(positionFin["13"]-positionActu["13"])>SEUIL_ANGLE :
+				if abs(positionFin["13"]-positionActu["13"])>LIMITE_ANGLE:
+					if positionFin["13"]-positionActu["13"]>0:
+						positionFin["13"]=positionActu["13"]+LIMITE_ANGLE
+					else:
+						positionFin["13"]=positionActu["13"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_hip_y':positionFin["13"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
 			if abs(positionFin["14"]-positionActu["14"])>SEUIL_ANGLE :
+				if abs(positionFin["14"]-positionActu["14"])>LIMITE_ANGLE:
+					if positionFin["14"]-positionActu["14"]>0:
+						positionFin["14"]=positionActu["14"]+LIMITE_ANGLE
+					else:
+						positionFin["14"]=positionActu["14"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_knee_y': positionFin["14"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
 			if abs(positionFin["15"]-positionActu["15"])>SEUIL_ANGLE :
+				if abs(positionFin["15"]-positionActu["15"])>LIMITE_ANGLE:
+					if positionFin["15"]-positionActu["15"]>0:
+						positionFin["15"]=positionActu["15"]+LIMITE_ANGLE
+					else:
+						positionFin["15"]=positionActu["15"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_ankle_y':positionFin["15"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
 		if "jambe_droite" in self.speed.keys() and "21" in positionFin:
 			if abs(positionFin["21"]-positionActu["21"])>SEUIL_ANGLE :
+				if abs(positionFin["21"]-positionActu["21"])>LIMITE_ANGLE:
+					if positionFin["21"]-positionActu["21"]>0:
+						positionFin["21"]=positionActu["21"]+LIMITE_ANGLE
+					else:
+						positionFin["21"]=positionActu["21"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_hip_x':positionFin["21"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
 			if abs(positionFin["22"]-positionActu["22"])>SEUIL_ANGLE :
+				if abs(positionFin["22"]-positionActu["22"])>LIMITE_ANGLE:
+					if positionFin["22"]-positionActu["22"]>0:
+						positionFin["22"]=positionActu["22"]+LIMITE_ANGLE
+					else:
+						positionFin["22"]=positionActu["22"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_hip_z':positionFin["22"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
 			if abs(positionFin["23"]-positionActu["23"])>SEUIL_ANGLE :
+				if abs(positionFin["23"]-positionActu["23"])>LIMITE_ANGLE:
+					if positionFin["23"]-positionActu["23"]>0:
+						positionFin["23"]=positionActu["23"]+LIMITE_ANGLE
+					else:
+						positionFin["23"]=positionActu["23"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_hip_y': positionFin["23"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
 			if abs(positionFin["24"]-positionActu["24"])>SEUIL_ANGLE :
+				if abs(positionFin["24"]-positionActu["24"])>LIMITE_ANGLE:
+					if positionFin["24"]-positionActu["24"]>0:
+						positionFin["24"]=positionActu["24"]+LIMITE_ANGLE
+					else:
+						positionFin["24"]=positionActu["24"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_knee_y':positionFin["24"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
 			if abs(positionFin["25"]-positionActu["25"])>SEUIL_ANGLE :
+				if abs(positionFin["25"]-positionActu["25"])>LIMITE_ANGLE:
+					if positionFin["25"]-positionActu["25"]>0:
+						positionFin["25"]=positionActu["25"]+LIMITE_ANGLE
+					else:
+						positionFin["25"]=positionActu["25"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_ankle_y':positionFin["25"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
 		if "colonne" in self.speed.keys() and "31" in positionFin:
 			if abs(positionFin["31"]-positionActu["31"])>SEUIL_ANGLE :
+				if abs(positionFin["31"]-positionActu["31"])>LIMITE_ANGLE:
+					if positionFin["31"]-positionActu["31"]>0:
+						positionFin["31"]=positionActu["31"]+LIMITE_ANGLE
+					else:
+						positionFin["31"]=positionActu["31"]-LIMITE_ANGLE
 				self.robot.goto_position({'abs_y':positionFin["31"]}, timeMultiplier*self.speed["colonne"], wait=False)
 			if abs(positionFin["32"]-positionActu["32"])>SEUIL_ANGLE :
+				if abs(positionFin["32"]-positionActu["32"])>LIMITE_ANGLE:
+					if positionFin["32"]-positionActu["32"]>0:
+						positionFin["32"]=positionActu["32"]+LIMITE_ANGLE
+					else:
+						positionFin["32"]=positionActu["32"]-LIMITE_ANGLE
 				self.robot.goto_position({'abs_x':positionFin["32"]}, timeMultiplier*self.speed["colonne"], wait=False)
 			if abs(positionFin["33"]-positionActu["33"])>SEUIL_ANGLE :
+				if abs(positionFin["33"]-positionActu["33"])>LIMITE_ANGLE:
+					if positionFin["33"]-positionActu["33"]>0:
+						positionFin["33"]=positionActu["33"]+LIMITE_ANGLE
+					else:
+						positionFin["33"]=positionActu["33"]-LIMITE_ANGLE
 				self.robot.goto_position({'abs_z':positionFin["33"]}, timeMultiplier*self.speed["colonne"], wait=False)
 			if abs(positionFin["34"]-positionActu["34"])>SEUIL_ANGLE :
+				if abs(positionFin["34"]-positionActu["34"])>LIMITE_ANGLE:
+					if positionFin["34"]-positionActu["34"]>0:
+						positionFin["34"]=positionActu["34"]+LIMITE_ANGLE
+					else:
+						positionFin["34"]=positionActu["34"]-LIMITE_ANGLE
 				self.robot.goto_position({'bust_y':positionFin["34"]}, timeMultiplier*self.speed["colonne"], wait=False)
 			if abs(positionFin["35"]-positionActu["35"])>SEUIL_ANGLE :
+				if abs(positionFin["35"]-positionActu["35"])>LIMITE_ANGLE:
+					if positionFin["35"]-positionActu["35"]>0:
+						positionFin["35"]=positionActu["35"]+LIMITE_ANGLE
+					else:
+						positionFin["35"]=positionActu["35"]-LIMITE_ANGLE
 				self.robot.goto_position({'bust_x':positionFin["35"]}, timeMultiplier*self.speed["colonne"], wait=False)
 		if "bras_droit" in self.speed.keys() and "51" in positionFin:
 			if abs(positionFin["51"]-positionActu["51"])>SEUIL_ANGLE :
+				if abs(positionFin["51"]-positionActu["51"])>LIMITE_ANGLE:
+					if positionFin["51"]-positionActu["51"]>0:
+						positionFin["51"]=positionActu["51"]+LIMITE_ANGLE
+					else:
+						positionFin["51"]=positionActu["51"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_shoulder_y':positionFin["51"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
 			if abs(positionFin["52"]-positionActu["52"])>SEUIL_ANGLE :
+				if abs(positionFin["52"]-positionActu["52"])>LIMITE_ANGLE:
+					if positionFin["52"]-positionActu["52"]>0:
+						positionFin["52"]=positionActu["52"]+LIMITE_ANGLE
+					else:
+						positionFin["52"]=positionActu["52"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_shoulder_x':positionFin["52"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
 			if abs(positionFin["53"]-positionActu["53"])>SEUIL_ANGLE :
+				if abs(positionFin["53"]-positionActu["53"])>LIMITE_ANGLE:
+					if positionFin["53"]-positionActu["53"]>0:
+						positionFin["53"]=positionActu["53"]+LIMITE_ANGLE
+					else:
+						positionFin["53"]=positionActu["53"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_arm_z':positionFin["53"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
 			if abs(positionFin["54"]-positionActu["54"])>SEUIL_ANGLE :
+				if abs(positionFin["54"]-positionActu["54"])>LIMITE_ANGLE:
+					if positionFin["54"]-positionActu["54"]>0:
+						positionFin["54"]=positionActu["54"]+LIMITE_ANGLE
+					else:
+						positionFin["54"]=positionActu["54"]-LIMITE_ANGLE
 				self.robot.goto_position({'r_elbow_y': positionFin["54"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
 		if "bras_gauche" in self.speed.keys() and "41" in positionFin:
 			if abs(positionFin["41"]-positionActu["41"])>SEUIL_ANGLE :
+				if abs(positionFin["41"]-positionActu["41"])>LIMITE_ANGLE:
+					if positionFin["41"]-positionActu["41"]>0:
+						positionFin["41"]=positionActu["41"]+LIMITE_ANGLE
+					else:
+						positionFin["41"]=positionActu["41"]-LIMITE_ANGLE
 				Poppyboid.goto_position({'l_shoulder_y':positionFin["41"]},timeMultiplier*self.speed["bras_gauche"], wait=False)
 			if abs(positionFin["42"]-positionActu["42"])>SEUIL_ANGLE:
+				if abs(positionFin["42"]-positionActu["42"])>LIMITE_ANGLE:
+					if positionFin["42"]-positionActu["42"]>0:
+						positionFin["42"]=positionActu["42"]+LIMITE_ANGLE
+					else:
+						positionFin["42"]=positionActu["42"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_shoulder_x':positionFin["42"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
 			if abs(positionFin["43"]-positionActu["43"])>SEUIL_ANGLE :
+				if abs(positionFin["43"]-positionActu["43"])>LIMITE_ANGLE:
+					if positionFin["43"]-positionActu["43"]>0:
+						positionFin["43"]=positionActu["43"]+LIMITE_ANGLE
+					else:
+						positionFin["43"]=positionActu["43"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_arm_z':positionFin["43"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
 			if abs(positionFin["44"]-positionActu["44"])>SEUIL_ANGLE :
+				if abs(positionFin["44"]-positionActu["44"])>LIMITE_ANGLE:
+					if positionFin["44"]-positionActu["44"]>0:
+						positionFin["44"]=positionActu["44"]+LIMITE_ANGLE
+					else:
+						positionFin["44"]=positionActu["44"]-LIMITE_ANGLE
 				self.robot.goto_position({'l_elbow_y': positionFin["44"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
 		if "tete" in self.speed.keys() and "36" in positionFin:
 			if abs(positionFin["36"]-positionActu["36"])>SEUIL_ANGLE :
+				if abs(positionFin["36"]-positionActu["36"])>LIMITE_ANGLE:
+					if positionFin["36"]-positionActu["36"]>0:
+						positionFin["36"]=positionActu["36"]+LIMITE_ANGLE
+					else:
+						positionFin["36"]=positionActu["36"]-LIMITE_ANGLE
 				self.robot.goto_position({'head_z':positionFin["36"]}, timeMultiplier*self.speed["tete"], wait=False)
 			if abs(positionFin["37"]-positionActu["37"])>SEUIL_ANGLE :
+				if abs(positionFin["37"]-positionActu["37"])>LIMITE_ANGLE:
+					if positionFin["37"]-positionActu["37"]>0:
+						positionFin["37"]=positionActu["37"]+LIMITE_ANGLE
+					else:
+						positionFin["37"]=positionActu["37"]-LIMITE_ANGLE
 				self.robot.goto_position({'head_y':positionFin["37"]}, timeMultiplier*self.speed["tete"], wait=False)
 		#Pour laisser le temps au robot d'effectuer le mouvement : t_sleep>t_mouvement
 		#time.sleep(1)     
 
 class goMovePrimitive(pypot.primitive.Primitive):
-	def __init__(self, robot, rev, moveType, moveName, speedDict, tempsboucle):
+	def __init__(self, robot, rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime):
 		self.robot=robot
 		self.rev=rev
 		self.moveType=moveType
 		self.moveName=moveName
 		self.speedDict=speedDict
 		self.tempsboucle=tempsboucle
+		self.startTime=startTime
+		self.endTime=endTime
 		pypot.primitive.Primitive.__init__(self, robot)
 		
 	def run(self):
@@ -339,14 +470,21 @@ class goMovePrimitive(pypot.primitive.Primitive):
 		global EXO_SLEEP
 		global EXO_ENABLE
 		global MOVING_ENABLE
+		global PLAYING_MOVE
+
+		while PLAYING_MOVE:	# attente que la partie du mouvement precedent se termine
+			time.sleep(0.1)
+		PLAYING_MOVE = True
 		#time.sleep(0.5)		#attente le temps que mov precedent se termine
+		print "startTime : "+str(self.startTime)+", endTime : "+str(self.endTime)
 		with open('./move/'+self.moveType+'/'+self.moveName+'.json', 'r') as f:
 			moveFile = json.load(f)
 		if self.rev == False:
-			for temps in range(moveFile["nb_temps"]):
+			for temps in range(self.startTime, self.endTime):
 				while EXO_SLEEP == True and MOVING_ENABLE == True:
 					time.sleep(0.2)
 				if MOVING_ENABLE == False:
+					PLAYING_MOVE = False
 					print "---stop moving primitive 1---"
 					return
 				if temps+1 == 1:
@@ -355,15 +493,18 @@ class goMovePrimitive(pypot.primitive.Primitive):
 					if str(temps+1) in moveFile:
 						miseEnPosPrimitive(Poppyboid,moveFile[str(temps+1)], self.speedDict).start()
 					if MOVING_ENABLE == False:
+						PLAYING_MOVE = False
 						print "---stop moving primitive 2---"
 						return
 					time.sleep(self.tempsboucle)
 				EXO_TEMPS += 1
 		else:
+			return	#TODO : lecture a l'envers non geree !!!
 			for temps in range(moveFile["nb_temps"]):
 				while EXO_SLEEP == True and MOVING_ENABLE == True:
 					time.sleep(0.5)
 				if MOVING_ENABLE == False:
+					PLAYING_MOVE = False
 					print "---stop moving primitive 1---"
 					return
 				if temps+1 == 1:
@@ -372,11 +513,14 @@ class goMovePrimitive(pypot.primitive.Primitive):
 					if str(moveFile["nb_temps"]-temps) in moveFile:
 						miseEnPosPrimitive(Poppyboid,moveFile[str(moveFile["nb_temps"]-temps)], self.speedDict).start()
 					if MOVING_ENABLE == False:
+						PLAYING_MOVE = False
 						print "---stop moving primitive 2---"
 						return
 					time.sleep(self.tempsboucle)
 				EXO_TEMPS += 1
-		MOVING_ENABLE = False
+		PLAYING_MOVE = False
+		if self.endTime == moveFile["nb_temps"]:	#si on est a la derniere partie
+			MOVING_ENABLE = False
 
 #primitive jouer un exo ou une seance
 class goExoPrimitive(pypot.primitive.Primitive):
@@ -1116,6 +1260,7 @@ def GoMove(moveName, speed=5, rev=False, save=False, poppyParts=''):
 	global EXO_ENABLE
 	global MOVING_ENABLE
 	global PLAYING_EXO
+	global PLAYING_MOVE
 	EXO_SLEEP = False
 	MOVING_ENABLE = True
 	if len(poppyParts) == 0:
@@ -1138,49 +1283,78 @@ def GoMove(moveName, speed=5, rev=False, save=False, poppyParts=''):
 	print ('going to move')
 	with open('./move/'+moveType+'/'+moveName+'.json', 'r') as f:
 		moveFile = json.load(f)
-	tempsboucle = 50
-	speedList = list()
-	speedDict = {}
-	#print "poppyParts"
-	#print poppyParts
-	for key, value in moveFile["speed"].iteritems():
-		#print "key : "+key
-		if key in poppyParts:
-			speedList.append(key)
-			#print "speed : "+str(speed)
-			#print moveFile["speed"][key]
-			value = value*(2.2/(float(speed)*0.2+1.0))
-			moveFile["speed"][key] = value
-			#print moveFile["speed"][key]
-			if value < tempsboucle:
-				tempsboucle = value
-			if tempsboucle>=0.5:
-				tempsboucle = 0.5
-			speedDict[key] = value
-	tempsboucle = tempsboucle*1.2
-	print "temps boucle : "+ str(tempsboucle)
-	if save == True:
-		NonCompliant(speedList, 25)
-	else:
-		NonCompliant(speedList)
-	if PLAYING_EXO==False:		#juste un mouvement en lecture
-		goMovePrimitive(Poppyboid, rev, moveType, moveName, speedDict, tempsboucle).start()
-	else:
-		goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle)
+# decompose en fonction du nombre de parties temporelles du mouvement
+	if not "parties" in moveFile:	#initialisation pour les fichiers ancienne generation
+		moveFile["parties"]={}
+		moveFile["parties"]["nb_parts"]=1
+		moveFile["parties"]["offsetPart1"]={}
+		moveFile["parties"]["offsetPart1"]["min"]=0
+	for part in range(1, moveFile["parties"]["nb_parts"]+1):
+		print "part : "+str(part)
+		startTime = moveFile["parties"]["offsetPart"+str(part)]["min"]
+		if part == moveFile["parties"]["nb_parts"]:	# recuperation temps fin de chaque partie
+			endTime = moveFile["nb_temps"]
+		else:
+			endTime = moveFile["parties"]["offsetPart"+str(part+1)]["min"]
+		tempsboucle = 50
+		if part == 1:	# initialise la liste des poppyParts pour la lecture du mouvement
+			speedList = list()
+			speedDict = {}
+			nb_speed = ""
+		else:
+			nb_speed = part
+		#print "poppyParts"
+		#print poppyParts
+		for key, value in moveFile["speed"+str(nb_speed)].iteritems():
+			#print "key : "+key
+			if key in poppyParts:
+				speedList.append(key)
+				#print "speed : "+str(speed)
+				#print moveFile["speed"][key]
+				value = value*(2.2/(float(speed)*0.2+1.0))
+				moveFile["speed"+str(nb_speed)][key] = value
+				print moveFile["speed"+str(nb_speed)][key]
+				if value < tempsboucle:
+					tempsboucle = value
+				if tempsboucle>=0.5:
+					tempsboucle = 0.5
+				speedDict[key] = value
+		tempsboucle = tempsboucle*1.2
+		print "temps boucle : "+ str(tempsboucle)
+		if save == True:
+			NonCompliant(speedList, 25)
+		else:
+			NonCompliant(speedList)
+		if PLAYING_EXO==False:		#juste un mouvement en lecture
+			while PLAYING_MOVE:
+				time.sleep(0.1)
+			goMovePrimitive(Poppyboid, rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime).start()
+			time.sleep(0.2)
+		else:
+			goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime)
+			time.sleep(0.2)
 	return 'Move has started'
 
-def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle):
+def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime):
 	global EXO_TEMPS
 	global EXO_SLEEP
 	global EXO_ENABLE
 	global MOVING_ENABLE
+	global PLAYING_MOVE
+
+	print "verif si playing move"
+	while PLAYING_MOVE:
+		time.sleep(0.1)
+	PLAYING_MOVE=True
+	print "startTime : "+str(startTime)+", endTime : "+str(endTime)
 	with open('./move/'+moveType+'/'+moveName+'.json', 'r') as f:
 		moveFile = json.load(f)
 	if rev == False:
-		for temps in range(moveFile["nb_temps"]):
+		for temps in range(startTime, endTime):
 			while EXO_SLEEP == True and MOVING_ENABLE == True:
 				time.sleep(0.2)
 			if MOVING_ENABLE == False:
+				PLAYING_MOVE = False
 				print "---stop move 1---"
 				return "stop"
 			if temps+1 == 1:
@@ -1189,18 +1363,22 @@ def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle):
 				if str(temps+1) in moveFile:
 					miseEnPosPrimitive(Poppyboid,moveFile[str(temps+1)], speedDict).start()
 				if MOVING_ENABLE == False:
+					PLAYING_MOVE = False
 					print "---stop move 2---"
 					return "stop"
 				time.sleep(tempsboucle)
 				if MOVING_ENABLE == False:
+					PLAYING_MOVE = False
 					print "---stop move 3---"
 					return "stop"
 			EXO_TEMPS += 1
 	else:
+		return "stop" 	#TODO : lecture non geree a l'envers !!!
 		for temps in range(moveFile["nb_temps"]):
 			while EXO_SLEEP == True and MOVING_ENABLE == True:
 				time.sleep(0.5)
 			if MOVING_ENABLE == False:
+				PLAYING_MOVE = False
 				return "stop"
 			if temps+1 == 1:
 				goFirstPos(moveFile[str(moveFile["nb_temps"]-temps)], moveFile["speed"])
@@ -1208,13 +1386,17 @@ def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle):
 				if str(moveFile["nb_temps"]-temps) in moveFile:
 					miseEnPosPrimitive(Poppyboid,moveFile[str(moveFile["nb_temps"]-temps)], speedDict).start()
 				if MOVING_ENABLE == False:
+					PLAYING_MOVE = False
 					return "stop"
 				time.sleep(tempsboucle)
 				if MOVING_ENABLE == False:
+					PLAYING_MOVE = False
 					print "---stop move 3---"
 					return "stop"
 			EXO_TEMPS += 1
-	MOVING_ENABLE = False
+	PLAYING_MOVE = False
+	if endTime == moveFile["nb_temps"]:
+		MOVING_ENABLE = False
 
 def GoExo(exoName):
 	#time.sleep(0.5)	#le temps que la seance precedente se finnisse si existante
