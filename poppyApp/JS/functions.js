@@ -24,6 +24,10 @@ function Compliant() {
 				statusCode: {
 					200: function() {
 						console.log("Poppy is compliant" );
+					},
+					0:function(data){		//error, not connected
+						console.log('error : Poppy is not connected');
+						document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 					}
 				}
 			});
@@ -40,6 +44,10 @@ function Compliant() {
 				statusCode: {
 					200: function() {
 						console.log("Poppy is not compliant" );						
+					},
+					0:function(data){		//error, not connected
+						console.log('error : Poppy is not connected');
+						document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 					}
 				}
 			});
@@ -102,6 +110,10 @@ function PartNonCompliant(poppyParts="") {
 						console.log("Poppy is not compliant" );
 						$('input:checkbox[name=poppyParts]').removeAttr('checked');
 						$('#modal_part_non_compliant').modal('hide');
+					},
+					0:function(data){		//error, not connected
+						console.log('error : Poppy is not connected');
+						document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 					}
 				}
 			});
@@ -119,6 +131,10 @@ function semiCompliant(semiPoppyParts="") {
 		statusCode: {
 			200: function() {
 				console.log("Poppy is semi-compliant" );
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -136,6 +152,10 @@ function SaveInitPos() {
 		statusCode: {
 			201: function(data) {
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	})
@@ -167,6 +187,10 @@ function GoInitPos(pos = "undefined") {
 				$('#compliantJG').bootstrapToggle("on");
 				$('#compliantJD').bootstrapToggle("on");
 				$('#compliant').bootstrapToggle("on");
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	})
@@ -229,6 +253,10 @@ function SaveSsMovePart() {
 			},
 			200:function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -258,6 +286,10 @@ function Symetry(moveName="") {
 			},
 			200:function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -287,6 +319,10 @@ function Reverse(moveName="") {
 			},
 			200:function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -355,6 +391,10 @@ function CreateMove(previsu = "False") {
 		},
 		200:function(data){
 			console.log(data);
+		},
+		0:function(data){		//error, not connected
+			console.log('error : Poppy is not connected');
+			document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 		}
 	   }
 	});
@@ -430,6 +470,10 @@ function CreateExo() {
 			},
 			200:function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});	
@@ -473,6 +517,10 @@ function GoMove(rev = "False") {    //non utilisé pour l'instant ! y a la fonct
 			},
 			200:function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	})
@@ -539,6 +587,10 @@ function verifFinExo(){
 					
 					$('#progressbar').progressbar('value', en_cours/total * 100);
 					$("#progressbarlabel").html(Math.round(en_cours/total*100)+" %");
+				},
+				0:function(data){		//error, not connected
+					console.log('error : Poppy is not connected');
+					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 				}
 			}
 		});
@@ -568,6 +620,10 @@ function verifFinMov(){
 				},
 				200: function(data){
 					//do nothing
+				},
+				0:function(data){		//error, not connected
+					console.log('error : Poppy is not connected');
+					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 				}
 			}
 		});
@@ -709,6 +765,10 @@ function Go(exoName) {
 				},
 				200:function(data){
 					console.log(data.responseText);
+				},
+				0:function(data){		//error, not connected
+					console.log('error : Poppy is not connected');
+					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 				}
 			}
 		})
@@ -724,6 +784,10 @@ function Go(exoName) {
 				},
 				200:function(data){
 					console.log(data);
+				},
+				0:function(data){		//error, not connected
+					console.log('error : Poppy is not connected');
+					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 				}
 			}
 		})
@@ -739,6 +803,10 @@ function Go(exoName) {
 				},
 				200:function(data){
 					console.log(data);
+				},
+				0:function(data){		//error, not connected
+					console.log('error : Poppy is not connected');
+					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 				}
 			}
 		})
@@ -761,6 +829,10 @@ function StopExo(moveName = "") {
 			},
 			200: function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -800,6 +872,10 @@ function RemoveMove(moveName="") {
 			},
 			200:function(data){
 				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -851,14 +927,42 @@ function SendFile() {
 		dataToSend=JSON.stringify(donnees);
 	}).done(function(){
 		$.ajax({
-		  url: 'http://poppygr.local:4567/?Submit=senddata&jsonfile='+namefile,
-		  type:'POST',
-		  data:  dataToSend,
-		  //dataType: 'json'
+			url: 'http://poppygr.local:4567/?Submit=senddata&jsonfile='+namefile,
+			type:'POST',
+			data:  dataToSend,
+			//dataType: 'json',
+			error: function(jqXHR, textStatus, errorThrown) {
+		        console.log('error : Poppy is not connected');
+			    //console.log(jqXHR,textStatus, errorThrown);
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+	        }
 		}).success( function(data){
 			console.log(data);
 		});
 	});
+}
+
+function ScanResults() {
+	$.ajax({
+		url: 'http://poppygr.local:4567/?Submit=getMesure',
+		type:'GET',
+		dataType: 'json',
+		statusCode: {
+			200: function(data) {
+				results = data
+				temperatureMax = Math.max(results["temperature"]["max"])
+				//console.log("temperature maximale : "+temperatureMax)	
+				$('#temperatureMax').html(temperatureMax);
+				$('#poppyName').html('poppygr.local');
+				document.getElementById('poppyConnected').src="includes/images/connected.png";
+			},
+			0:function(data){		//error, not connected
+				//console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+	setTimeout("ScanResults()", 5000);
 }
 
 function ReceiveFile(namefile = 'nothg', BDD = "false") {
@@ -902,6 +1006,10 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 			},
 			200:function(data){
 				console.log("does not exist");
+			},
+			0:function(data){		//error, not connected
+				//console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
 	});
@@ -1007,12 +1115,11 @@ function AfficheMovelist(playerOnly = "false"){
 			}
 		} );
 	});
-	
-		
 }
 
 function initPage() {
 	StopExo();
 	ReceiveMovelist();
 	AfficheMovelist();
+	setTimeout("ScanResults()", 5000);
 }

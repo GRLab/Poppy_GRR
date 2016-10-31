@@ -26,6 +26,7 @@ include "includes/header.php";
 				<img src="includes/images/notconnected.png" id="poppyConnected">
 				Poppy : 
 				<txt id="poppyName"></txt>
+				<txt id="tempMax">Tmax : <txt id="temperatureMax"></txt></txt> 
 			</section>
 			<br>
 			<section class="power">

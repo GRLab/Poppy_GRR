@@ -131,6 +131,13 @@ body {
     font-size:17px;
     font-weight:normal;
 }
+#tempMax{
+    float:right;
+    margin-right: 10px;
+}
+#temperatureMax{
+    font-weight: normal;
+}
 
 #contenu{
 	clear:both;

@@ -300,26 +300,19 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
             else:
 		self.send_headers()
 
-        if 'Submit' in params.keys() and "mesure" == params['Submit']:
-            self.send_headers()
-	    print("going to measure")
-            fonctions.mesure()
-            text="measure ok !"
-            print ('measure ok !')
-
-        if 'Submit' in params.keys() and "senddata" == params['Submit']:
-            jsonfile="dataPos.json"
-	    if params['jsonfile']!="":
-		    jsonfile = params['jsonfile']
-	    self.read_data(jsonfile, 200)
-	    text="data ok !"
-            print ('data ok !')
+	if 'Submit' in params.keys() and "senddata" == params['Submit']:
+		jsonfile="dataPos.json"
+		if params['jsonfile']!="":
+			jsonfile = params['jsonfile']
+		self.read_data(jsonfile, 200)
+		text="data ok !"
+		print ('data ok !')
 
 	self.wfile.write(text)
-	
+
     def do_GET(self):
 	print self.path	#pour voir ce qui a ete recu avant traitement
-        parsed_path = urlparse(self.path) #recupere l'url de la requete
+	parsed_path = urlparse(self.path) #recupere l'url de la requete
 	try :
             params = dict([p.split('=') for p in parsed_path[4].split('&')])
         except:
@@ -329,7 +322,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
         #request verification and application
 	
 	if 'Submit' in params.keys() and "receivedata" == params['Submit']:
-            jsonfile=""
+	    jsonfile=""
 	    if params['jsonfile']!="":
 		    jsonfile = params['jsonfile']
 	    BDD = ""
@@ -345,6 +338,12 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		self.wfile.write(jsondata)
 		print ('data send!')
 	    
+	if 'Submit' in params.keys() and "getMesure" == params['Submit']:
+		results = fonctions.scanResults()
+		results = json.dumps(results)
+		self.send_headers(200)
+		self.wfile.write(results)
+
 	print
 
         
@@ -354,5 +353,6 @@ server_address = ("poppygr.local", PORT) #changer l'IP en fonction
 server = BaseHTTPServer.HTTPServer
 handler = RequestHandler
 print "Serveur actif sur le port :", PORT
+fonctions.mesure()	#start scanning the motors
 httpd = server(server_address, handler)
 httpd.serve_forever()

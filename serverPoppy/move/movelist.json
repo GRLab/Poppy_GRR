@@ -54,11 +54,11 @@
         ]
     }, 
     "nb_seance": 9, 
-    "nb_mov": 57, 
+    "nb_mov": 58, 
     "list_mov": {
-        "up": [
-            "bras_gauche", 
-            "bras_droit"
+        "flechijambes": [
+            "jambe_gauche", 
+            "jambe_droite"
         ], 
         "montreheure": [
             "bras_gauche", 
@@ -82,6 +82,14 @@
         "regardRev": [
             "tete"
         ], 
+        "debout": [
+            "bras_gauche", 
+            "bras_droit", 
+            "jambe_gauche", 
+            "jambe_droite", 
+            "tete", 
+            "colonne"
+        ], 
         "baissebd": [
             "bras_droit"
         ], 
@@ -92,8 +100,7 @@
             "bras_droit", 
             "bras_gauche"
         ], 
-        "brasseRev": [
-            "bras_droit", 
+        "giveG2": [
             "bras_gauche"
         ], 
         "bowSym": [
@@ -108,9 +115,6 @@
             "bras_gauche"
         ], 
         "leveBD": [
-            "bras_droit"
-        ], 
-        "demoD": [
             "bras_droit"
         ], 
         "pointedevantbg": [
@@ -129,7 +133,8 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "giveG2": [
+        "brasseRev": [
+            "bras_droit", 
             "bras_gauche"
         ], 
         "demo": [
@@ -158,8 +163,8 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "baisseteteRev": [
-            "tete"
+        "testz": [
+            "bras_droit"
         ], 
         "respi": [
             "colonne"
@@ -173,8 +178,8 @@
         "salutAssisG": [
             "bras_gauche"
         ], 
-        "testz": [
-            "bras_droit"
+        "baisseteteRev": [
+            "tete"
         ], 
         "montreheurebras": [
             "bras_gauche", 
@@ -224,6 +229,9 @@
             "jambe_droite", 
             "jambe_gauche"
         ], 
+        "demoD": [
+            "bras_droit"
+        ], 
         "brasseJD": [
             "jambe_droite"
         ], 
@@ -231,9 +239,9 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "flechijambes": [
-            "jambe_gauche", 
-            "jambe_droite"
+        "up": [
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "bow": [
             "bras_gauche", 
@@ -272,32 +280,15 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "demoAssis": [
-            "tete", 
-            "colonne"
-        ], 
         "salut2": [
             "bras_gauche", 
             "tete", 
             "bras_droit"
         ], 
-        "demoDebout": [
+        "demodebout": [
             "tete", 
             "bras_gauche", 
             "bras_droit"
-        ], 
-        "levetete": [
-            "tete"
-        ], 
-        "brassejambes": [
-            "jambe_droite", 
-            "jambe_gauche"
-        ], 
-        "impatient": [
-            "bras_gauche", 
-            "bras_droit", 
-            "tete", 
-            "colonne"
         ], 
         "bowexo": [
             "bras_gauche", 
@@ -309,6 +300,23 @@
             "tete", 
             "bras_droit"
         ], 
+        "brassejambes": [
+            "jambe_droite", 
+            "jambe_gauche"
+        ], 
+        "impatient": [
+            "bras_gauche", 
+            "bras_droit", 
+            "tete", 
+            "colonne"
+        ], 
+        "demoAssis": [
+            "tete", 
+            "colonne"
+        ], 
+        "levetete": [
+            "tete"
+        ], 
         "demoDeboutJ": [
             "tete", 
             "bras_gauche", 
@@ -316,7 +324,7 @@
             "jambe_gauche", 
             "bras_droit"
         ], 
-        "demodebout": [
+        "demoDebout": [
             "tete", 
             "bras_gauche", 
             "bras_droit"

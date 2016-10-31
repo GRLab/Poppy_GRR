@@ -643,51 +643,57 @@ class semiCompliantPrimitive(pypot.primitive.Primitive):
 				self.robot.goto_position({'head_y':self.robot.head_y.present_position}, t, wait=False)
 			time.sleep(t/2.0)
 
-#Primitive mesure de l'etat des moteurs
-class scanMotors(pypot.primitive.Primitive):
-	"""thread qui scanne les donnees moteurs"""
+#mesure de l'etat des moteurs
+def scanMotors(idmoteur, t0):
+	global position
+	global voltage
+	global temperature
+	global couple
+	temps = time.time()-t0
+	#mesures
+	imoteur=0
+	for m in Poppyboid.motors:
+		position[imoteur] = m.present_position
+		voltage[imoteur] = m.present_voltage
+		temperature[imoteur] = m.present_temperature
+		couple[imoteur] = m.present_load
+		imoteur=imoteur+1
+
+#primitive scan moteurs regulier
+class scanMotorsLoop(pypot.primitive.Primitive):
 	def __init__(self, Poppyboid, idmoteur, t0):
 		pypot.primitive.Primitive.__init__(self, Poppyboid)
 		self.Poppyboid=Poppyboid
 		self.idmoteur=idmoteur
 		self.t0=t0
-		
-	def run(self):
-		global position
-		global voltage
-		global temperature
-		global couple
-		#global Ivalue
-		print("scanning...")
-		temps = time.time()-t0
-		#mesure I
-		#ser.write('5')
-		#Ivalue = ser.readline()
-		#Ivalue = Ivalue[0:-2]	#supprime le dernier caractere : saut de ligne
-		#mesures
-		imoteur=0
-		for m in Poppyboid.motors:
-			position[imoteur] = m.present_position
-			voltage[imoteur] = m.present_voltage
-			temperature[imoteur] = m.present_temperature
-			couple[imoteur] = m.present_load
-			imoteur=imoteur+1
-		#affichage + sauvegarde
-		#print 'Intensite : ', Ivalue
-		#with open("data/data.csv", "a") as csvfile:
-			#writer = csv.writer(csvfile, delimiter='	')
-			#writer.writerow(('Intensite' ,Ivalue))
-		for imoteur in range(nbmoteurs):		
-			print"ID : ", idmoteur[imoteur], "\t", round(temps, 2), "s\tposition : ", position[imoteur], "\tvoltage : ", round(voltage[imoteur], 1), "\ttemperature : ", temperature[imoteur], "\tcouple : ", couple[imoteur]
-			with open("data/data.csv", "a") as csvfile:
-				#fieldnames=[ 'ID', 'temps', 'pos', 'U', 'temp.', 'couple']
-				writer = csv.writer(csvfile, delimiter='	')
-				#writer.writerow(fieldnames)	
-				writer.writerow(( idmoteur[imoteur], round(temps,2), round(position[imoteur],2), round(voltage[imoteur], 1), temperature[imoteur], couple[imoteur] ))
-		print
-		print("scan done")
 
-Poppyboid.attach_primitive(scanMotors(Poppyboid, idmoteur, t0), 'scan')
+	def run(self):
+		while True:
+			scanMotors(self.idmoteur, self.t0)
+			time.sleep(5)
+
+Poppyboid.attach_primitive(scanMotorsLoop(Poppyboid, idmoteur, t0), 'scan')
+
+def scanResults():
+	global position
+	global voltage
+	global temperature
+	global couple
+	results = {}
+	results["position"]={}
+	results["voltage"]={}
+	results["temperature"]={}
+	results["couple"]={}
+	results["temperature"]["max"]=0
+	for imoteur in range(nbmoteurs):		
+		#print"ID : ", idmoteur[imoteur], "\t", round(temps, 2), "s\tposition : ", position[imoteur], "\tvoltage : ", round(voltage[imoteur], 1), "\ttemperature : ", temperature[imoteur], "\tcouple : ", couple[imoteur]
+		results["position"][idmoteur[imoteur]] = position[imoteur]
+		results["voltage"][idmoteur[imoteur]] = round(voltage[imoteur], 1)
+		results["temperature"][idmoteur[imoteur]] = round(temperature[imoteur], 1)
+		results["couple"][idmoteur[imoteur]] = couple[imoteur]
+		if round(temperature[imoteur], 1)>results["temperature"]["max"]:
+			results["temperature"]["max"]=round(temperature[imoteur], 1)
+	return results
 
 #FONCTIONS
 def Compliant(poppyParts='all'): 
@@ -1500,7 +1506,6 @@ def verifFinMov():
 
 def mesure():
 	Poppyboid.scan.start()
-	time.sleep(1)
 
 def readConfig(moveConfig, movename=''):
 	print type(moveConfig)
