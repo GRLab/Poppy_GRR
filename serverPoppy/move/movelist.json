@@ -54,7 +54,7 @@
         ]
     }, 
     "nb_seance": 9, 
-    "nb_mov": 58, 
+    "nb_mov": 52, 
     "list_mov": {
         "flechijambes": [
             "jambe_gauche", 
@@ -114,7 +114,7 @@
         "demoG": [
             "bras_gauche"
         ], 
-        "leveBD": [
+        "demoD": [
             "bras_droit"
         ], 
         "pointedevantbg": [
@@ -163,8 +163,8 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "testz": [
-            "bras_droit"
+        "regard": [
+            "tete"
         ], 
         "respi": [
             "colonne"
@@ -185,32 +185,17 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "regard": [
-            "tete"
-        ], 
         "montreheurestab": [
             "colonne", 
             "bras_gauche", 
             "tete", 
             "bras_droit"
         ], 
-        "testa": [
-            "bras_droit"
-        ], 
-        "testc": [
-            "bras_droit"
-        ], 
-        "testb": [
-            "tete"
-        ], 
         "desesperecol": [
             "colonne"
         ], 
         "leveJD": [
             "jambe_droite"
-        ], 
-        "testeb": [
-            "bras_droit"
         ], 
         "regardCiel": [
             "tete"
@@ -229,7 +214,7 @@
             "jambe_droite", 
             "jambe_gauche"
         ], 
-        "demoD": [
+        "leveBD": [
             "bras_droit"
         ], 
         "brasseJD": [
@@ -264,10 +249,6 @@
         "papbras": [
             "bras_gauche", 
             "bras_droit"
-        ], 
-        "testd": [
-            "bras_droit", 
-            "bras_gauche"
         ]
     }, 
     "nb_exo": 15, 

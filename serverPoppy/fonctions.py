@@ -1554,12 +1554,13 @@ def readConfig(moveConfig, movename=''):
 				print " "
 				newPart = 0
 				actualpart = key
+				print "actualpart : "+actualpart
 				if key in poppyParts :
 					print "condition ok : memes parties dans poppyparts"
 					if moveDir != "exo" and moveDir != "seance":	# si on cree un mouvement (donc pas un exo ni seance)
 						#Si meme poppyparts en meme temps, alors erreur !
 						print "juste avant la boucle !!!!!"
-						print timeline 
+						#print timeline 
 						for key, value2 in timeline[actualpart].iteritems():	#parcourt tous les fichiers avec la partie actualpart
 							print "condition pour la cle : "+key
 							print "t0 : "+str(t0)+" - tOref : "+str(timeline[actualpart][key]["t0"])+" - tf : "+str(tf)+" - tfref : "+str(timeline[actualpart][key]["tf"])
@@ -1595,29 +1596,47 @@ def readConfig(moveConfig, movename=''):
 									break
 
 					if (t0min == -1 and newPart) or not newPart: 		# si le movepart actuel a le plus grand offset OU si premier ajoute OU si nouveau poppyPart
+						k=0		#compteur pour dictionnaire speed
 						print "creating offsetPart"+str(moveFile["parties"]["nb_parts"])
 						print moveFile["parties"]
 						removeLast = False
+						kcompteur=0
 						for offsetPart, offsetValue in moveFile["parties"].iteritems():			# pour tous les offsetparts
+							kcompteur +=1							#incremente compteur
 							if offsetPart != "nb_parts" and "min" in moveFile["parties"][offsetPart]:
-								if moveFile["parties"][offsetPart]["min"]==t0:
-									moveFile["parties"]["nb_parts"]-=1	#en fait pas +1 au nb de partiesi
+								if moveFile["parties"][offsetPart]["min"]==t0 and t0!=0 and newPart:
+									moveFile["parties"]["nb_parts"]-=1	#en fait pas +1 au nb de parties
 									removeLast = True
 									print "supprime le fake nouveau offsetpart"
+								elif newPart==0 and t0==moveFile["parties"][offsetPart]["min"]:	#si meme offset que partie existante
+									t0min = 0
+									print "ajoute "+str(t0)+" a : "+offsetPart
+									moveFile["parties"][offsetPart][actualpart]=t0				#rajoute la nouvelle poppyPart
+									k = kcompteur												#enregistre le compteur
+									break
+								elif newPart==0 and t0<moveFile["parties"][offsetPart]["min"]:	#si y a un offset existant plus grand
+									t0min = moveFile["parties"][offsetPart]["min"]
+									break
+								previousOffsetPart = offsetPart
 						if removeLast:
 							del moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"]+1)]	#suppr le offsetPart cree
-						print "ajoute "+str(t0)+" a l'offsetPart"+str(moveFile["parties"]["nb_parts"])
-						moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"])][actualpart]=t0	# ajoute la nouvelle partie a offsetpart
+						if t0min == -1:							# TODO : si on ajoute le nouveau a la fin. Faire les differents cas
+							realOffsetPart = "offsetPart"+str(moveFile["parties"]["nb_parts"])
+						elif t0min != 0:
+							realOffsetPart = previousOffsetPart
+						if t0min !=0:
+							print "ajoute "+str(t0)+" a "+realOffsetPart
+							moveFile["parties"][realOffsetPart][actualpart]=t0	# ajoute la nouvelle partie a offsetpart
 
-						if "min" in moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"])]:		#MAJ du min des offset de la partie
-							if t0<moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"])]["min"]:
-								moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"])]["min"]=t0
-						else:
-							moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"])]["min"]=t0
+							if "min" in moveFile["parties"][realOffsetPart]:		#MAJ du min des offset de la partie
+								if t0<moveFile["parties"][realOffsetPart]["min"]:
+									moveFile["parties"][realOffsetPart]["min"]=t0
+							else:
+								moveFile["parties"][realOffsetPart]["min"]=t0
 						# MAJ de speed
 						if moveFile["parties"]["nb_parts"]==1:
 							k=""
-						else:
+						elif k==0:
 							k=moveFile["parties"]["nb_parts"]
 						if "speed"+str(k) not in moveFile:
 							print "creating speed"+str(k)
@@ -1635,46 +1654,50 @@ def readConfig(moveConfig, movename=''):
 							print "boucle dans parties nb_parts, iteration "+str(partNumber)
 							print moveFile["parties"]
 							print "offsetPart"+str(partNumber)+" : "+str(moveFile["parties"]["offsetPart"+str(partNumber)]["min"])
-							if moveFile["parties"]["offsetPart"+str(partNumber)][actualpart]==t0min:	#arrive a offsetPart directement superieur
-								print "condition egal a t0min : OK"
-								for j in range(moveFile["parties"]["nb_parts"],partNumber, -1):	#decale tout en +1
-									print "boucle degressive: iteration "+str(j)+" ["+str(moveFile["parties"]["nb_parts"])+"; "+str(partNumber)+"]"
-									del moveFile["parties"]["offsetPart"+str(j)]
-									moveFile["parties"]["offsetPart"+str(j)]={}
-									for partKey, partValue in moveFile["parties"]["offsetPart"+str(j-1)].iteritems():	#recopie offsetPart
-										if j==2 and partKey==actualpart:
-											moveFile["parties"]["offsetPart2"][partKey]=partValue
-										elif j!=2:
-											moveFile["parties"]["offsetPart"+str(j)][partKey]=partValue
+							if actualpart in moveFile["parties"]["offsetPart"+str(partNumber)]:
+								if moveFile["parties"]["offsetPart"+str(partNumber)][actualpart]==t0min:	#arrive a offsetPart directement superieur
+									print "condition egal a t0min : OK ("+str(t0min)+" = "+str(moveFile["parties"]["offsetPart"+str(partNumber)][actualpart])
+									for j in range(moveFile["parties"]["nb_parts"],partNumber, -1):	#decale tout en +1
+										print "boucle degressive: iteration "+str(j)+" ["+str(moveFile["parties"]["nb_parts"])+"; "+str(partNumber)+"]"
+										print moveFile["parties"]
+										del moveFile["parties"]["offsetPart"+str(j)]
+										moveFile["parties"]["offsetPart"+str(j)]={}
+										for partKey, partValue in moveFile["parties"]["offsetPart"+str(j-1)].iteritems():	#recopie offsetPart
+											if j==2 and partKey==actualpart:
+												moveFile["parties"]["offsetPart2"][partKey]=partValue
+												moveFile["parties"]["offsetPart2"]["min"]=partValue
+											elif j!=2:
+												moveFile["parties"]["offsetPart"+str(j)][partKey]=partValue
+											
+									# partie speed
+										if j!=moveFile["parties"]["nb_parts"]:
+											del moveFile["speed"+str(j)]
+										if (j-1)!=1:
+											moveFile["speed"+str(j)]={}
+											for speedKey, speedValue in moveFile["speed"+str(j-1)].iteritems():		#recopie speed
+												moveFile["speed"+str(j)][speedKey]=speedValue
+										else:
+											moveFile["speed2"]={}
+											moveFile["speed2"][actualpart]=moveFile["speed"][actualpart]
+									print "ajout nouvelle valeur offsetPart"+str(partNumber)+" = "+str(t0)
+									if partNumber!=1:
+										del moveFile["parties"]["offsetPart"+str(partNumber)]
+										moveFile["parties"]["offsetPart"+str(partNumber)]={}
+									moveFile["parties"]["offsetPart"+str(partNumber)][actualpart]=t0
+									moveFile["parties"]["offsetPart"+str(partNumber)]["min"]=t0
+									print moveFile["parties"]
 
-									if j!=moveFile["parties"]["nb_parts"]:
-										del moveFile["speed"+str(j)]
-									if (j-1)!=1:
-										moveFile["speed"+str(j)]={}
-										for speedKey, speedValue in moveFile["speed"+str(j-1)].iteritems():		#recopie speed
-											moveFile["speed"+str(j)][speedKey]=speedValue
+									if partNumber==1:
+										partNumber=""
 									else:
-										moveFile["speed2"]={}
-										moveFile["speed2"][actualpart]=moveFile["speed"][actualpart]
-								print "ajout nouvelle valeur offsetPart"+str(partNumber)+" = "+str(t0)
-								if partNumber!=1:
-									del moveFile["parties"]["offsetPart"+str(partNumber)]
-									moveFile["parties"]["offsetPart"+str(partNumber)]={}
-								moveFile["parties"]["offsetPart"+str(partNumber)][actualpart]=t0
-								moveFile["parties"]["offsetPart"+str(partNumber)]["min"]=t0
-
-
-								if partNumber==1:
-									partNumber=""
-								else:
-									del moveFile["speed"+str(partNumber)]
-									moveFile["speed"+str(partNumber)]={}
-								if period == 0:
-									moveFile["speed"+str(partNumber)][actualpart] = value/2
-									period = 1
-								else:
-									moveFile["speed"+str(partNumber)][actualpart] = period*value
-								break
+										del moveFile["speed"+str(partNumber)]
+										moveFile["speed"+str(partNumber)]={}
+									if period == 0:
+										moveFile["speed"+str(partNumber)][actualpart] = value/2
+										period = 1
+									else:
+										moveFile["speed"+str(partNumber)][actualpart] = period*value
+									break
 
 		else:	#si c'est une seance...
 			with open("./move/movelist.json", 'r') as f:
