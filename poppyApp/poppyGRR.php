@@ -25,7 +25,7 @@ include "includes/header.php";
 			<section id="poppy">
 				<img src="includes/images/notconnected.png" id="poppyConnected">
 				Poppy : 
-				<txt id="poppyName"></txt>
+				<input txt value="poppy.local" id="poppyName" onchange="majPoppyName()"></txt>
 				<txt id="tempMax">Tmax : <txt id="temperatureMax"></txt></txt> 
 			</section>
 			<br>

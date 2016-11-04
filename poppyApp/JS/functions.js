@@ -3,6 +3,13 @@ var jsondataBDD = "";
 var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
+var init = false;
+var poppyName = "192.168.0.125";//"poppygr.local";	//nom du robot poppy ou adresse IP
+
+function majPoppyName(){
+	poppyName = $('#poppyName').val();
+	console.log("poppyName : "+poppyName)
+}
 
 function Compliant() {
 	//var compliant= $('#compliant').val();
@@ -19,7 +26,7 @@ function Compliant() {
 			$('#compliantJD').bootstrapToggle("off");
 			$('#compliantJG').bootstrapToggle("off");
 			$.ajax({
-				url: 'http://poppygr.local:4567/?Submit=set+robot+compliant&poppyParts=',
+				url: 'http://'+poppyName+':4567/?Submit=set+robot+compliant&poppyParts=',
 				type:'POST',
 				statusCode: {
 					200: function() {
@@ -39,7 +46,7 @@ function Compliant() {
 			$('#compliantBD').bootstrapToggle("on");
 			$('#compliantBG').bootstrapToggle("on");
 			$.ajax({
-				url: 'http://poppygr.local:4567/?Submit=set+robot+non-compliant&poppyParts=',
+				url: 'http://'+poppyName+':4567/?Submit=set+robot+non-compliant&poppyParts=',
 				type:'POST',
 				statusCode: {
 					200: function() {
@@ -103,7 +110,7 @@ function PartNonCompliant(poppyParts="") {
 		else{
 			$('#compliant').bootstrapToggle("on"); //MAJ de l'affichage bouton ON/OFF seulement
 			$.ajax({
-				url: 'http://poppygr.local:4567/?Submit=set+robot+non-compliant&poppyParts='+poppyParts,
+				url: 'http://'+poppyName+':4567/?Submit=set+robot+non-compliant&poppyParts='+poppyParts,
 				type:'POST',
 				statusCode: {
 					200: function() {
@@ -126,7 +133,7 @@ function PartNonCompliant(poppyParts="") {
 
 function semiCompliant(semiPoppyParts="") {
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=set+robot+semi-compliant&poppyParts='+semiPoppyParts,
+		url: 'http://'+poppyName+':4567/?Submit=set+robot+semi-compliant&poppyParts='+semiPoppyParts,
 		type:'POST',
 		statusCode: {
 			200: function() {
@@ -147,7 +154,7 @@ function SaveInitPos() {
 		return;
 	}
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=save+init+pos&posName='+posName,
+		url: 'http://'+poppyName+':4567/?Submit=save+init+pos&posName='+posName,
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -174,7 +181,7 @@ function GoInitPos(pos = "undefined") {
 		var posName = pos;
 	}
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=go+init+pos&posName='+posName,
+		url: 'http://'+poppyName+':4567/?Submit=go+init+pos&posName='+posName,
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -234,7 +241,7 @@ function SaveSsMovePart() {
 	}
 
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=save+part+move&moveName='+moveName+'&poppyParts='+poppyParts+'&semiMou='+semiMou+'&playedMove='+playedMove,
+		url: 'http://'+poppyName+':4567/?Submit=save+part+move&moveName='+moveName+'&poppyParts='+poppyParts+'&semiMou='+semiMou+'&playedMove='+playedMove,
 		type:'POST',
 		statusCode: {
 			201: function() {
@@ -273,7 +280,7 @@ function Symetry(moveName="") {
 	}
 	listeFiles.push(moveName)
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=symetry&moveName='+moveName,
+		url: 'http://'+poppyName+':4567/?Submit=symetry&moveName='+moveName,
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -306,7 +313,7 @@ function Reverse(moveName="") {
 	}
 	listeFiles.push(moveName)
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=reverse&moveName='+moveName,
+		url: 'http://'+poppyName+':4567/?Submit=reverse&moveName='+moveName,
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -344,9 +351,8 @@ function CreateMove(previsu = "False") {
 		var namefile = $('#ss_mov_'+iter).val();
 		if (namefile != "") {
 			var offset = $('#offset_'+iter).val();
-			if (!(offset>=0 && offset<100) || offset == "") {
+			if (!(offset>=0) || offset == "") {
 				offset = 0;
-				//alert('error, offset set to 0 (must be [0-99])');
 			}
 			var speed = $('#speed_'+iter).val();
 			if (!(speed>=1 && speed<=10) || speed == "") {
@@ -369,7 +375,7 @@ function CreateMove(previsu = "False") {
 		return
 	}
 	$.ajax({
-	  url: 'http://poppygr.local:4567/?Submit=create+move&moveName='+moveName+'&previsu='+previsu,
+	  url: 'http://'+poppyName+':4567/?Submit=create+move&moveName='+moveName+'&previsu='+previsu,
 	  type:'POST',
 	  data:  moveConfig,
 	  statusCode: {
@@ -450,7 +456,7 @@ function CreateExo() {
 		return
 	}
 	$.ajax({
-	  url: 'http://poppygr.local:4567/?Submit=create+exo&exoName='+exoName,
+	  url: 'http://'+poppyName+':4567/?Submit=create+exo&exoName='+exoName,
 	  type:'POST',
 	  data:  exoConfig,
 	  statusCode: {
@@ -505,7 +511,7 @@ function GoMove(rev = "False") {    //non utilisé pour l'instant ! y a la fonct
 		var submit = "go+reverse";
 	}
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit='+submit+'&moveName='+moveName+'&speed='+speed+'&poppyParts='+poppyParts,
+		url: 'http://'+poppyName+':4567/?Submit='+submit+'&moveName='+moveName+'&speed='+speed+'&poppyParts='+poppyParts,
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -544,7 +550,7 @@ function verifFinExo(){
 	var exo= document.getElementById('Go'+activeMove).className;
 	if(exo!="resume"){
 		$.ajax({
-			url: 'http://poppygr.local:4567/?Submit=verif+fin+exo',
+			url: 'http://'+poppyName+':4567/?Submit=verif+fin+exo',
 			type:'POST',
 			dataType : 'json',
 			statusCode: {
@@ -609,7 +615,7 @@ function verifFinMov(){
 	var mov= document.getElementById('Go'+activeMove).className;
 	if(mov!="resume"){
 		$.ajax({
-			url: 'http://poppygr.local:4567/?Submit=verif+fin+mov',
+			url: 'http://'+poppyName+':4567/?Submit=verif+fin+mov',
 			type:'POST',
 			dataType : 'json',
 			statusCode: {
@@ -649,7 +655,7 @@ function Go(exoName) {
 	if(exo=="play"){
 		StopExo();
 		$.ajax({
-			url: 'http://poppygr.local:4567/?Submit=go&exoName='+exoName,
+			url: 'http://'+poppyName+':4567/?Submit=go&exoName='+exoName,
 			type:'POST',
 			dataType:'json',
 			statusCode: {
@@ -775,7 +781,7 @@ function Go(exoName) {
 	} 
 	else if (exo=='pause'){
 		$.ajax({
-			url: 'http://poppygr.local:4567/?Submit=pause+exo',
+			url: 'http://'+poppyName+':4567/?Submit=pause+exo',
 			type:'POST',
 			statusCode: {
 				201: function(data) {
@@ -794,7 +800,7 @@ function Go(exoName) {
 	}
 	else if (exo=='resume'){
 		$.ajax({
-			url: 'http://poppygr.local:4567/?Submit=resume+exo',
+			url: 'http://'+poppyName+':4567/?Submit=resume+exo',
 			type:'POST',
 			statusCode: {
 				201: function(data) {
@@ -820,7 +826,7 @@ function Go(exoName) {
 function StopExo(moveName = "") {
 	
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=stop+exo',
+		url: 'http://'+poppyName+':4567/?Submit=stop+exo',
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -862,7 +868,7 @@ function RemoveMove(moveName="") {
 		return;
 	}
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=remove+move&moveName='+moveName,
+		url: 'http://'+poppyName+':4567/?Submit=remove+move&moveName='+moveName,
 		type:'POST',
 		statusCode: {
 			201: function(data) {
@@ -927,7 +933,7 @@ function SendFile() {
 		dataToSend=JSON.stringify(donnees);
 	}).done(function(){
 		$.ajax({
-			url: 'http://poppygr.local:4567/?Submit=senddata&jsonfile='+namefile,
+			url: 'http://'+poppyName+':4567/?Submit=senddata&jsonfile='+namefile,
 			type:'POST',
 			data:  dataToSend,
 			//dataType: 'json',
@@ -944,7 +950,7 @@ function SendFile() {
 
 function ScanResults() {
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=getMesure',
+		url: 'http://'+poppyName+':4567/?Submit=getMesure',
 		type:'GET',
 		dataType: 'json',
 		statusCode: {
@@ -953,7 +959,7 @@ function ScanResults() {
 				temperatureMax = Math.max(results["temperature"]["max"])
 				//console.log("temperature maximale : "+temperatureMax)	
 				$('#temperatureMax').html(temperatureMax);
-				$('#poppyName').html('poppygr.local');
+				$('#poppyName').html(''+poppyName+'');
 				document.getElementById('poppyConnected').src="includes/images/connected.png";
 			},
 			0:function(data){		//error, not connected
@@ -975,7 +981,7 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 		}
 	}
 	$.ajax({
-		url: 'http://poppygr.local:4567/?Submit=receivedata&jsonfile='+namefile+'&BDD='+BDD,
+		url: 'http://'+poppyName+':4567/?Submit=receivedata&jsonfile='+namefile+'&BDD='+BDD,
 		type:'GET',
 		dataType: 'json',
 		statusCode: {
@@ -1000,7 +1006,6 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 						AfficheMovelist();
 					});
 				}
-				$('#poppyName').html('poppygr.local');
 				document.getElementById('poppyConnected').src="includes/images/connected.png";
 
 			},
@@ -1013,6 +1018,9 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 			}
 		}
 	});
+	if(init == false){
+		setTimeout("WaitBeforeScan()", 5000);
+	}
 }
 
 function insertJsonBDD(moveName){
@@ -1117,9 +1125,12 @@ function AfficheMovelist(playerOnly = "false"){
 	});
 }
 
+function WaitBeforeScan(){
+	setTimeout("ScanResults()", 5000);
+}
+
 function initPage() {
 	StopExo();
 	ReceiveMovelist();
 	AfficheMovelist();
-	setTimeout("ScanResults()", 5000);
 }

@@ -127,13 +127,15 @@ body {
     font-weight:bold;
 }
 #poppyName{
-    color:#ffffff;
+    color:#000000;
     font-size:17px;
     font-weight:normal;
+    width:150px;
 }
 #tempMax{
     float:right;
     margin-right: 10px;
+    margin-top:4.5px;
 }
 #temperatureMax{
     font-weight: normal;
