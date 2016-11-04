@@ -10,11 +10,6 @@ include "includes/header.php";
 ?>
 <div id="container">
 <body onload="initPage()">
-<!--partie exercice/seance en cours-->
-	<div id='exoConfig'>
-		<div id="progressbar"></div>
-		<div id="progressbarlabel"></div>
-	</div>
 
 <!--partie boutons-->
 	<div id='application'>
@@ -25,7 +20,7 @@ include "includes/header.php";
 			<section id="poppy">
 				<img src="includes/images/notconnected.png" id="poppyConnected">
 				Poppy : 
-				<input txt value="poppy.local" id="poppyName" onchange="majPoppyName()"></txt>
+				<input txt value="192.168.0.125" id="poppyName" onchange="majPoppyName()"></txt>
 				<txt id="tempMax">Tmax : <txt id="temperatureMax"></txt></txt> 
 			</section>
 			<br>
@@ -74,12 +69,16 @@ include "includes/header.php";
 			</tr-->
 			</table>
 			<!--input type="button" value="switch ON" onclick='Compliant()' id='compliant'  /-->  
-			 
 			<br><section> <text id="title" style="font-size:16px;">Position initiale :</text> &nbsp 
 				<input type="button" value="debout" onclick='GoDebout()' id='goDebout' /> 
 				<input type="button" value="assis" onclick='GoAssis()' id='goAssis' /><br> 
 				</section>
 			</section>
+			 <!--suivi avancement exercice/seance en cours-->
+			<div id='exoConfig'>
+				<div id="progressbar"></div>
+				<div id="progressbarlabel"></div>
+			</div>
 			<section class="poppyimage">
 			<center> <img src="includes/images/poppyImage.png" id="poppyImage" ></center> 
 			</section>

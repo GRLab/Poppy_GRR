@@ -339,7 +339,7 @@ aside {
 
 /* Bloc exoConfig */
 #exoConfig{
-	width:250px;
+	width:342px;
 	margin-right:5px;
 	float:right;
 	height:auto;
@@ -352,6 +352,7 @@ aside {
 	padding-bottom : 10px;
 	font-size:14px;
 	display:none;
+    z-index: 10;    /*au dessus des autres blocs (indice fort)*/
 }
 #progressbar{
 	height : 10px;
