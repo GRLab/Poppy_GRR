@@ -693,6 +693,15 @@ def scanResults():
 		results["couple"][idmoteur[imoteur]] = couple[imoteur]
 		if round(temperature[imoteur], 1)>results["temperature"]["max"]:
 			results["temperature"]["max"]=round(temperature[imoteur], 1)
+
+		results[u'compliant'] = poppyCompliant()
+		results[u'compliant'] = "u'"+str(results[u'compliant'] )+"'"
+		results[u'compliantBG'] = "u'"+str(Poppyboid.l_arm_z.compliant)+"'"
+		results[u'compliantBD'] = "u'"+str(Poppyboid.r_arm_z.compliant)+"'"
+		results[u'compliantT'] = "u'"+str(Poppyboid.head_z.compliant)+"'"
+		results[u'compliantJG'] = "u'"+str(Poppyboid.l_hip_z.compliant)+"'"
+		results[u'compliantJD'] = "u'"+str(Poppyboid.r_hip_z.compliant)+"'"
+		results[u'compliantCol'] = "u'"+str(Poppyboid.abs_z.compliant)+"'"
 	return results
 
 #FONCTIONS
@@ -1842,6 +1851,12 @@ def loadData(moveName, BDD):
 	if moveName == './move/movelist.json':
 		jsondata[u'compliant'] = poppyCompliant()
 		jsondata[u'compliant'] = "u'"+str(jsondata[u'compliant'] )+"'"
+		jsondata[u'compliantBG'] = "u'"+str(Poppyboid.l_arm_z.compliant)+"'"
+		jsondata[u'compliantBD'] = "u'"+str(Poppyboid.r_arm_z.compliant)+"'"
+		jsondata[u'compliantT'] = "u'"+str(Poppyboid.head_z.compliant)+"'"
+		jsondata[u'compliantJG'] = "u'"+str(Poppyboid.l_hip_z.compliant)+"'"
+		jsondata[u'compliantJD'] = "u'"+str(Poppyboid.r_hip_z.compliant)+"'"
+		jsondata[u'compliantCol'] = "u'"+str(Poppyboid.abs_z.compliant)+"'"
 	return jsondata
 
 def poppyCompliant():

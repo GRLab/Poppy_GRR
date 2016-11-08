@@ -105,7 +105,7 @@ function PartNonCompliant(poppyParts="") {
 				nbsemiNbParts = nbsemiNbParts + 1;
 			}
 		});
-        //MAJ bouton ON/OFF ttes les parties
+        //MAJ bouton ON/OFF de Poppy entier
 		if(nbParts==0){
 			partComp=false;
 			$('#compliant').bootstrapToggle("off");
@@ -1017,9 +1017,66 @@ function ScanResults() {
 			200: function(data) {
 				results = data
 				temperatureMax = Math.max(results["temperature"]["max"])
-				//console.log("temperature maximale : "+temperatureMax)	
+				//console.log("temperature maximale : "+temperatureMax)
 				$('#temperatureMax').html(temperatureMax);
 				$('#poppyName').html(''+poppyName+'');
+				if (data['compliant']=="u'True'"){
+					partComp=true;
+					$('#compliant').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliant').bootstrapToggle('on');
+				}
+				if (data['compliantT']=="u'True'"){
+					partComp=true;
+					$('#compliantT').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliantT').bootstrapToggle('on');
+				}
+				if (data['compliantBG']=="u'True'"){
+					partComp=true;
+					$('#compliantBG').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliantBG').bootstrapToggle('on');
+				}
+				if (data['compliantBD']=="u'True'"){
+					partComp=true;
+					$('#compliantBD').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliantBD').bootstrapToggle('on');
+				}
+				if (data['compliantCol']=="u'True'"){
+					partComp=true;
+					$('#compliantCol').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliantCol').bootstrapToggle('on');
+				}
+				if (data['compliantJD']=="u'True'"){
+					partComp=true;
+					$('#compliantJD').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliantJD').bootstrapToggle('on');
+				}
+				if (data['compliantJG']=="u'True'"){
+					partComp=true;
+					$('#compliantJG').bootstrapToggle("off");
+				}
+				else{
+					partComp=true;
+					$('#compliantJG').bootstrapToggle('on');
+				}
+				partComp=false;
 				if (uptodate==true){
 					document.getElementById('poppyConnected').src="includes/images/connected.png";
 				}
@@ -1071,14 +1128,64 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 				jsondata = data
 				console.log(jsondata) 
 				if (namefile == 'movelist'){
-					dataListe = jsondata;
+					dataListe = jsondata;		// maj variable globale
 					if (jsondata['compliant']=="u'True'"){
 						partComp=true;
 						$('#compliant').bootstrapToggle("off");
 					}
 					else{
-						$('#compliant').val('switch OFF');
+						partComp=true;
+						$('#compliant').bootstrapToggle('on');
 					}
+					if (jsondata['compliantT']=="u'True'"){
+						partComp=true;
+						$('#compliantT').bootstrapToggle("off");
+					}
+					else{
+						partComp=true;
+						$('#compliantT').bootstrapToggle('on');
+					}
+					if (jsondata['compliantBG']=="u'True'"){
+						partComp=true;
+						$('#compliantBG').bootstrapToggle("off");
+					}
+					else{
+						partComp=true;
+						$('#compliantBG').bootstrapToggle('on');
+					}
+					if (jsondata['compliantBD']=="u'True'"){
+						partComp=true;
+						$('#compliantBD').bootstrapToggle("off");
+					}
+					else{
+						partComp=true;
+						$('#compliantBD').bootstrapToggle('on');
+					}
+					if (jsondata['compliantCol']=="u'True'"){
+						partComp=true;
+						$('#compliantCol').bootstrapToggle("off");
+					}
+					else{
+						partComp=true;
+						$('#compliantCol').bootstrapToggle('on');
+					}
+					if (jsondata['compliantJD']=="u'True'"){
+						partComp=true;
+						$('#compliantJD').bootstrapToggle("off");
+					}
+					else{
+						partComp=true;
+						$('#compliantJD').bootstrapToggle('on');
+					}
+					if (jsondata['compliantJG']=="u'True'"){
+						partComp=true;
+						$('#compliantJG').bootstrapToggle("off");
+					}
+					else{
+						partComp=true;
+						$('#compliantJG').bootstrapToggle('on');
+					}
+					partComp=false;
 					CheckIfPoppyUptodate(jsondata['nb_mov'], jsondata['nb_exo'],jsondata['nb_seance']);
 				}
 				else if (BDD == "true"){
@@ -1227,7 +1334,7 @@ function GetIP() {
 }
 
 function WaitBeforeScan(){
-	//setTimeout("ScanResults()", 5000);
+	setTimeout("ScanResults()", 5000);
 }
 
 function initPage() {
