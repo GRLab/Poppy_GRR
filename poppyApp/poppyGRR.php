@@ -93,6 +93,7 @@ include "includes/header.php";
 		</section>
 	</div>
 	<div id="contenu">
+		<input type="button" value="Mettre à jour le robot" id="majPoppy" onclick="majPoppy()" />
 		<input type="button" value="Mettre à jour la base" id="majBdD" onclick="majBdD()" /><br> <br>
 	</div>
 

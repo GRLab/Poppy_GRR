@@ -930,7 +930,7 @@ def SaveMovePart(poppyParts, moveName, semiMou, playedMove = ''):
 def majMoveList(moveDir, moveName, poppyParts):
 	with open('./move/movelist.json','r') as f:
 		jsondata = json.load(f)
-	print moveDir
+	print moveDir+" saved"
 	if moveName not in jsondata["list_"+moveDir]:
 		jsondata["nb_"+moveDir] += 1
 	jsondata["list_"+moveDir][moveName] = poppyParts
@@ -1771,6 +1771,31 @@ def readConfig(moveConfig, movename=''):
 		return "seance created"
 	else:
 		return "move created"
+
+def addMove(moveName, moveType, moveFile):
+	moveFile = json.loads(moveFile)
+	print type(moveFile)
+	moveDir = directory(moveName)
+	if moveDir != '':
+		return "already exists"
+	poppyParts = list()
+	print moveFile
+	if "tete" in moveFile["poppyParts"]:
+		poppyParts.append("tete")
+	if "bras_gauche" in moveFile["poppyParts"]:
+		poppyParts.append("bras_gauche")
+	if "bras_droit" in moveFile["poppyParts"]:
+		poppyParts.append("bras_droit")
+	if "colonne" in moveFile["poppyParts"]:
+		poppyParts.append("colonne")
+	if "jambe_gauche" in moveFile["poppyParts"]:
+		poppyParts.append("jambe_gauche")
+	if "jambe_droite" in moveFile["poppyParts"]:
+		poppyParts.append("jambe_droite")
+	del moveFile["poppyParts"]
+	with open("./move/"+moveType+"/"+moveName+".json", 'w') as f:
+		json.dump(moveFile, f, indent=4)
+	majMoveList(moveType, moveName, poppyParts)
 	
 def directory(moveName):
 	with open('./move/movelist.json', 'r') as f:

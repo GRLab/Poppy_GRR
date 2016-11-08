@@ -308,6 +308,18 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		text="data ok !"
 		print ('data ok !')
 
+	if 'Submit' in params.keys() and "add+move" == params['Submit']:
+		if params['moveName']!="":
+			moveName = params['moveName']
+		if params['type']!="":
+			moveType = params['type']
+		moveFile = self.rfile.read(int(self.headers['Content-Length']))
+		text=fonctions.addMove(moveName, moveType, moveFile)
+		if text == "added":
+			self.send_headers(201)
+		else:
+			self.send_headers()
+
 	self.wfile.write(text)
 
     def do_GET(self):

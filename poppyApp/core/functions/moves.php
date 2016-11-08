@@ -28,7 +28,11 @@ if(isset($_GET["action"])){
 	} else if ($_GET["action"] == "getMovelist"){
 		$movelist = getMovelist();
 		echo  json_encode($movelist);
-	} 
+	} else if ($_GET["action"] == "getMovesNumber"){
+		header('Content-type: application/json');
+		$movesNumber = getMovesNumber();
+		echo  json_encode($movesNumber);
+	}
 }
 
 
@@ -224,6 +228,23 @@ function getMovelist(){
 	$aDatas = $requete->fetchAll( PDO::FETCH_ASSOC);
 	
 	return $aDatas;
+}
+
+function getMovesNumber(){
+	$sSQL = "SELECT `nb_movetype`
+			 FROM `movetype`
+			 WHERE `id_moveType` = :id_moveType";
+			 
+	$requete = Connexion::getInstance()->prepare($sSQL);
+	for ($nb=1; $nb<=3; $nb++){
+		$requete->execute(
+						array('id_moveType' => $nb)
+				);
+			
+		$movesNumber[$nb-1] = $requete->fetch( PDO::FETCH_ASSOC)["nb_movetype"];
+	}
+
+	return $movesNumber; 
 }
 
 ?>

@@ -5,10 +5,13 @@ var activeMove = "";
 var partComp = false;
 var init = false;
 var poppyName = "192.168.0.125";//"poppygr.local";	//nom du robot poppy ou adresse IP
+var uptodate = true;
 
 function majPoppyName(){
 	poppyName = $('#poppyName').val();
 	console.log("poppyName : "+poppyName)
+	GetIP()
+	ReceiveMovelist()
 }
 
 function Compliant() {
@@ -920,6 +923,63 @@ function majBdDsuite(){
 	});
 }
 
+function majPoppy(){
+	$.post('./core/functions/moves.php?action=getMovelist').done(function(database){
+		data = JSON.parse(database);
+		console.log(data);
+		for (var key in data){
+			moveName = data[key]["moveName"];
+			if (data[key]["id_moveType"]=="1"){
+				var type = "mov";
+			}else if (data[key]["id_moveType"]=="2"){
+				var type = "exo";
+			}else if (data[key]["id_moveType"]=="3"){
+				var type = "seance";
+			}
+			var poppyParts = [];
+			if (data[key]["tete"]==1){
+				poppyParts.push("tete");
+			} 
+			if (data[key]["bras_gauche"]==1){
+				poppyParts.push("bras_gauche");
+			} 
+			if (data[key]["bras_droit"]==1){
+				poppyParts.push("bras_droit");
+			} 
+			if (data[key]["colonne"]==1){
+				poppyParts.push("colonne");
+			} 
+			if (data[key]["jambe_gauche"]==1){
+				poppyParts.push("jambe_gauche");
+			} 
+			if (data[key]["jambe_droite"]==1){
+				poppyParts.push("jambe_droite");
+			}
+			dataToSend = data[key]["jsondata"];
+			dataToSend = JSON.parse(dataToSend);
+			dataToSend["poppyParts"]=poppyParts;
+			dataToSend = JSON.stringify(dataToSend)
+			$.ajax({
+				url: 'http://'+poppyName+':4567/?Submit=add+move&moveName='+moveName+'&type='+type,
+				type:'POST',
+				data: dataToSend,
+				statusCode: {
+					201: function(data){
+						//console.log("added");
+					},
+					200:function(data){
+						//console.log("already exists");
+					},
+					0:function(data){		//error, not connected
+						console.log('error : Poppy is not connected');
+						document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+					}
+				}
+			});
+		}
+		ReceiveMovelist();
+	});
+}
 
 function SendFile() {
 	var dataToSend ;
@@ -960,7 +1020,12 @@ function ScanResults() {
 				//console.log("temperature maximale : "+temperatureMax)	
 				$('#temperatureMax').html(temperatureMax);
 				$('#poppyName').html(''+poppyName+'');
-				document.getElementById('poppyConnected').src="includes/images/connected.png";
+				if (uptodate==true){
+					document.getElementById('poppyConnected').src="includes/images/connected.png";
+				}
+				else{
+					document.getElementById('poppyConnected').src="includes/images/notUptodate.png";
+				}
 			},
 			0:function(data){		//error, not connected
 				//console.log('error : Poppy is not connected');
@@ -969,6 +1034,23 @@ function ScanResults() {
 		}
 	});
 	setTimeout("ScanResults()", 5000);
+}
+
+function CheckIfPoppyUptodate(nb_mov, nb_exo, nb_seance){
+	$.post("./core/functions/moves.php?action=getMovesNumber").done(function(data){
+		var movNumber=data[0];
+		var exoNumber=data[1];
+		var seanceNumber=data[2];
+		if(nb_mov!=movNumber || nb_exo!=exoNumber || nb_seance!=seanceNumber){
+			console.log("Poppy n'est pas a jour");
+			uptodate=false;
+			document.getElementById('poppyConnected').src="includes/images/notUptodate.png";
+		}
+		else{
+			console.log("Poppy est a jour");
+			uptodate=true;
+		}
+	});
 }
 
 function ReceiveFile(namefile = 'nothg', BDD = "false") {
@@ -987,7 +1069,7 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 		statusCode: {
 			201: function(data) {
 				jsondata = data
-				console.log(jsondata)
+				console.log(jsondata) 
 				if (namefile == 'movelist'){
 					dataListe = jsondata;
 					if (jsondata['compliant']=="u'True'"){
@@ -997,6 +1079,7 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 					else{
 						$('#compliant').val('switch OFF');
 					}
+					CheckIfPoppyUptodate(jsondata['nb_mov'], jsondata['nb_exo'],jsondata['nb_seance']);
 				}
 				else if (BDD == "true"){
 					jsondataBDD = jsondata;
@@ -1006,14 +1089,18 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 						AfficheMovelist();
 					});
 				}
-				document.getElementById('poppyConnected').src="includes/images/connected.png";
-
+				if (uptodate==true){
+					document.getElementById('poppyConnected').src="includes/images/connected.png";
+				}
+				else{
+					document.getElementById('poppyConnected').src="includes/images/notUptodate.png";
+				}
 			},
 			200:function(data){
 				console.log("does not exist");
 			},
 			0:function(data){		//error, not connected
-				//console.log('error : Poppy is not connected');
+				console.log('error : Poppy is not connected');
 				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
 		}
@@ -1125,12 +1212,27 @@ function AfficheMovelist(playerOnly = "false"){
 	});
 }
 
+function GetIP() {
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=getIP',
+		type:'GET',
+		dataType: 'text',
+		statusCode: {
+			200: function(data) {
+				poppyIP = data
+				console.log("adresse IP du robot : "+poppyIP)	
+			},
+		}
+	});
+}
+
 function WaitBeforeScan(){
-	setTimeout("ScanResults()", 5000);
+	//setTimeout("ScanResults()", 5000);
 }
 
 function initPage() {
 	StopExo();
 	ReceiveMovelist();
 	AfficheMovelist();
+	GetIP();
 }
