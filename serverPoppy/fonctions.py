@@ -4,7 +4,7 @@ import os
 import pypot.primitive
 import json
 import numpy
-#import serial
+import socket
 import csv
 from collections import OrderedDict
 #Creation de l'objet robot
@@ -1554,11 +1554,10 @@ def readConfig(moveConfig, movename=''):
 				print " "
 				newPart = 0
 				actualpart = key
-				print "actualpart : "+actualpart
 				if key in poppyParts :
 					print "condition ok : memes parties dans poppyparts"
 					if moveDir != "exo" and moveDir != "seance":	# si on cree un mouvement (donc pas un exo ni seance)
-						#Si meme poppyparts en meme temps, alors erreur !
+						print "actualpart : "+actualpart
 						print "juste avant la boucle !!!!!"
 						#print timeline 
 						for key, value2 in timeline[actualpart].iteritems():	#parcourt tous les fichiers avec la partie actualpart
@@ -1577,7 +1576,7 @@ def readConfig(moveConfig, movename=''):
 					poppyParts.append(key)			# met a jour la liste
 #TODO
 
-				if newPart:
+				if moveDir == "mov" and newPart:
 					moveFile["parties"]["nb_parts"]+=1	#incremente nb parties tempo
 					moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"])]={}
 				if moveDir == "mov":				# gestion si mouvement
@@ -1825,4 +1824,8 @@ def poppyCompliant():
 		return True
 	else:
 		return False
-		
+
+def giveIP():
+	IPaddress = ([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
+	print IPaddress
+	return IPaddress

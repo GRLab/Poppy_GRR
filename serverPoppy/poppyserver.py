@@ -344,6 +344,11 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		self.send_headers(200)
 		self.wfile.write(results)
 
+	if 'Submit' in params.keys() and "getIP" == params['Submit']:
+		IPAddress = fonctions.giveIP()
+		self.send_headers(200)
+		self.wfile.write(IPAddress)
+
 	print
 
         

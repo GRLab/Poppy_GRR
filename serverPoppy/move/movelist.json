@@ -1,10 +1,5 @@
 {
     "list_seance": {
-        "bowi": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit"
-        ], 
         "demoDeboutJ2": [
             "tete", 
             "bras_gauche", 
@@ -20,11 +15,6 @@
             "bras_droit"
         ], 
         "demoDebout3": [
-            "tete", 
-            "bras_gauche", 
-            "bras_droit"
-        ], 
-        "demoDebout2": [
             "tete", 
             "bras_gauche", 
             "bras_droit"
@@ -53,8 +43,8 @@
             "bras_droit"
         ]
     }, 
-    "nb_seance": 9, 
-    "nb_mov": 52, 
+    "nb_seance": 7, 
+    "nb_mov": 47, 
     "list_mov": {
         "flechijambes": [
             "jambe_gauche", 
@@ -82,23 +72,11 @@
         "regardRev": [
             "tete"
         ], 
-        "debout": [
-            "bras_gauche", 
-            "bras_droit", 
-            "jambe_gauche", 
-            "jambe_droite", 
-            "tete", 
-            "colonne"
-        ], 
         "baissebd": [
             "bras_droit"
         ], 
         "tetebrasse": [
             "tete"
-        ], 
-        "brasseRevRev": [
-            "bras_droit", 
-            "bras_gauche"
         ], 
         "giveG2": [
             "bras_gauche"
@@ -133,9 +111,10 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "brasseRev": [
-            "bras_droit", 
-            "bras_gauche"
+        "penchageavant": [
+            "jambe_gauche", 
+            "jambe_droite", 
+            "colonne"
         ], 
         "demo": [
             "bras_gauche", 
@@ -205,20 +184,8 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "penchageavant": [
-            "jambe_gauche", 
-            "jambe_droite", 
-            "colonne"
-        ], 
-        "brasseJ": [
-            "jambe_droite", 
-            "jambe_gauche"
-        ], 
         "leveBD": [
             "bras_droit"
-        ], 
-        "brasseJD": [
-            "jambe_droite"
         ], 
         "desesperebras": [
             "bras_gauche", 
@@ -251,7 +218,7 @@
             "bras_droit"
         ]
     }, 
-    "nb_exo": 15, 
+    "nb_exo": 13, 
     "list_exo": {
         "giveCard": [
             "bras_gauche"
@@ -266,11 +233,6 @@
             "tete", 
             "bras_droit"
         ], 
-        "demodebout": [
-            "tete", 
-            "bras_gauche", 
-            "bras_droit"
-        ], 
         "bowexo": [
             "bras_gauche", 
             "tete", 
@@ -280,10 +242,6 @@
             "bras_gauche", 
             "tete", 
             "bras_droit"
-        ], 
-        "brassejambes": [
-            "jambe_droite", 
-            "jambe_gauche"
         ], 
         "impatient": [
             "bras_gauche", 
