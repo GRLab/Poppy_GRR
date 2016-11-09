@@ -20,7 +20,7 @@ include "includes/header.php";
 			<section id="poppy">
 				<img src="includes/images/notconnected.png" id="poppyConnected">
 				Poppy : 
-				<input txt value="192.168.0.125" id="poppyName" onchange="majPoppyName()"></txt>
+				<input txt value="" id="poppyName" onchange="majPoppyName()"></txt>
 				<txt id="tempMax">Tmax : <txt id="temperatureMax"></txt></txt> 
 			</section>
 			<br>

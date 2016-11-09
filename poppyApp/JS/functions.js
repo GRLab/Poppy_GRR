@@ -6,6 +6,7 @@ var partComp = false;
 var init = false;
 var poppyName = "192.168.0.125";//"poppygr.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
+var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 
 function majPoppyName(){
 	poppyName = $('#poppyName').val();
@@ -1019,7 +1020,17 @@ function ScanResults() {
 				temperatureMax = Math.max(results["temperature"]["max"])
 				//console.log("temperature maximale : "+temperatureMax)
 				$('#temperatureMax').html(temperatureMax);
-				$('#poppyName').html(''+poppyName+'');
+				if (temperatureMax>=seuilTemp){
+					if($('#temperatureMax').css('color')!='rgb(255, 0, 0)'){
+						alert("Attention ! Poppy surchauffe !");
+					} 
+					$('#temperatureMax').css('color','rgb(255,0,0)');
+				}
+				else{
+					$('#temperatureMax').css('color','rgb(255,255,223)');
+				}
+
+				$('#poppyName').val(poppyName);
 				if (data['compliant']=="u'True'"){
 					partComp=true;
 					$('#compliant').bootstrapToggle("off");
@@ -1338,6 +1349,7 @@ function WaitBeforeScan(){
 }
 
 function initPage() {
+	$('#poppyName').val(poppyName);
 	StopExo();
 	ReceiveMovelist();
 	AfficheMovelist();

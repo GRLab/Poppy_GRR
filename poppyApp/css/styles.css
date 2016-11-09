@@ -139,6 +139,7 @@ body {
 }
 #temperatureMax{
     font-weight: normal;
+    color:rgb(255,255,223);
 }
 
 #contenu{
