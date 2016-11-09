@@ -373,6 +373,9 @@ include "includes/header.php";
 	</script>
 
 	<script src="JS/functions.js"></script>
+	<audio id="audioPlayer">
+		<source src="includes/sons/done.ogg">
+	</audio>
 </body>
 
 <?php include "includes/footer.php"; ?>	

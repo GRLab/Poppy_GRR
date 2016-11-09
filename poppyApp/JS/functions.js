@@ -7,6 +7,7 @@ var init = false;
 var poppyName = "192.168.0.125";//"poppygr.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
+var player = "";
 
 function majPoppyName(){
 	poppyName = $('#poppyName').val();
@@ -215,6 +216,11 @@ function GoAssis(){
 	GoInitPos(pos="assis");
 }
 
+function stopPlayer(){
+	console.log("stop sound");
+	player.pause();
+}
+
 function SaveSsMovePart() {
 	$('#exoConfig').hide();
 	var moveName = $('#nom_mvt_ss_part').val();
@@ -243,13 +249,16 @@ function SaveSsMovePart() {
 		poppyParts.push('tete');
 		alert('error, poppyParts set to tete');
 	}
-
+	player.play();
+	player.pause();
 	$.ajax({
 		url: 'http://'+poppyName+':4567/?Submit=save+part+move&moveName='+moveName+'&poppyParts='+poppyParts+'&semiMou='+semiMou+'&playedMove='+playedMove,
 		type:'POST',
 		statusCode: {
 			201: function() {
 				console.log("move saved in Poppy." );
+				player.play();			//joue un son
+				setTimeout('stopPlayer()', 2200);
 				//Si le mouvement a bien été sauvegardé, on l'enregistre dans la bdd
 				//Obligé de faire avec un post car on est dans du js !
 				$.post("./core/functions/moves.php?action=insert", {"moveName" : moveName, "moveType" : "mov", "parts" : poppyParts}).done(function(data){
@@ -1224,6 +1233,7 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 		}
 	});
 	if(init == false){
+		init = true;
 		setTimeout("WaitBeforeScan()", 5000);
 	}
 }
@@ -1348,7 +1358,12 @@ function WaitBeforeScan(){
 	setTimeout("ScanResults()", 5000);
 }
 
+function initSound() {
+	player = document.querySelector('#audioPlayer');
+}
+
 function initPage() {
+	initSound();
 	$('#poppyName').val(poppyName);
 	StopExo();
 	ReceiveMovelist();
