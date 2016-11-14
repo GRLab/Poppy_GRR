@@ -1036,35 +1036,35 @@ def reverse(moveName):
 		if str(nb_temps+1) in moveData :
 			revData[str(nb_tps_max-nb_temps)] = {}
 		if '41' in moveData[str(nb_temps+1)] : 	#bras gauche en bras droit
-			revData[str(nb_tps_max-nb_temps)]["51"] = moveData[str(nb_temps+1)]["41"]
-			revData[str(nb_tps_max-nb_temps)]["52"] = - moveData[str(nb_temps+1)]["42"]
-			revData[str(nb_tps_max-nb_temps)]["53"] = - moveData[str(nb_temps+1)]["43"]
-			revData[str(nb_tps_max-nb_temps)]["54"] = moveData[str(nb_temps+1)]["44"]
+			revData[str(nb_tps_max-nb_temps)]["41"] = moveData[str(nb_temps+1)]["41"]
+			revData[str(nb_tps_max-nb_temps)]["42"] = moveData[str(nb_temps+1)]["42"]
+			revData[str(nb_tps_max-nb_temps)]["43"] = moveData[str(nb_temps+1)]["43"]
+			revData[str(nb_tps_max-nb_temps)]["44"] = moveData[str(nb_temps+1)]["44"]
 		if '51' in moveData[str(nb_temps+1)] : 	#bras droit en bras gauche
-			revData[str(nb_tps_max-nb_temps)]["41"] = moveData[str(nb_temps+1)]["51"]
-			revData[str(nb_tps_max-nb_temps)]["42"] = - moveData[str(nb_temps+1)]["52"]
-			revData[str(nb_tps_max-nb_temps)]["43"] = - moveData[str(nb_temps+1)]["53"]
-			revData[str(nb_tps_max-nb_temps)]["44"] = moveData[str(nb_temps+1)]["54"]
+			revData[str(nb_tps_max-nb_temps)]["51"] = moveData[str(nb_temps+1)]["51"]
+			revData[str(nb_tps_max-nb_temps)]["52"] = moveData[str(nb_temps+1)]["52"]
+			revData[str(nb_tps_max-nb_temps)]["53"] = moveData[str(nb_temps+1)]["53"]
+			revData[str(nb_tps_max-nb_temps)]["54"] = moveData[str(nb_temps+1)]["54"]
 		if '11' in moveData[str(nb_temps+1)] : 	#jambe gauche en jambe droite
-			revData[str(nb_tps_max-nb_temps)]["21"] = - moveData[str(nb_temps+1)]["11"]
-			revData[str(nb_tps_max-nb_temps)]["22"] = - moveData[str(nb_temps+1)]["12"]
-			revData[str(nb_tps_max-nb_temps)]["23"] = moveData[str(nb_temps+1)]["13"]
-			revData[str(nb_tps_max-nb_temps)]["24"] = moveData[str(nb_temps+1)]["14"]
-			revData[str(nb_tps_max-nb_temps)]["25"] = moveData[str(nb_temps+1)]["15"]
+			revData[str(nb_tps_max-nb_temps)]["11"] = moveData[str(nb_temps+1)]["11"]
+			revData[str(nb_tps_max-nb_temps)]["12"] = moveData[str(nb_temps+1)]["12"]
+			revData[str(nb_tps_max-nb_temps)]["13"] = moveData[str(nb_temps+1)]["13"]
+			revData[str(nb_tps_max-nb_temps)]["14"] = moveData[str(nb_temps+1)]["14"]
+			revData[str(nb_tps_max-nb_temps)]["15"] = moveData[str(nb_temps+1)]["15"]
 		if '21' in moveData[str(nb_temps+1)] : 	#jambe droite en jambe gauche
-			revData[str(nb_tps_max-nb_temps)]["11"] = - moveData[str(nb_temps+1)]["21"]
-			revData[str(nb_tps_max-nb_temps)]["12"] = - moveData[str(nb_temps+1)]["22"]
-			revData[str(nb_tps_max-nb_temps)]["13"] = moveData[str(nb_temps+1)]["23"]
-			revData[str(nb_tps_max-nb_temps)]["14"] = moveData[str(nb_temps+1)]["24"]
-			revData[str(nb_tps_max-nb_temps)]["15"] = moveData[str(nb_temps+1)]["25"]
+			revData[str(nb_tps_max-nb_temps)]["21"] = moveData[str(nb_temps+1)]["21"]
+			revData[str(nb_tps_max-nb_temps)]["22"] = moveData[str(nb_temps+1)]["22"]
+			revData[str(nb_tps_max-nb_temps)]["23"] = moveData[str(nb_temps+1)]["23"]
+			revData[str(nb_tps_max-nb_temps)]["24"] = moveData[str(nb_temps+1)]["24"]
+			revData[str(nb_tps_max-nb_temps)]["25"] = moveData[str(nb_temps+1)]["25"]
 		if '31' in moveData[str(nb_temps+1)] : 	#colonne
 			revData[str(nb_tps_max-nb_temps)]["31"] = moveData[str(nb_temps+1)]["31"]
 			revData[str(nb_tps_max-nb_temps)]["32"] = moveData[str(nb_temps+1)]["32"]
-			revData[str(nb_tps_max-nb_temps)]["33"] = - moveData[str(nb_temps+1)]["33"]
+			revData[str(nb_tps_max-nb_temps)]["33"] = moveData[str(nb_temps+1)]["33"]
 			revData[str(nb_tps_max-nb_temps)]["34"] = moveData[str(nb_temps+1)]["34"]
 			revData[str(nb_tps_max-nb_temps)]["35"] = moveData[str(nb_temps+1)]["35"]
 		if '36' in moveData[str(nb_temps+1)] : 	#tete
-			revData[str(nb_tps_max-nb_temps)]["36"] = - moveData[str(nb_temps+1)]["36"]
+			revData[str(nb_tps_max-nb_temps)]["36"] = moveData[str(nb_temps+1)]["36"]
 			revData[str(nb_tps_max-nb_temps)]["37"] = moveData[str(nb_temps+1)]["37"]
 	revData["speed"] = {}
 	poppyParts = list()

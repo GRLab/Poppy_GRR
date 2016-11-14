@@ -44,11 +44,14 @@
         ]
     }, 
     "nb_seance": 7, 
-    "nb_mov": 47, 
+    "nb_mov": 50, 
     "list_mov": {
-        "flechijambes": [
-            "jambe_gauche", 
-            "jambe_droite"
+        "solRedresseCou": [
+            "colonne"
+        ], 
+        "up": [
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "montreheure": [
             "bras_gauche", 
@@ -142,9 +145,6 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "regard": [
-            "tete"
-        ], 
         "respi": [
             "colonne"
         ], 
@@ -157,8 +157,11 @@
         "salutAssisG": [
             "bras_gauche"
         ], 
-        "baisseteteRev": [
+        "regard": [
             "tete"
+        ], 
+        "plancheHaut": [
+            "colonne"
         ], 
         "montreheurebras": [
             "bras_gauche", 
@@ -184,6 +187,9 @@
             "bras_gauche", 
             "bras_droit"
         ], 
+        "solLeveTete": [
+            "tete"
+        ], 
         "leveBD": [
             "bras_droit"
         ], 
@@ -191,9 +197,9 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "up": [
-            "bras_gauche", 
-            "bras_droit"
+        "flechijambes": [
+            "jambe_gauche", 
+            "jambe_droite"
         ], 
         "bow": [
             "bras_gauche", 
@@ -206,6 +212,10 @@
         ], 
         "tetebrasseRev": [
             "tete"
+        ], 
+        "SolPlieGenoux": [
+            "jambe_gauche", 
+            "jambe_droite"
         ], 
         "montreheuretete": [
             "tete"
@@ -233,15 +243,13 @@
             "tete", 
             "bras_droit"
         ], 
-        "bowexo": [
-            "bras_gauche", 
+        "demoDebout": [
             "tete", 
+            "bras_gauche", 
             "bras_droit"
         ], 
-        "bow2": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit"
+        "levetete": [
+            "tete"
         ], 
         "impatient": [
             "bras_gauche", 
@@ -253,8 +261,10 @@
             "tete", 
             "colonne"
         ], 
-        "levetete": [
-            "tete"
+        "bow2": [
+            "bras_gauche", 
+            "tete", 
+            "bras_droit"
         ], 
         "demoDeboutJ": [
             "tete", 
@@ -263,9 +273,9 @@
             "jambe_gauche", 
             "bras_droit"
         ], 
-        "demoDebout": [
-            "tete", 
+        "bowexo": [
             "bras_gauche", 
+            "tete", 
             "bras_droit"
         ], 
         "salutG": [
