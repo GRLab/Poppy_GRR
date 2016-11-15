@@ -249,6 +249,7 @@ function SaveSsMovePart() {
 		poppyParts.push('tete');
 		alert('error, poppyParts set to tete');
 	}
+	player.currentTime = 0;
 	player.play();
 	player.pause();
 	$.ajax({
