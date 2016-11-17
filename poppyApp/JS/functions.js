@@ -7,7 +7,9 @@ var init = false;
 var poppyName = "192.168.0.125";//"poppygr.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
-var player = "";
+var player = "";				// son lors fin d'enregistrement mouvement
+var playerWarning = "";			// son lors surchauffe robot (warning avant mode securite)
+var playerAlert = "";			// son lors de l'activation mode securite du robot (surchauffe)
 
 function majPoppyName(){
 	poppyName = $('#poppyName').val();
@@ -216,9 +218,16 @@ function GoAssis(){
 	GoInitPos(pos="assis");
 }
 
-function stopPlayer(){
-	console.log("stop sound");
-	player.pause();
+function stopPlayer(playerName){
+	if (playerName=="player"){
+		player.pause();
+	}
+	if (playerName=="playerWarning"){
+		playerWarning.pause();
+	}
+	if (playerName=="playerAlert"){
+		playerAlert.pause();
+	}
 }
 
 function SaveSsMovePart() {
@@ -259,7 +268,7 @@ function SaveSsMovePart() {
 			201: function() {
 				console.log("move saved in Poppy." );
 				player.play();			//joue un son
-				setTimeout('stopPlayer()', 2200);
+				setTimeout('stopPlayer("player")', 2200);
 				//Si le mouvement a bien été sauvegardé, on l'enregistre dans la bdd
 				//Obligé de faire avec un post car on est dans du js !
 				$.post("./core/functions/moves.php?action=insert", {"moveName" : moveName, "moveType" : "mov", "parts" : poppyParts}).done(function(data){
@@ -1039,7 +1048,38 @@ function ScanResults() {
 				else{
 					$('#temperatureMax').css('color','rgb(255,255,223)');
 				}
-
+				var playWarning = false;
+				var playAlert = false;
+				for (var key in data['poppyPart_alert']){
+					if (data['poppyPart_alert'][key]=='warning'){
+						if ($('#compliantPart'+key).css('color') == 'rgb(255, 255, 255)'){
+							playWarning = true;
+						}
+						$('#compliantPart'+key).css('color','rgb(255,100,30)');
+						$('#compliantPart'+key).css('font-weight','bold');
+					}
+					else if (data['poppyPart_alert'][key]=='stop'){
+						if ($('#compliantPart'+key).css('color') != 'rgb(255, 30, 30)'){
+							playAlert = true;
+						}
+						$('#compliantPart'+key).css('color','rgb(255,30,30)');
+						$('#compliantPart'+key).css('font-weight','bold');
+					}
+					else if (data['poppyPart_alert'][key]=='ok'){
+						$('#compliantPart'+key).css('color','rgb(255,255,255)');
+						$('#compliantPart'+key).css('font-weight','');
+					}
+				}
+				if(playAlert==true){
+					playerAlert.currentTime=0;
+					playerAlert.play();
+					setTimeout('stopPlayer("playerAlert")', 2200);
+				}
+				else if(playWarning==true){
+					playerWarning.currentTime=0;
+					playerWarning.play();
+					setTimeout('stopPlayer("playerWarning")', 2200);
+				}
 				$('#poppyName').val(poppyName);
 				if (data['compliant']=="u'True'"){
 					partComp=true;
@@ -1361,6 +1401,12 @@ function WaitBeforeScan(){
 
 function initSound() {
 	player = document.querySelector('#audioPlayer');
+	playerWarning = document.querySelector('#audioPlayerWarning');
+	playerAlert = document.querySelector('#audioPlayerAlert');
+	playerWarning.play();
+	playerWarning.pause();
+	playerAlert.play();
+	playerAlert.pause();
 }
 
 function initPage() {

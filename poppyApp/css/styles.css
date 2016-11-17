@@ -53,7 +53,7 @@ ul li input[type="text"], ul li input[type="password"] {
 #firstLine{
 	height:30px;
 }
-#compliantPart{
+#compliantPartT, #compliantPartBD, #compliantPartBG, #compliantPartCol, #compliantPartJD, #compliantPartJG{
 	width:130px;
 }
 #semiMou{

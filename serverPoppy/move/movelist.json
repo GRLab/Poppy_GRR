@@ -44,14 +44,10 @@
         ]
     }, 
     "nb_seance": 7, 
-    "nb_mov": 50, 
+    "nb_mov": 53, 
     "list_mov": {
         "solRedresseCou": [
             "colonne"
-        ], 
-        "up": [
-            "bras_gauche", 
-            "bras_droit"
         ], 
         "montreheure": [
             "bras_gauche", 
@@ -75,14 +71,20 @@
         "regardRev": [
             "tete"
         ], 
+        "solRedresseTeteRev": [
+            "colonne", 
+            "tete"
+        ], 
         "baissebd": [
             "bras_droit"
         ], 
         "tetebrasse": [
             "tete"
         ], 
-        "giveG2": [
-            "bras_gauche"
+        "penchageavant": [
+            "jambe_gauche", 
+            "jambe_droite", 
+            "colonne"
         ], 
         "bowSym": [
             "bras_droit", 
@@ -114,10 +116,8 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "penchageavant": [
-            "jambe_gauche", 
-            "jambe_droite", 
-            "colonne"
+        "giveG2": [
+            "bras_gauche"
         ], 
         "demo": [
             "bras_gauche", 
@@ -144,6 +144,10 @@
         "danceAssisB": [
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "flechijambes": [
+            "jambe_gauche", 
+            "jambe_droite"
         ], 
         "respi": [
             "colonne"
@@ -187,6 +191,10 @@
             "bras_gauche", 
             "bras_droit"
         ], 
+        "solRedresseTete": [
+            "tete", 
+            "colonne"
+        ], 
         "solLeveTete": [
             "tete"
         ], 
@@ -197,9 +205,9 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "flechijambes": [
-            "jambe_gauche", 
-            "jambe_droite"
+        "up": [
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "bow": [
             "bras_gauche", 
@@ -209,6 +217,10 @@
         "mainsenlair": [
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "SolPlieGenouxRev": [
+            "jambe_droite", 
+            "jambe_gauche"
         ], 
         "tetebrasseRev": [
             "tete"
@@ -243,13 +255,15 @@
             "tete", 
             "bras_droit"
         ], 
-        "demoDebout": [
-            "tete", 
+        "bowexo": [
             "bras_gauche", 
+            "tete", 
             "bras_droit"
         ], 
-        "levetete": [
-            "tete"
+        "bow2": [
+            "bras_gauche", 
+            "tete", 
+            "bras_droit"
         ], 
         "impatient": [
             "bras_gauche", 
@@ -261,10 +275,8 @@
             "tete", 
             "colonne"
         ], 
-        "bow2": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit"
+        "levetete": [
+            "tete"
         ], 
         "demoDeboutJ": [
             "tete", 
@@ -273,9 +285,9 @@
             "jambe_gauche", 
             "bras_droit"
         ], 
-        "bowexo": [
-            "bras_gauche", 
+        "demoDebout": [
             "tete", 
+            "bras_gauche", 
             "bras_droit"
         ], 
         "salutG": [

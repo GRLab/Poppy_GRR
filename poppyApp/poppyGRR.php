@@ -33,32 +33,32 @@ include "includes/header.php";
 				<td id="semiMou">semi-mou</td>
 			</tr>
 			<tr id="compliantRow">
-				<td id="compliantPart">Tete</td>
+				<td id="compliantPartT">Tete</td>
 				<td><input id='compliantT' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
 				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="tete" ></td>
 			</tr>
 			<tr id="compliantRow">
-				<td id="compliantPart">BrasG</td> 
+				<td id="compliantPartBG">BrasG</td> 
 				<td><input id='compliantBG' data-toggle="toggle" data-onstyle="warning" type="checkbox" data-size="mini"> </td>
 				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="bras_gauche"></td>
 			</tr>
 			<tr id="compliantRow">
-				<td id="compliantPart">BrasD</td>
+				<td id="compliantPartBD">BrasD</td>
 				<td><input id='compliantBD' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
 				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="bras_droit" ></td>
 			</tr>
 			<tr id="compliantRow">
-				<td id="compliantPart">Colonne </td>
+				<td id="compliantPartCol">Colonne </td>
 				<td><input id='compliantCol' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
 				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="colonne"></td>
 			</tr>
 			<tr id="compliantRow">
-				<td id="compliantPart">JambeG </td>
+				<td id="compliantPartJG">JambeG </td>
 				<td><input id='compliantJG' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
 				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="jambe_gauche"></td>
 			</tr>
 			<tr id="compliantRow">
-				<td id="compliantPart">JambeD </td>
+				<td id="compliantPartJD">JambeD </td>
 				<td><input id='compliantJD' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
 				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="jambe_droite"></td>
 			</tr>
@@ -375,6 +375,12 @@ include "includes/header.php";
 	<script src="JS/functions.js"></script>
 	<audio id="audioPlayer">
 		<source src="includes/sons/done.ogg">
+	</audio>
+	<audio id="audioPlayerWarning">
+		<source src="includes/sons/warning.ogg">
+	</audio>
+	<audio id="audioPlayerAlert">
+		<source src="includes/sons/alert.ogg">
 	</audio>
 </body>
 

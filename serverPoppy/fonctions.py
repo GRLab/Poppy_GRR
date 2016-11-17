@@ -2,6 +2,8 @@ from poppy_humanoid import PoppyHumanoid
 import time
 import os
 import pypot.primitive
+from pypot.dynamixel.io.abstract_io import AbstractDxlIO
+from pypot.dynamixel.__init__ import get_available_ports
 import json
 import numpy
 import socket
@@ -18,6 +20,10 @@ position=range(nbmoteurs)			#variable present position
 voltage=range(nbmoteurs)			#variable inumpyut voltage
 temperature=range(nbmoteurs)			#variable temperature
 couple=range(nbmoteurs)				#variable pourcentage of couple
+poppyPart_alert = {}			# dict contenant les parties du robot en surchauffe
+SEUIL_TEMP = 55					# seuil de temperature pour alerter
+SEUIL_TEMP_ARRET = 59			# seuil de temperature pour arreter le moteur
+SecurityStop = False
 #Ivalue=0					#variable intensite
 TIME_LIMIT = 10
 SEUIL_ANGLE = 5						# angle min de detection enregistrement et pour bouger
@@ -643,21 +649,74 @@ class semiCompliantPrimitive(pypot.primitive.Primitive):
 				self.robot.goto_position({'head_y':self.robot.head_y.present_position}, t, wait=False)
 			time.sleep(t/2.0)
 
+def setSecurityMode():
+	global SecurityStop
+	SecurityStop = True
+
 #mesure de l'etat des moteurs
 def scanMotors(idmoteur, t0):
 	global position
-	global voltage
+	global violtage
 	global temperature
 	global couple
+	global poppyPart_alert
+	global SEUIL_TEMP
+	global SEUIL_TEMP_ARRET
+	global SecurityStop
+	stop = False
 	temps = time.time()-t0
 	#mesures
 	imoteur=0
+	poppyPart_alert['JG'] = 'ok'
+	poppyPart_alert['JD'] = 'ok'
+	poppyPart_alert['T'] = 'ok'
+	poppyPart_alert['Col'] = 'ok'
+	poppyPart_alert['BG'] = 'ok'
+	poppyPart_alert['BD'] = 'ok'
+
 	for m in Poppyboid.motors:
 		position[imoteur] = m.present_position
 		voltage[imoteur] = m.present_voltage
 		temperature[imoteur] = m.present_temperature
 		couple[imoteur] = m.present_load
+		if round(temperature[imoteur], 1)>=SEUIL_TEMP:
+			if idmoteur[imoteur]>=11 and idmoteur[imoteur]<=19:
+				poppyPart = "JG"
+			if idmoteur[imoteur]>=21 and idmoteur[imoteur]<=29:
+				poppyPart = "JD"
+			if idmoteur[imoteur]>=31 and idmoteur[imoteur]<=35:
+				poppyPart = "Col"
+			if idmoteur[imoteur]>=36 and idmoteur[imoteur]<=37:
+				poppyPart = "T"
+			if idmoteur[imoteur]>=41 and idmoteur[imoteur]<=49:
+				poppyPart = "BG"
+			if idmoteur[imoteur]>=51 and idmoteur[imoteur]<=59:
+				poppyPart = "BD"
+			if poppyPart not in poppyPart_alert:
+				poppyPart_alert[poppyPart]=""
+			if poppyPart_alert[poppyPart]!="stop" and round(temperature[imoteur],1)<SEUIL_TEMP_ARRET:
+				poppyPart_alert[poppyPart]="warning"
+			elif round(temperature[imoteur],1)>=SEUIL_TEMP_ARRET:
+				poppyPart_alert[poppyPart]="stop"
+				stop = True
 		imoteur=imoteur+1
+	if stop == True and SecurityStop == False:
+		if not poppyCompliant():
+			print "set security mode"
+			setSecurityMode()
+			time.sleep(10)
+			print "security mode : stop exo"
+			StopExo()
+			time.sleep(5)
+			print "security mode : semi compliant"
+			semiCompliant()
+			time.sleep(20)
+			print "security mode : compliant"
+			Compliant()
+			time.sleep(5)
+			print "security mode OFF"
+			SecurityStop = False
+
 
 #primitive scan moteurs regulier
 class scanMotorsLoop(pypot.primitive.Primitive):
@@ -679,6 +738,7 @@ def scanResults():
 	global voltage
 	global temperature
 	global couple
+	global poppyPart_alert
 	results = {}
 	results["position"]={}
 	results["voltage"]={}
@@ -693,15 +753,18 @@ def scanResults():
 		results["couple"][idmoteur[imoteur]] = couple[imoteur]
 		if round(temperature[imoteur], 1)>results["temperature"]["max"]:
 			results["temperature"]["max"]=round(temperature[imoteur], 1)
+	if "poppyPart_alert" in results:
+		del results["poppyPart_alert"]
+	results["poppyPart_alert"]=poppyPart_alert
 
-		results[u'compliant'] = poppyCompliant()
-		results[u'compliant'] = "u'"+str(results[u'compliant'] )+"'"
-		results[u'compliantBG'] = "u'"+str(Poppyboid.l_arm_z.compliant)+"'"
-		results[u'compliantBD'] = "u'"+str(Poppyboid.r_arm_z.compliant)+"'"
-		results[u'compliantT'] = "u'"+str(Poppyboid.head_z.compliant)+"'"
-		results[u'compliantJG'] = "u'"+str(Poppyboid.l_hip_z.compliant)+"'"
-		results[u'compliantJD'] = "u'"+str(Poppyboid.r_hip_z.compliant)+"'"
-		results[u'compliantCol'] = "u'"+str(Poppyboid.abs_z.compliant)+"'"
+	results[u'compliant'] = poppyCompliant()
+	results[u'compliant'] = "u'"+str(results[u'compliant'] )+"'"
+	results[u'compliantBG'] = "u'"+str(Poppyboid.l_arm_z.compliant)+"'"
+	results[u'compliantBD'] = "u'"+str(Poppyboid.r_arm_z.compliant)+"'"
+	results[u'compliantT'] = "u'"+str(Poppyboid.head_z.compliant)+"'"
+	results[u'compliantJG'] = "u'"+str(Poppyboid.l_hip_z.compliant)+"'"
+	results[u'compliantJD'] = "u'"+str(Poppyboid.r_hip_z.compliant)+"'"
+	results[u'compliantCol'] = "u'"+str(Poppyboid.abs_z.compliant)+"'"
 	return results
 
 #FONCTIONS
@@ -1270,6 +1333,9 @@ def goFirstPos(position, speed, init = False):
 		time.sleep(temps_attente)
 
 def GoMove(moveName, speed=5, rev=False, save=False, poppyParts=''):
+	global SecurityStop
+	if SecurityStop == True:
+		return "Security mode"
 	global EXO_TEMPS
 	global EXO_SLEEP
 	global EXO_ENABLE
@@ -1414,6 +1480,9 @@ def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, e
 		MOVING_ENABLE = False
 
 def GoExo(exoName):
+	global SecurityStop
+	if SecurityStop == True:
+		return "Security mode"
 	#time.sleep(0.5)	#le temps que la seance precedente se finnisse si existante
 	global PLAYING_EXO
 	PLAYING_EXO = False
