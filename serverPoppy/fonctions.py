@@ -21,8 +21,8 @@ voltage=range(nbmoteurs)			#variable inumpyut voltage
 temperature=range(nbmoteurs)			#variable temperature
 couple=range(nbmoteurs)				#variable pourcentage of couple
 poppyPart_alert = {}			# dict contenant les parties du robot en surchauffe
-SEUIL_TEMP = 55					# seuil de temperature pour alerter
-SEUIL_TEMP_ARRET = 59			# seuil de temperature pour arreter le moteur
+SEUIL_TEMP = 53					# seuil de temperature pour alerter
+SEUIL_TEMP_ARRET = 56			# seuil de temperature pour arreter le moteur
 SecurityStop = False
 #Ivalue=0					#variable intensite
 TIME_LIMIT = 10
@@ -688,6 +688,7 @@ def scanMotors(idmoteur, t0):
 				poppyPart = "Col"
 			if idmoteur[imoteur]>=36 and idmoteur[imoteur]<=37:
 				poppyPart = "T"
+				Compliant("tete")	#desactive la tete car chauffe vite
 			if idmoteur[imoteur]>=41 and idmoteur[imoteur]<=49:
 				poppyPart = "BG"
 			if idmoteur[imoteur]>=51 and idmoteur[imoteur]<=59:
@@ -1929,10 +1930,21 @@ def loadData(moveName, BDD):
 	return jsondata
 
 def poppyCompliant():
-	if len(Poppyboid.compliant) == 25:
-		return True
-	else:
+#	if len(Poppyboid.compliant) == 25:
+#		return True
+	if Poppyboid.l_arm_z.compliant == False:
 		return False
+	if Poppyboid.r_arm_z.compliant == False:
+		return False
+	if Poppyboid.head_z.compliant == False:
+		return False
+	if Poppyboid.l_hip_z.compliant == False:
+		return False
+	if Poppyboid.r_hip_z.compliant == False:
+		return False
+	if Poppyboid.abs_z.compliant == False:
+		return False
+	return True
 
 def giveIP():
 	IPaddress = ([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
