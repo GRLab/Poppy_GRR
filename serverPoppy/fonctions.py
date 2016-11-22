@@ -488,7 +488,7 @@ class goMovePrimitive(pypot.primitive.Primitive):
 		if self.rev == False:
 			for temps in range(self.startTime, self.endTime):
 				while EXO_SLEEP == True and MOVING_ENABLE == True:
-					time.sleep(0.2)
+					time.sleep(0.1)
 				if MOVING_ENABLE == False:
 					PLAYING_MOVE = False
 					print "---stop moving primitive 1---"
@@ -508,7 +508,7 @@ class goMovePrimitive(pypot.primitive.Primitive):
 			return	#TODO : lecture a l'envers non geree !!!
 			for temps in range(moveFile["nb_temps"]):
 				while EXO_SLEEP == True and MOVING_ENABLE == True:
-					time.sleep(0.5)
+					time.sleep(0.2)
 				if MOVING_ENABLE == False:
 					PLAYING_MOVE = False
 					print "---stop moving primitive 1---"
@@ -552,7 +552,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 
 		for i in range(moveConfig["nb_fichiers"]):		#verifie les parametres du fichier config
 			while EXO_SLEEP == True and EXO_ENABLE == True:				#tant que l'exercice est en pause
-				time.sleep(0.5)
+				time.sleep(0.05)
 			if EXO_ENABLE == False:					#si ordre d'arreter la primitive
 				break
 			namefile = moveConfig["fichier"+str(i+1)]["namefile"]
@@ -596,7 +596,8 @@ class goExoPrimitive(pypot.primitive.Primitive):
 					PLAYING_EXO = False
 					return
 				PAUSE = True
-				time.sleep(moveConfig["fichier"+str(i+1)]["pause"])
+				if moveConfig["fichier"+str(i+1)]["pause"]!=0:
+					time.sleep(moveConfig["fichier"+str(i+1)]["pause"])
 				PAUSE = False
 				EXO_TEMPS += moveConfig["fichier"+str(i+1)]["pause"]
 				PLAYING_EXO = False
@@ -1014,6 +1015,8 @@ def symetry(moveName):
 	dir = directory(moveName)
 	if dir == '':
 		return 'move file does not exist'
+	if dir != 'mov':
+		return 'not a move'
 	moveFile = './move/'+dir+'/'+moveName+'.json'
 	symName = moveName+'Sym'
 	symFile = './move/'+dir+'/'+symName+'.json'
@@ -1050,10 +1053,10 @@ def symetry(moveName):
 			symData[str(nb_temps+1)]["15"] = moveData[str(nb_temps+1)]["25"]
 		if '31' in moveData[str(nb_temps+1)] : 	#colonne
 			symData[str(nb_temps+1)]["31"] = moveData[str(nb_temps+1)]["31"]
-			symData[str(nb_temps+1)]["32"] = moveData[str(nb_temps+1)]["32"]
+			symData[str(nb_temps+1)]["32"] = - moveData[str(nb_temps+1)]["32"]
 			symData[str(nb_temps+1)]["33"] = - moveData[str(nb_temps+1)]["33"]
 			symData[str(nb_temps+1)]["34"] = moveData[str(nb_temps+1)]["34"]
-			symData[str(nb_temps+1)]["35"] = moveData[str(nb_temps+1)]["35"]
+			symData[str(nb_temps+1)]["35"] = - moveData[str(nb_temps+1)]["35"]
 		if '36' in moveData[str(nb_temps+1)] : 	#tete
 			symData[str(nb_temps+1)]["36"] = - moveData[str(nb_temps+1)]["36"]
 			symData[str(nb_temps+1)]["37"] = moveData[str(nb_temps+1)]["37"]
@@ -1411,10 +1414,10 @@ def GoMove(moveName, speed=5, rev=False, save=False, poppyParts=''):
 			while PLAYING_MOVE:
 				time.sleep(0.1)
 			goMovePrimitive(Poppyboid, rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime).start()
-			time.sleep(0.2)
+			time.sleep(0.05)
 		else:
 			goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime)
-			time.sleep(0.2)
+			time.sleep(0.05)
 	return 'Move has started'
 
 def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime):
@@ -1434,7 +1437,7 @@ def goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, e
 	if rev == False:
 		for temps in range(startTime, endTime):
 			while EXO_SLEEP == True and MOVING_ENABLE == True:
-				time.sleep(0.2)
+				time.sleep(0.1)
 			if MOVING_ENABLE == False:
 				PLAYING_MOVE = False
 				print "---stop move 1---"

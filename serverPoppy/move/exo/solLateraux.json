@@ -1,0 +1,75 @@
+{
+    "nb_fichiers": 14, 
+    "fichier8": {
+        "pause": 0, 
+        "vitesse": 9, 
+        "namefile": "solLateralG"
+    }, 
+    "fichier9": {
+        "pause": 1, 
+        "vitesse": 9, 
+        "namefile": "solLateralGRev"
+    }, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "solRedresseTete"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "solOrienteBciel"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "solPlieGenoux"
+    }, 
+    "fichier6": {
+        "pause": 0, 
+        "vitesse": 9, 
+        "namefile": "solLateralGSym"
+    }, 
+    "fichier7": {
+        "pause": 1, 
+        "vitesse": 9, 
+        "namefile": "solLateralGSymRev"
+    }, 
+    "fichier4": {
+        "pause": 0, 
+        "vitesse": 9, 
+        "namefile": "solLateralG"
+    }, 
+    "fichier5": {
+        "pause": 1, 
+        "vitesse": 9, 
+        "namefile": "solLateralGRev"
+    }, 
+    "fichier10": {
+        "pause": 0, 
+        "vitesse": 9, 
+        "namefile": "solLateralGSym"
+    }, 
+    "fichier11": {
+        "pause": 1, 
+        "vitesse": 9, 
+        "namefile": "solLateralGSymRev"
+    }, 
+    "fichier12": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "solOrienteBcielRev"
+    }, 
+    "fichier13": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "solRedresseTeteRev"
+    }, 
+    "fichier14": {
+        "pause": 5, 
+        "vitesse": 7, 
+        "namefile": "solPlieGenouxRev"
+    }, 
+    "type": "exo", 
+    "nb_temps": 210
+}

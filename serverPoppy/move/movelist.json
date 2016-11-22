@@ -44,7 +44,7 @@
         ]
     }, 
     "nb_seance": 7, 
-    "nb_mov": 53, 
+    "nb_mov": 59, 
     "list_mov": {
         "solRedresseCou": [
             "colonne"
@@ -71,9 +71,9 @@
         "regardRev": [
             "tete"
         ], 
-        "solRedresseTeteRev": [
-            "colonne", 
-            "tete"
+        "solPlieGenoux": [
+            "jambe_gauche", 
+            "jambe_droite"
         ], 
         "baissebd": [
             "bras_droit"
@@ -81,10 +81,16 @@
         "tetebrasse": [
             "tete"
         ], 
-        "penchageavant": [
-            "jambe_gauche", 
-            "jambe_droite", 
+        "solRedresseTeteRev": [
+            "colonne", 
+            "tete"
+        ], 
+        "solLateralG": [
+            "bras_gauche", 
             "colonne"
+        ], 
+        "giveG2": [
+            "bras_gauche"
         ], 
         "bowSym": [
             "bras_droit", 
@@ -103,6 +109,10 @@
         "pointedevantbg": [
             "bras_gauche"
         ], 
+        "solLateralGSymRev": [
+            "bras_droit", 
+            "colonne"
+        ], 
         "baissetete": [
             "tete"
         ], 
@@ -116,8 +126,10 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "giveG2": [
-            "bras_gauche"
+        "penchageavant": [
+            "jambe_gauche", 
+            "jambe_droite", 
+            "colonne"
         ], 
         "demo": [
             "bras_gauche", 
@@ -149,7 +161,15 @@
             "jambe_gauche", 
             "jambe_droite"
         ], 
+        "solOrienteBcielRev": [
+            "bras_droit", 
+            "bras_gauche"
+        ], 
         "respi": [
+            "colonne"
+        ], 
+        "solLateralGRev": [
+            "bras_gauche", 
             "colonne"
         ], 
         "giveBackG": [
@@ -177,29 +197,37 @@
             "tete", 
             "bras_droit"
         ], 
+        "solPlieGenouxRev": [
+            "jambe_droite", 
+            "jambe_gauche"
+        ], 
         "desesperecol": [
             "colonne"
         ], 
         "leveJD": [
             "jambe_droite"
         ], 
-        "regardCiel": [
-            "tete"
+        "solOrienteBciel": [
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "salut": [
             "tete", 
             "bras_gauche", 
             "bras_droit"
         ], 
+        "solLeveTete": [
+            "tete"
+        ], 
         "solRedresseTete": [
             "tete", 
             "colonne"
         ], 
-        "solLeveTete": [
-            "tete"
-        ], 
         "leveBD": [
             "bras_droit"
+        ], 
+        "regardCiel": [
+            "tete"
         ], 
         "desesperebras": [
             "bras_gauche", 
@@ -218,16 +246,8 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "SolPlieGenouxRev": [
-            "jambe_droite", 
-            "jambe_gauche"
-        ], 
         "tetebrasseRev": [
             "tete"
-        ], 
-        "SolPlieGenoux": [
-            "jambe_gauche", 
-            "jambe_droite"
         ], 
         "montreheuretete": [
             "tete"
@@ -238,9 +258,13 @@
         "papbras": [
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "solLateralGSym": [
+            "bras_droit", 
+            "colonne"
         ]
     }, 
-    "nb_exo": 13, 
+    "nb_exo": 14, 
     "list_exo": {
         "giveCard": [
             "bras_gauche"
@@ -277,6 +301,14 @@
         ], 
         "levetete": [
             "tete"
+        ], 
+        "solLateraux": [
+            "jambe_droite", 
+            "jambe_gauche", 
+            "tete", 
+            "colonne", 
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "demoDeboutJ": [
             "tete", 
