@@ -57,7 +57,8 @@ function Compliant() {
 				type:'POST',
 				statusCode: {
 					200: function() {
-						console.log("Poppy is not compliant" );						
+						console.log("Poppy is not compliant" );
+						initSound();						
 					},
 					0:function(data){		//error, not connected
 						console.log('error : Poppy is not connected');
@@ -124,6 +125,7 @@ function PartNonCompliant(poppyParts="") {
 						console.log("Poppy is not compliant" );
 						$('input:checkbox[name=poppyParts]').removeAttr('checked');
 						$('#modal_part_non_compliant').modal('hide');
+						initSound();
 					},
 					0:function(data){		//error, not connected
 						console.log('error : Poppy is not connected');
@@ -145,6 +147,7 @@ function semiCompliant(semiPoppyParts="") {
 		statusCode: {
 			200: function() {
 				console.log("Poppy is semi-compliant" );
+				initSound();
 			},
 			0:function(data){		//error, not connected
 				console.log('error : Poppy is not connected');
@@ -176,6 +179,7 @@ function SaveInitPos() {
 }
 
 function GoInitPos(pos = "undefined") {
+	initSound();
 	$('#exoConfig').hide();
 	if(pos == "undefined"){
 		var posName = prompt('Please enter the name of the initial position','debout');
@@ -311,7 +315,10 @@ function Symetry(moveName="") {
 				$.post("./core/functions/moves.php?action=insertMov" , {"listeFiles" : listeFiles, "moveType" : data, "moveName" : moveName+"Sym"}).done(function(data){
 					console.log(data);
 				});
-				insertJsonBDD(moveName);
+				insertJsonBDD(moveName+"Sym");
+				$.post("./core/functions/moves.php?action=symetry" , {"moveName" : moveName+"Sym"}).done(function(data){
+					console.log(data);
+				});
 				ReceiveMovelist();
 			},
 			200:function(data){
@@ -344,7 +351,7 @@ function Reverse(moveName="") {
 				$.post("./core/functions/moves.php?action=insertMov" , {"listeFiles" : listeFiles, "moveType" : data, "moveName" : moveName+"Rev"}).done(function(data){
 					console.log(data);
 				});
-				insertJsonBDD(moveName);
+				insertJsonBDD(moveName+"Rev");
 				ReceiveMovelist();
 			},
 			200:function(data){
@@ -674,6 +681,7 @@ function clickFleche(){
 
 
 function Go(exoName) {
+	initSound();
 	var exo= document.getElementById('Go'+exoName).className;
 	if(exo=="play"){
 		StopExo();
@@ -1399,10 +1407,13 @@ function WaitBeforeScan(){
 	setTimeout("ScanResults()", 5000);
 }
 
-function initSound() {
+function loadSound() {
 	player = document.querySelector('#audioPlayer');
 	playerWarning = document.querySelector('#audioPlayerWarning');
 	playerAlert = document.querySelector('#audioPlayerAlert');
+}
+
+function initSound(){
 	playerWarning.play();
 	playerWarning.pause();
 	playerAlert.play();
@@ -1410,7 +1421,7 @@ function initSound() {
 }
 
 function initPage() {
-	initSound();
+	loadSound();
 	$('#poppyName').val(poppyName);
 	StopExo();
 	ReceiveMovelist();

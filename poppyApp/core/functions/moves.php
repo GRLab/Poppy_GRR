@@ -13,6 +13,9 @@ if(isset($_GET["action"])){
 		//Et après on peut enregistrer
 		insertMoveList($_POST["moveName"], $_POST["moveType"], $aParts);
 		echo  json_encode($_POST["moveName"]." added to the database");
+	} else if ($_GET["action"] == "symetry"){
+		$changed = doSymetry($_POST["moveName"]);
+		echo  json_encode(" symetry ok for ".$_POST["moveName"]." : ".$changed);
 	} else if($_GET["action"] == "deleteMov"){
 		deleteMove($_POST["moveName"]);
 		echo  json_encode("removed");
@@ -35,6 +38,53 @@ if(isset($_GET["action"])){
 	}
 }
 
+function doSymetry($sNameMov){
+	// realise la symetrie des poppyParts
+	$poppyParts = getPartsFichiers(array($sNameMov));
+	if(in_array("bras_gauche", $poppyParts)==true && in_array("bras_droit", $poppyParts)==false){
+		$sSQL = "UPDATE `movelist` 
+				 SET `bras_gauche`=0, `bras_droit`=1
+				 WHERE `moveName` = :moveName";
+				 
+		$requete = Connexion::getInstance()->prepare($sSQL);
+		$requete->execute(
+							array('moveName' => $sNameMov)
+						 );
+		$changed = "changed";
+	} else if (in_array("bras_gauche", $poppyParts)==false && in_array("bras_droit", $poppyParts)==true){
+		$sSQL = "UPDATE `movelist` 
+				 SET `bras_gauche`=1, `bras_droit`=0
+				 WHERE `moveName` = :moveName";
+				 
+		$requete = Connexion::getInstance()->prepare($sSQL);
+		$requete->execute(
+							array('moveName' => $sNameMov)
+						 );
+		$changed = "changed";
+	}
+	if(in_array("jambe_gauche", $poppyParts)==true && in_array("jambe_droite", $poppyParts)==false){
+		$sSQL = "UPDATE `movelist` 
+				 SET `jambe_gauche`=0, `jambe_droite`=1
+				 WHERE `moveName` = :moveName";
+				 
+		$requete = Connexion::getInstance()->prepare($sSQL);
+		$requete->execute(
+							array('moveName' => $sNameMov)
+						 );
+		$changed = "changed";
+	} else if (in_array("jambe_gauche", $poppyParts)==false && in_array("jambe_droite", $poppyParts)==true){
+		$sSQL = "UPDATE `movelist` 
+				 SET `jambe_gauche`=1, `jambe_droite`=0
+				 WHERE `moveName` = :moveName";
+				 
+		$requete = Connexion::getInstance()->prepare($sSQL);
+		$requete->execute(
+							array('moveName' => $sNameMov)
+						 );
+		$changed = "changed";
+	}  
+	return $poppyParts;
+}
 
 function insertMoveList($sNameMov, $sMoveType, $aParts){
 	
