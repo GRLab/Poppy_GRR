@@ -44,7 +44,7 @@
         ]
     }, 
     "nb_seance": 7, 
-    "nb_mov": 59, 
+    "nb_mov": 67, 
     "list_mov": {
         "solRedresseCou": [
             "colonne"
@@ -100,6 +100,14 @@
         "regardCielRev": [
             "tete"
         ], 
+        "mainsenlair": [
+            "bras_gauche", 
+            "bras_droit"
+        ], 
+        "plancheMiseEnPos2": [
+            "bras_gauche", 
+            "bras_droit"
+        ], 
         "demoG": [
             "bras_gauche"
         ], 
@@ -108,6 +116,11 @@
         ], 
         "pointedevantbg": [
             "bras_gauche"
+        ], 
+        "etirementLateralGRev": [
+            "bras_droit", 
+            "bras_gauche", 
+            "colonne"
         ], 
         "solLateralGSymRev": [
             "bras_droit", 
@@ -126,10 +139,10 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "penchageavant": [
-            "jambe_gauche", 
-            "jambe_droite", 
-            "colonne"
+        "etirementLateralG": [
+            "bras_gauche", 
+            "colonne", 
+            "bras_droit"
         ], 
         "demo": [
             "bras_gauche", 
@@ -184,9 +197,6 @@
         "regard": [
             "tete"
         ], 
-        "plancheHaut": [
-            "colonne"
-        ], 
         "montreheurebras": [
             "bras_gauche", 
             "bras_droit"
@@ -201,6 +211,9 @@
             "jambe_droite", 
             "jambe_gauche"
         ], 
+        "etirementGBG": [
+            "bras_gauche"
+        ], 
         "desesperecol": [
             "colonne"
         ], 
@@ -211,10 +224,23 @@
             "bras_gauche", 
             "bras_droit"
         ], 
+        "plancheMiseEnPos2Rev": [
+            "bras_droit", 
+            "bras_gauche"
+        ], 
         "salut": [
             "tete", 
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "penchageavant": [
+            "jambe_gauche", 
+            "jambe_droite", 
+            "colonne"
+        ], 
+        "etirementGCol": [
+            "bras_droit", 
+            "colonne"
         ], 
         "solLeveTete": [
             "tete"
@@ -223,11 +249,24 @@
             "tete", 
             "colonne"
         ], 
+        "plancheMiseEnPos": [
+            "bras_gauche", 
+            "bras_droit", 
+            "jambe_gauche", 
+            "jambe_droite", 
+            "tete", 
+            "colonne"
+        ], 
         "leveBD": [
             "bras_droit"
         ], 
         "regardCiel": [
             "tete"
+        ], 
+        "etirementLateralGRevSym": [
+            "bras_droit", 
+            "bras_gauche", 
+            "colonne"
         ], 
         "desesperebras": [
             "bras_gauche", 
@@ -242,9 +281,10 @@
             "bras_droit", 
             "tete"
         ], 
-        "mainsenlair": [
+        "etirementLateralGSym": [
+            "bras_droit", 
             "bras_gauche", 
-            "bras_droit"
+            "colonne"
         ], 
         "tetebrasseRev": [
             "tete"
@@ -264,7 +304,7 @@
             "colonne"
         ]
     }, 
-    "nb_exo": 14, 
+    "nb_exo": 15, 
     "list_exo": {
         "giveCard": [
             "bras_gauche"
@@ -277,6 +317,11 @@
         "salut2": [
             "bras_gauche", 
             "tete", 
+            "bras_droit"
+        ], 
+        "etirementLateraux": [
+            "bras_gauche", 
+            "colonne", 
             "bras_droit"
         ], 
         "bowexo": [
