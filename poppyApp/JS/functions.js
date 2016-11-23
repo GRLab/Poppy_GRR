@@ -253,6 +253,12 @@ function SaveSsMovePart() {
 		alert('Veuillez entrer un nom pour ce mouvement');
 		return;
 	}
+	moveName = moveName.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
+	moveName = moveName.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
+	moveName = moveName.replace(/\354|\355|\356|\357/g,"i");
+	moveName = moveName.replace(/\371|\372|\373|\374/g,"u");
+	moveName = moveName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
+	moveName = moveName.replace(/\347/g,"c");	// ç
 	if (playedMove == null ) {
 		alert('annulé');
 		return;
@@ -373,6 +379,12 @@ function CreateMove(previsu = "False") {
 		alert('enter a name');
 		return
 	}
+	moveName = moveName.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
+	moveName = moveName.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
+	moveName = moveName.replace(/\354|\355|\356|\357/g,"i");
+	moveName = moveName.replace(/\371|\372|\373|\374/g,"u");
+	moveName = moveName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
+	moveName = moveName.replace(/\347/g,"c");	// ç
 	var type = 'mov';
 	moveConfig = '{"type":"'+type+'"';
 	var nb_fichiers=0;
@@ -448,7 +460,12 @@ function CreateExo() {
 		alert('enter a name');
 		return;
 	}
-
+	exoName = exoName.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
+	exoName = exoName.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
+	exoName = exoName.replace(/\354|\355|\356|\357/g,"i");
+	exoName = exoName.replace(/\371|\372|\373|\374/g,"u");
+	exoName = exoName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
+	exoName = exoName.replace(/\347/g,"c");	// ç
 	var type = $('#type_exo').val();
 	if (!(type == 'exo' || type == 'seance')){
 		alert('error, choose type : exo or seance');
