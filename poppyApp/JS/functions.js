@@ -1418,7 +1418,6 @@ function AfficheMovelist(playerOnly = "false"){
 				poppyParts += "JambeD ";
 			}
 			texte += "<td id='parts"+moveName+"'>"+poppyParts+"</td>";
-	//TODO : rajouter un bouton "renommer"		
 			texte += "<td><input type='button' title='rename' onclick='Rename(&quot;"+moveName+"&quot;)' id='rename' /> <input type='button' title='symetry' onclick='Symetry(&quot;"+moveName+"&quot;)' id='symetry' /> <input type='button' title='Reverse' onclick='Reverse(&quot;"+moveName+"&quot;)' id='reverse'/> <input type='button' title='delete' onclick='RemoveMove(&quot;"+moveName+"&quot;)' id='delete'/></td>";
 			texte += "<td><input type='button' title='play' onclick='Go(&quot;"+moveName+"&quot;)' id='Go"+moveName+"' class='play' style='color:#00ba00'/> <input type='button' title='stop' onclick='StopExo(&quot;"+moveName+"&quot;)' id='stop"+moveName+"' class='stop' style='color:#ea0000'/> </td>";
 			texte += "</tr>";
@@ -1448,7 +1447,8 @@ function AfficheMovelist(playerOnly = "false"){
 					sortAscending:  ": activer pour trier la colonne par ordre croissant",
 					sortDescending: ": activer pour trier la colonne par ordre décroissant"
 				}
-			}
+			},
+			stateSave: true 	//save state of the table to load at the same state
 		} );
 	});
 }
