@@ -1011,6 +1011,22 @@ def majMoveList(moveDir, moveName, poppyParts):
 	with open('./move/movelist.json','w') as f:
 		json.dump(jsondata, f, indent=4)
 
+def rename(previousName, newName):
+	moveDir = directory(previousName)
+	if moveDir == '':
+		return 'move file does not exist'
+	previousFile = './move/'+moveDir+'/'+previousName+'.json'
+	newFile = './move/'+moveDir+'/'+newName+'.json'
+	os.rename(previousFile, newFile)	#MAJ fichier json
+
+	with open('./move/movelist.json','r') as f:
+		movelist = json.load(f)
+	movelist["list_"+moveDir][newName]=movelist["list_"+moveDir][previousName]
+	del movelist["list_"+moveDir][previousName]
+	with open('./move/movelist.json','w') as f:
+		json.dump(movelist, f, indent=4)
+	return "renamed"
+
 def symetry(moveName):
 	dir = directory(moveName)
 	if dir == '':

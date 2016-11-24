@@ -138,6 +138,27 @@ include "includes/header.php";
 	</script>
 
 	<!-- Modal -->
+	<div class="modal fade" id="modal_rename" role="dialog">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Renommer <txt id="ancienNom"></txt></h4>
+			</div>
+			<div class="modal-body">
+				<fieldset class="form-group">
+					<label for="newName">Nouveau nom</label> <input type="text" class="form-control" id="newName" placeholder="nouveau nom" />
+				</fieldset>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			  <button type="button" class="btn btn-info" onclick="RenameSuite()">Sauvegarder</button>
+			</div> 
+		  </div>
+		</div>
+	</div>
+
 	<div class="modal fade" id="modal_create_ss_mvt_part" role="dialog">
 		<div class="modal-dialog">
 		  <!-- Modal content-->

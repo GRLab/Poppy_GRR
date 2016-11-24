@@ -16,6 +16,9 @@ if(isset($_GET["action"])){
 	} else if ($_GET["action"] == "symetry"){
 		$changed = doSymetry($_POST["moveName"]);
 		echo  json_encode(" symetry ok for ".$_POST["moveName"]." : ".$changed);
+	}else if ($_GET["action"] == "rename"){
+		$changed = doRename($_POST["ancienNom"], $_POST["nouveauNom"]);
+		echo  json_encode(" rename of ".$_POST["ancienNom"]." in ".$_POST["nouveauNom"].": ".$changed);
 	} else if($_GET["action"] == "deleteMov"){
 		deleteMove($_POST["moveName"]);
 		echo  json_encode("removed");
@@ -36,6 +39,19 @@ if(isset($_GET["action"])){
 		$movesNumber = getMovesNumber();
 		echo  json_encode($movesNumber);
 	}
+}
+
+function doRename($previousName, $newName){
+	$sSQL = "UPDATE `movelist` 
+			 SET `moveName`= :newName
+			 WHERE `moveName` = :previousName";
+			 
+	$requete = Connexion::getInstance()->prepare($sSQL);
+	$requete->execute(
+						array('previousName' => $previousName, 'newName' => $newName)
+					 );
+	$changed = "ok";
+	return $changed;
 }
 
 function doSymetry($sNameMov){

@@ -302,6 +302,48 @@ function SaveSsMovePart() {
 	});
 }
 
+function Rename(moveName=""){
+	$('#ancienNom').html(moveName);
+	$('#modal_rename').modal("show");
+}
+
+function RenameSuite(){
+	var ancienNom = $('#ancienNom').html();
+	var nouveauNom = $('#newName').val();
+	nouveauNom = nouveauNom.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
+	nouveauNom = nouveauNom.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
+	nouveauNom = nouveauNom.replace(/\354|\355|\356|\357/g,"i");
+	nouveauNom = nouveauNom.replace(/\371|\372|\373|\374/g,"u");
+	nouveauNom = nouveauNom.replace(/\360|\362|\363|\364|\365|\366/g,"o");
+	nouveauNom = nouveauNom.replace(/\347/g,"c");	// ç
+	if (nouveauNom == null || nouveauNom == ""){
+		alert('veuillez entrer un nom');
+		return;
+	}
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=rename&newName='+nouveauNom+'&previousName='+ancienNom,
+		type:'POST',
+		statusCode: {
+			201: function(data) {
+				console.log(ancienNom+" successfully renamed in "+nouveauNom);
+				$.post("./core/functions/moves.php?action=rename" , {"ancienNom" : ancienNom, "nouveauNom" : nouveauNom}).done(function(data){
+					console.log(data);
+				});
+				AfficheMovelist();
+			},
+			200:function(data){
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+	$('#newName').val('');
+	$('#modal_rename').modal('hide');
+}
+
 function Symetry(moveName="") {
 	var listeFiles = []
 	if (moveName==""){
@@ -1371,8 +1413,8 @@ function AfficheMovelist(playerOnly = "false"){
 				poppyParts += "JambeD ";
 			}
 			texte += "<td id='parts"+moveName+"'>"+poppyParts+"</td>";
-			
-			texte += "<td><input type='button' title='symetry' onclick='Symetry(&quot;"+moveName+"&quot;)' id='symetry' /><input type='button' title='Reverse' onclick='Reverse(&quot;"+moveName+"&quot;)' id='reverse'/> <input type='button' title='delete' onclick='RemoveMove(&quot;"+moveName+"&quot;)' id='delete'/></td>";
+	//TODO : rajouter un bouton "renommer"		
+			texte += "<td><input type='button' title='rename' onclick='Rename(&quot;"+moveName+"&quot;)' id='rename' /> <input type='button' title='symetry' onclick='Symetry(&quot;"+moveName+"&quot;)' id='symetry' /> <input type='button' title='Reverse' onclick='Reverse(&quot;"+moveName+"&quot;)' id='reverse'/> <input type='button' title='delete' onclick='RemoveMove(&quot;"+moveName+"&quot;)' id='delete'/></td>";
 			texte += "<td><input type='button' title='play' onclick='Go(&quot;"+moveName+"&quot;)' id='Go"+moveName+"' class='play' style='color:#00ba00'/> <input type='button' title='stop' onclick='StopExo(&quot;"+moveName+"&quot;)' id='stop"+moveName+"' class='stop' style='color:#ea0000'/> </td>";
 			texte += "</tr>";
 			

@@ -147,22 +147,29 @@ body {
 	padding-top: 30px;
 }
 /*boutons du tableau*/
+#rename{
+    width:35px;
+    background-image: url(../includes/images/rename.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:5px;
+}
 #symetry{
-	width:40px;
+	width:35px;
 	background-image: url(../includes/images/symetry.png);
 	background-repeat: no-repeat;
 	background-position: center;
     border-radius:5px;
 }
 #reverse{
-	width:40px;
+	width:35px;
 	background-image: url(../includes/images/reverse.png);
 	background-repeat: no-repeat;
 	background-position: center;
     border-radius:5px;
 }
 #delete{
-	width:40px;
+	width:35px;
 	background-image: url(../includes/images/delete.png);
 	background-repeat: no-repeat;
 	background-position: center;

@@ -156,6 +156,16 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    self.send_headers()
 		    text="move already exists"
 		    print('move already exists')
+
+	if 'Submit' in params.keys() and "rename" == params['Submit']:
+	    previousName = params['previousName']
+	    newName = params['newName']
+	    text = fonctions.rename(previousName, newName)
+	    if 'exist' in text:
+	    	    self.send_headers()
+	    else:
+		    self.send_headers(201)
+	    print (previousName+" renamed in "+newName)
 	
 	if 'Submit' in params.keys() and "symetry" == params['Submit']:
 	    moveName="dataPos.json"
