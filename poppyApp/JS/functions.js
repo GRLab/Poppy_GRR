@@ -304,6 +304,7 @@ function SaveSsMovePart() {
 
 function Rename(moveName=""){
 	$('#ancienNom').html(moveName);
+	$('#newName').val(moveName);
 	$('#modal_rename').modal("show");
 }
 
@@ -317,7 +318,7 @@ function RenameSuite(){
 	nouveauNom = nouveauNom.replace(/\360|\362|\363|\364|\365|\366/g,"o");
 	nouveauNom = nouveauNom.replace(/\347/g,"c");	// ç
 	if (nouveauNom == null || nouveauNom == ""){
-		alert('veuillez entrer un nom');
+		alert('Veuillez entrer un nom');
 		return;
 	}
 	$.ajax({
@@ -342,6 +343,10 @@ function RenameSuite(){
 	});
 	$('#newName').val('');
 	$('#modal_rename').modal('hide');
+}
+
+function RenameClear(){
+	$('#newName').val('');
 }
 
 function Symetry(moveName="") {

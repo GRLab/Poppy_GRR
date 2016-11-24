@@ -148,11 +148,11 @@ include "includes/header.php";
 			</div>
 			<div class="modal-body">
 				<fieldset class="form-group">
-					<label for="newName">Nouveau nom</label> <input type="text" class="form-control" id="newName" placeholder="nouveau nom" />
+					<label for="newName">Nouveau nom</label> <input value="" type="text" class="form-control" id="newName" placeholder="Nouveau nom" />
 				</fieldset>
 			</div>
 			<div class="modal-footer">
-			  <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			  <button type="button" class="btn btn-default" onclick="RenameClear()" data-dismiss="modal">Annuler</button>
 			  <button type="button" class="btn btn-info" onclick="RenameSuite()">Sauvegarder</button>
 			</div> 
 		  </div>
