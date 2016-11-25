@@ -1,4 +1,4 @@
-var dataListe = [];
+﻿var dataListe = [];
 var jsondataBDD = "";
 var nb_tempsBDD = 0;
 var activeMove = "";
@@ -160,7 +160,7 @@ function semiCompliant(semiPoppyParts="") {
 function SaveInitPos() {
 	var posName = prompt('Please enter the name of the initial position','debout');
         if (posName == null || posName == "") {
-		alert('canceled');
+		alert('Erreur. Pas de nom entr\351.');
 		return;
 	}
 	$.ajax({
@@ -184,7 +184,7 @@ function GoInitPos(pos = "undefined") {
 	if(pos == "undefined"){
 		var posName = prompt('Please enter the name of the initial position','debout');
 		if (posName == null || posName == "") {
-			alert('canceled');
+			alert('Erreur. Pas de nom entr\351.');
 			return;
 		}
 	}
@@ -253,20 +253,20 @@ function SaveSsMovePart() {
 		alert('Veuillez entrer un nom pour ce mouvement');
 		return;
 	}
-	moveName = moveName.replace(/\350|\351|\352|\353/g,"e");	//�, �, �, �
+	moveName = moveName.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
 	moveName = moveName.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
 	moveName = moveName.replace(/\354|\355|\356|\357/g,"i");
 	moveName = moveName.replace(/\371|\372|\373|\374/g,"u");
 	moveName = moveName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
-	moveName = moveName.replace(/\347/g,"c");	// �
+	moveName = moveName.replace(/\347/g,"c");	// ç
 	if (playedMove == null ) {
-		alert('annul�');
+		alert('Erreur dans le nom du mouvement jou\351.');
 		return;
 	}
 
 	if (poppyParts == null || poppyParts.length == 0) {
 		poppyParts.push('tete');
-		alert('error, poppyParts set to tete');
+		alert('Erreur, la t\352 a \351t\351 d\351finie.');
 	}
 	player.currentTime = 0;
 	player.play();
@@ -279,8 +279,8 @@ function SaveSsMovePart() {
 				console.log("move saved in Poppy." );
 				player.play();			//joue un son
 				setTimeout('stopPlayer("player")', 2200);
-				//Si le mouvement a bien été sauvegardé, on l'enregistre dans la bdd
-				//Obligé de faire avec un post car on est dans du js !
+				//Si le mouvement a bien Ã©tÃ© sauvegardÃ©, on l'enregistre dans la bdd
+				//ObligÃ© de faire avec un post car on est dans du js !
 				$.post("./core/functions/moves.php?action=insert", {"moveName" : moveName, "moveType" : "mov", "parts" : poppyParts}).done(function(data){
 					console.log(data);
 				});
@@ -311,14 +311,14 @@ function Rename(moveName=""){
 function RenameSuite(){
 	var ancienNom = $('#ancienNom').html();
 	var nouveauNom = $('#newName').val();
-	nouveauNom = nouveauNom.replace(/\350|\351|\352|\353/g,"e");	//�, �, �, �
+	nouveauNom = nouveauNom.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
 	nouveauNom = nouveauNom.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
 	nouveauNom = nouveauNom.replace(/\354|\355|\356|\357/g,"i");
 	nouveauNom = nouveauNom.replace(/\371|\372|\373|\374/g,"u");
 	nouveauNom = nouveauNom.replace(/\360|\362|\363|\364|\365|\366/g,"o");
-	nouveauNom = nouveauNom.replace(/\347/g,"c");	// �
+	nouveauNom = nouveauNom.replace(/\347/g,"c");	// ç
 	if (nouveauNom == null || nouveauNom == ""){
-		alert('Veuillez entrer un nom');
+		alert('Erreur. Pas de nom d\351fini.');
 		return;
 	}
 	$.ajax({
@@ -354,7 +354,7 @@ function Symetry(moveName="") {
 	if (moveName==""){
 		var moveName = prompt('Please enter the name of the move part','move_part_name');
 		if (moveName == null || moveName == "") {
-			alert('canceled');
+			alert('Erreur. Pas de nom d\351fini.');
 			return;
 		}
 	}
@@ -390,7 +390,7 @@ function Reverse(moveName="") {
 	if (moveName == ""){
 		var moveName = prompt('Please enter the name of the move part','moveName');
 		if (moveName == null || moveName == "") {
-			alert('canceled');
+			alert('Erreur. Pas de nom d\351fini.');
 			return;
 		}
 	}
@@ -423,15 +423,15 @@ function CreateMove(previsu = "False") {
 	var listeFiles = [];
 	var moveName = $('#nom_mov').val();
 	if (moveName== "") {
-		alert('enter a name');
+		alert('Erreur. Pas de nom d\351fini.');
 		return
 	}
-	moveName = moveName.replace(/\350|\351|\352|\353/g,"e");	//�, �, �, �
+	moveName = moveName.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
 	moveName = moveName.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
 	moveName = moveName.replace(/\354|\355|\356|\357/g,"i");
 	moveName = moveName.replace(/\371|\372|\373|\374/g,"u");
 	moveName = moveName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
-	moveName = moveName.replace(/\347/g,"c");	// �
+	moveName = moveName.replace(/\347/g,"c");	// ç
 	var type = 'mov';
 	moveConfig = '{"type":"'+type+'"';
 	var nb_fichiers=0;
@@ -460,7 +460,7 @@ function CreateMove(previsu = "False") {
 	}
 	moveConfig = moveConfig+', "nb_fichiers":'+nb_fichiers+'}';
 	if(nb_fichiers == 0){
-		alert("error: no file")
+		alert("Erreur. Aucun fichier d\351tect\351.")
 		return
 	}
 	$.ajax({
@@ -504,18 +504,18 @@ function CreateExo() {
 	var listeFiles = [];
 	var exoName = $('#nom_exo').val();
 	if (exoName== "") {
-		alert('enter a name');
+		alert('Erreur. Pas de nom d\351fini.');
 		return;
 	}
-	exoName = exoName.replace(/\350|\351|\352|\353/g,"e");	//�, �, �, �
+	exoName = exoName.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
 	exoName = exoName.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
 	exoName = exoName.replace(/\354|\355|\356|\357/g,"i");
 	exoName = exoName.replace(/\371|\372|\373|\374/g,"u");
 	exoName = exoName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
-	exoName = exoName.replace(/\347/g,"c");	// �
+	exoName = exoName.replace(/\347/g,"c");	// ç
 	var type = $('#type_exo').val();
 	if (!(type == 'exo' || type == 'seance')){
-		alert('error, choose type : exo or seance');
+		alert('Erreur. Aucun type d\351tect\351. Choisissez entre "exo" et "seance".');
 		return;
 	}
 	exoConfig = '{"type":"'+type+'"';
@@ -546,7 +546,7 @@ function CreateExo() {
 	}
 	exoConfig = exoConfig+', "nb_fichiers":'+nb_fichiers+'}';
 	if(nb_fichiers == 0){
-		alert("error: no file")
+		alert("Erreur. Aucun fichier d\351tect\351.")
 		return
 	}
 	$.ajax({
@@ -579,7 +579,7 @@ function CreateExo() {
 	});	
 }
 
-function GoMove(rev = "False") {    //non utilisé pour l'instant ! y a la fonction Go plus bas
+function GoMove(rev = "False") {    //non utilisÃ© pour l'instant ! y a la fonction Go plus bas
 	$('#exoConfig').hide();
 	var moveName = $('#nom_mvt').val();
 	var speed = $('#speed').val();
@@ -636,7 +636,7 @@ function verifFinExo(){
 	if(fin_exo == 1){
 		$('#exoConfig').hide();   //A mettre en commentaire si on veut garder le visuel apres la seance
 		$('#progressbar').progressbar('value', 100);
-		$("#progressbarlabel").html("Terminé !");
+		$("#progressbarlabel").html("TerminÃ© !");
 		document.getElementById('Go'+activeMove).className = "play";
 		activeMove = "";
 		return;
@@ -734,11 +734,11 @@ function verifFinMov(){
 function clickFleche(){
 	if ($(this).hasClass('active')){
 		  $(this).next().slideToggle();		          
-		  $(this).children().html('▸');    
+		  $(this).children().html('â–¸');    
 		  $(this).removeClass('active');
 	} else {
 		$(this).next().slideToggle();	
-		$(this).children().html('▾');
+		$(this).children().html('â–¾');
 		$(this).addClass('active');
 	}  	
 }
@@ -812,7 +812,7 @@ function Go(exoName) {
 					$('#exoConfig').append('<div id="nom_seance">' + exoName + '</div>' );
 					for (i=1; i<=jsondata['nb_fichiers']; i++){
 						if (jsondata[i]['nb_fichiers'] >0){
-							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">▾</span> ' + jsondata[i]['nom']+'</div>');
+							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">â–¾</span> ' + jsondata[i]['nom']+'</div>');
 							var texte = "";
 							texte+= '<div class="containerMvts">';
 							for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
@@ -954,7 +954,7 @@ function RemoveMove(moveName="") {
 	if (moveName==""){
 		var moveName = prompt('Please enter the name of the move part','move_part_name');
 		if (moveName == null || moveName == "") {
-			alert('canceled');
+			alert('Erreur. Pas de nom d\351fini.');
 			return;
 		}
 	}
@@ -986,7 +986,7 @@ function RemoveFileDatabase(moveName="") {
 	if (moveName == ""){
 		var moveName = prompt('Please enter the name of the move part','move_part_name');
 		if (moveName == null || moveName == "") {
-			alert('canceled');
+			alert('Erreur. Pas de nom d\351fini.');
 			return;
 		}
 	}
@@ -1077,7 +1077,7 @@ function SendFile() {
 	var dataToSend ;
 	var namefile = prompt('Please enter the name of file','currentPos.json');
         if (namefile == null || namefile == "") {
-		alert('canceled');
+		alert('Erreur. Pas de nom d\351fini.');
 		return;
 	}
 	jsonfile='JS/'+namefile;
@@ -1248,7 +1248,7 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 	if (namefile == 'nothg') {
 		var namefile = prompt('Please enter the name of file','movelist');
 		if (namefile === null || namefile == ''){
-			alert('canceled');
+			alert('Erreur. Pas de nom d\351fini.');
 			return;
 		}
 	}
@@ -1372,7 +1372,7 @@ function AfficheMovelist(playerOnly = "false"){
 									'<tr>'+
 										'<th>Nom du mouvement</th>'+
 										'<th>Type</th>'+
-										'<th>Parties utilisées</th>'+
+										'<th>Parties utilisÃ©es</th>'+
 										'<th>Actions</th>'+
 										'<th>Player</th>'+
 									'</tr>'+
@@ -1436,7 +1436,7 @@ function AfficheMovelist(playerOnly = "false"){
 				infoPostFix:    "",
 				loadingRecords: "Chargement en cours...",
 				zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-				emptyTable:     "Aucune donnée disponible dans le tableau",
+				emptyTable:     "Aucune donnÃ©e disponible dans le tableau",
 				paginate: {
 					first:      "Premier",
 					previous:   "Pr&eacute;c&eacute;dent",
@@ -1445,7 +1445,7 @@ function AfficheMovelist(playerOnly = "false"){
 				},
 				aria: {
 					sortAscending:  ": activer pour trier la colonne par ordre croissant",
-					sortDescending: ": activer pour trier la colonne par ordre décroissant"
+					sortDescending: ": activer pour trier la colonne par ordre dÃ©croissant"
 				}
 			},
 			stateSave: true 	//save state of the table to load at the same state

@@ -236,7 +236,7 @@ include "includes/header.php";
 					</fieldset></td>
 				</tr>
 			</table>
-			<button type="button" class="btn btn-info" onclick="add_one_ss_mov()">Add</button>
+			<button type="button" class="btn btn-info" onclick="add_one_ss_mov()">Ajouter</button>
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 			  <button type="button" class="btn btn-default" onclick="PrevisualisationMove()">Prévisualiser</button>
@@ -276,7 +276,7 @@ include "includes/header.php";
 					</fieldset></td>
 				</tr>
 			</table>
-			<button type="button" class="btn btn-info" onclick="add_one_mov()">Add</button>
+			<button type="button" class="btn btn-info" onclick="add_one_mov()">Ajouter</button>
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 			  <button type="button" class="btn btn-info" onclick="CreateExo()">Sauvegarder</button>
