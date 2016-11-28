@@ -404,3 +404,7 @@ aside {
 .containerMvts> div:last-child {
 	padding-bottom : 10px;
 }
+
+.ui-autocomplete{
+    z-index: 1051!important;
+}

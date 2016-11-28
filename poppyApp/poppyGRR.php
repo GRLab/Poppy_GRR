@@ -384,12 +384,18 @@ include "includes/header.php";
 		function add_one_ss_mov(){
 			nb_ss_mov = nb_ss_mov+1;
 			$('#add_ss_mov').append('<tr><td><fieldset class="form-group"><input type="text" class="form-control" id="ss_mov_'+nb_ss_mov+'" placeholder="ss_mov_name" /></fieldset></td><td><fieldset class="form-group"><input type="text" class="form-control" id="speed_'+nb_ss_mov+'" placeholder="speed [1-10] (normal=9)" /></fieldset></td><td><fieldset class="form-group"><input type="text" class="form-control" id="offset_'+nb_ss_mov+'" placeholder="offset" /></fieldset></td></tr>');
+			$('#ss_mov_'+nb_ss_mov).autocomplete({
+				source: movelistTags
+			});
 		};
 		//create exo
 		nb_mov = 1
 		function add_one_mov(){
 			nb_mov = nb_mov+1;
 			$('#add_mov').append('<tr><td><fieldset class="form-group"><input type="text" class="form-control" id="mov_'+nb_mov+'" placeholder="mov_name" /></fieldset></td><td><fieldset class="form-group"><input type="text" class="form-control" id="speedexo_'+nb_mov+'" placeholder="vitesse [1-10] (normal=5)" /></fieldset></td><td><fieldset class="form-group"><input type="text" class="form-control" id="pause_'+nb_mov+'" placeholder="pause" /></fieldset></td></tr>');
+			$('#mov_'+nb_mov).autocomplete({
+				source: movelistTags
+			});
 		};
 	</script>
 

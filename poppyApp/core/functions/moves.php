@@ -285,7 +285,8 @@ function checkJson(){
 
 function getMovelist(){
 	$sSQL = "SELECT *
-			 FROM `movelist`";
+			 FROM `movelist`
+			 ORDER BY `moveName`";
 			 
 	$requete = Connexion::getInstance()->prepare($sSQL);
 

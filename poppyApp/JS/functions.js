@@ -1,4 +1,5 @@
 ﻿var dataListe = [];
+var movelistTags = [];			//liste des mouvements pour l'autocompletion
 var jsondataBDD = "";
 var nb_tempsBDD = 0;
 var activeMove = "";
@@ -1361,6 +1362,7 @@ function ReceiveMovelist() {
 
 function AfficheMovelist(playerOnly = "false"){
 	var data;
+	movelistTags = [];
 	$.post('./core/functions/moves.php?action=getMovelist').done(function(database){
 		data = JSON.parse(database);
 		console.log(data);
@@ -1372,7 +1374,7 @@ function AfficheMovelist(playerOnly = "false"){
 									'<tr>'+
 										'<th>Nom du mouvement</th>'+
 										'<th>Type</th>'+
-										'<th>Parties utilisÃ©es</th>'+
+										'<th>Parties utilisées</th>'+
 										'<th>Actions</th>'+
 										'<th>Player</th>'+
 									'</tr>'+
@@ -1388,7 +1390,7 @@ function AfficheMovelist(playerOnly = "false"){
 			texte += "<tr>";
 			texte += "<td>"+data[key]["moveName"]+"</td>";
 			moveName = data[key]["moveName"];
-			
+			movelistTags.push(moveName);
 			if (data[key]["id_moveType"]=="1"){
 				var type = "mouvement";
 			}else if (data[key]["id_moveType"]=="2"){
@@ -1423,7 +1425,14 @@ function AfficheMovelist(playerOnly = "false"){
 			texte += "</tr>";
 			
 		}
-				
+		
+		$('#ss_mov_1').autocomplete({
+			source: movelistTags
+		});
+		$('#mov_1').autocomplete({
+			source: movelistTags
+		});
+
 		$('#tableMoves tbody').append(texte);	
 		$('#tableMoves').DataTable( {
 			language: {		
