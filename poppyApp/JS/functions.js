@@ -1496,6 +1496,13 @@ function initSound(){
 function initPage() {
 	loadSound();
 	$('#poppyName').val(poppyName);
+	$(document).tooltip({
+		classes: {
+			"ui-tooltip": "highlight"
+		},
+		show: { delay: 300 },
+		position: { my: "left bottom", at: "right top" }
+	});
 	StopExo();
 	ReceiveMovelist();
 	AfficheMovelist();
