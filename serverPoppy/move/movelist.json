@@ -44,7 +44,7 @@
         ]
     }, 
     "nb_seance": 7, 
-    "nb_mov": 80, 
+    "nb_mov": 81, 
     "list_mov": {
         "rotationTroncGSym": [
             "colonne"
@@ -111,17 +111,13 @@
         "regardCielRev": [
             "tete"
         ], 
-        "etirementLateralGSym": [
-            "bras_droit", 
+        "mainsenlair": [
             "bras_gauche", 
-            "colonne"
+            "bras_droit"
         ], 
         "plancheMiseEnPos2": [
             "bras_gauche", 
             "bras_droit"
-        ], 
-        "demoG": [
-            "bras_gauche"
         ], 
         "demoD": [
             "bras_droit"
@@ -164,6 +160,9 @@
         "demo": [
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "leveBDSym": [
+            "bras_gauche"
         ], 
         "rotationTroncG": [
             "colonne"
@@ -311,9 +310,10 @@
             "bras_droit", 
             "tete"
         ], 
-        "mainsenlair": [
+        "etirementLateralGSym": [
+            "bras_droit", 
             "bras_gauche", 
-            "bras_droit"
+            "colonne"
         ], 
         "cacheTeteBrasRev": [
             "bras_droit", 

@@ -9,6 +9,8 @@ import numpy
 import socket
 import csv
 from collections import OrderedDict
+import logging
+from logging.handlers import RotatingFileHandler
 #Creation de l'objet robot
 Poppyboid = PoppyHumanoid() 
 
@@ -566,6 +568,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 					return
 				NUM_EXO +=1
 				NUM_MOV = 0
+				logger.info("Exercice : "+NUM_EXO+", Mouvement : "+NUM_MOV)
 				if i==0:
 					time.sleep(1)
 				elif moveConfig["fichier"+str(i)]["pause"] == 0:
@@ -586,6 +589,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 				speed = moveConfig["fichier"+str(i+1)]["vitesse"]
 			#JOUE LE MOUVEMENT i+1
 				NUM_MOV +=1
+				logger.info("Exercice : "+NUM_EXO+", Mouvement : "+NUM_MOV)
 				move = GoMove(namefile, speed)
 				if move == "stop":
 					print "---stop exo via stop move---"
@@ -700,25 +704,38 @@ def scanMotors(idmoteur, t0):
 				poppyPart_alert[poppyPart]="warning"
 			elif round(temperature[imoteur],1)>=SEUIL_TEMP_ARRET:
 				poppyPart_alert[poppyPart]="stop"
+				logger.warning("motor %s is overheating ! Preparing security mode.", idmoteur[imoteur])
 				stop = True
 		imoteur=imoteur+1
 	if stop == True and SecurityStop == False:
 		if not poppyCompliant():
-			print "set security mode"
+			logger.warning("set security mode")
 			setSecurityMode()
 			time.sleep(10)
-			print "security mode : stop exo"
+			logger.warning("security mode : stop exo")
 			StopExo()
 			time.sleep(5)
-			print "security mode : semi compliant"
+			logger.warning("security mode : semi compliant")
 			semiCompliant()
 			time.sleep(20)
-			print "security mode : compliant"
+			logger.warning("security mode : compliant")
 			Compliant()
 			time.sleep(5)
-			print "security mode OFF"
+			logger.warning("security mode OFF")
 			SecurityStop = False
+	#sauvegarde csv si seconde compris entre 0 et 5 : 1 mesure/minute
+	seconds = int(time.strftime('%S', time.localtime()))
+	if (seconds>0 and seconds<=5):
+		with open("log/motor.csv", "a") as csvfile:
+			fieldnames=[ 'ID', 'posit.', 'U', 'temp.', 'couple']
+			writer = csv.writer(csvfile, delimiter='	')
+			writer.writerow([time.strftime('%d/%m/%Y %H:%M:%S', time.localtime()),''])
+			writer.writerow(fieldnames)
 
+		for imoteur in range(nbmoteurs):
+			with open("log/motor.csv", "a") as csvfile:
+				writer = csv.writer(csvfile, delimiter='	')
+				writer.writerow((idmoteur[imoteur], round(position[imoteur],2), round(voltage[imoteur],1), temperature[imoteur], couple[imoteur]))
 
 #primitive scan moteurs regulier
 class scanMotorsLoop(pypot.primitive.Primitive):
@@ -772,7 +789,6 @@ def scanResults():
 #FONCTIONS
 def Compliant(poppyParts='all'): 
 	global SEMI_MOU
-	print ('Poppy gets compliant')
 	if poppyParts == 'all':
 		while len(SEMI_MOU)>0:
 			del SEMI_MOU[0]
@@ -824,7 +840,6 @@ def Compliant(poppyParts='all'):
 			Poppyboid.head_y.compliant = True
 
 def NonCompliant(poppyParts='all', torqueLimit = 100, notMoving = False): 
-	print ('Poppy gets non-compliant')
 	sleep = 0
 	if poppyParts == 'all':
 		while len(SEMI_MOU)>0:
@@ -927,7 +942,6 @@ def NonCompliant(poppyParts='all', torqueLimit = 100, notMoving = False):
 
 def semiCompliant(poppyParts='all'): 
 	global SEMI_MOU
-	print ('Poppy gets semi-compliant')
 	if len(SEMI_MOU)>0:
 		NonCompliant(SEMI_MOU)
 	while len(SEMI_MOU)>0:
@@ -941,7 +955,6 @@ def semiCompliant(poppyParts='all'):
 	semiCompliantPrimitive(Poppyboid).start()
 
 def SavePosInit(namePos):
-	print('save init position')
 	#positionPrimitive(Poppyboid, namePos).start
 	if namePos == 'debout':
 		Poppyboid.initDebout.start()
@@ -966,7 +979,6 @@ def GoPosInit(namePos):
 	time.sleep(0.5)
 
 def SaveMovePart(poppyParts, moveName, semiMou, playedMove = ''):
-	print ('going to save move part')
 	NonCompliant(poppyParts)
 	time.sleep(0.5)
 	#TODO : Rajouter un bruit sonore
@@ -1004,7 +1016,6 @@ def SaveMovePart(poppyParts, moveName, semiMou, playedMove = ''):
 def majMoveList(moveDir, moveName, poppyParts):
 	with open('./move/movelist.json','r') as f:
 		jsondata = json.load(f)
-	print moveDir+" saved"
 	if moveName not in jsondata["list_"+moveDir]:
 		jsondata["nb_"+moveDir] += 1
 	jsondata["list_"+moveDir][moveName] = poppyParts
@@ -1014,7 +1025,7 @@ def majMoveList(moveDir, moveName, poppyParts):
 def rename(previousName, newName):
 	moveDir = directory(previousName)
 	if moveDir == '':
-		return 'move file does not exist'
+		return previousName+' does not exist'
 	previousFile = './move/'+moveDir+'/'+previousName+'.json'
 	newFile = './move/'+moveDir+'/'+newName+'.json'
 	os.rename(previousFile, newFile)	#MAJ fichier json
@@ -1025,7 +1036,7 @@ def rename(previousName, newName):
 	del movelist["list_"+moveDir][previousName]
 	with open('./move/movelist.json','w') as f:
 		json.dump(movelist, f, indent=4)
-	return "renamed"
+	return previousName+" renamed in "+newName
 
 def symetry(moveName):
 	dir = directory(moveName)
@@ -1099,7 +1110,7 @@ def symetry(moveName):
 	with open(symFile,'w') as f:
 		json.dump(symData, f, indent=4)
 	majMoveList(dir, symName, poppyParts)
-	return dir
+	return symName+" created"
 	
 def reverse(moveName):
 	dir = directory(moveName)
@@ -1172,10 +1183,9 @@ def reverse(moveName):
 	with open(revFile,'w') as f:
 		json.dump(revData, f, indent=4)
 	majMoveList(dir, revName, poppyParts)
-	return dir
+	return revName+" created"
 
 def RemoveMove(moveName):
-	print ('going to remove file')
 	remove = False
 	#mise a jour de la liste des fichiers mouvements
 	dir = directory(moveName)	#recupere le type de mouvement
@@ -1215,7 +1225,6 @@ def goFirstPos(position, speed, init = False):
 		
 		positionFin = position
 		print speed.keys()	
-		print positionFin
 		if "bras_droit" in speed.keys() and "51" in positionFin:
 			if abs(positionFin["51"]-positionActu["51"])>seuil :
 				v =  abs(positionFin["51"]-positionActu["51"])/vitesse
@@ -1302,7 +1311,6 @@ def goFirstPos(position, speed, init = False):
 				if v > temps_attente:
 					temps_attente = v
 				Poppyboid.goto_position({'l_hip_x':positionFin["11"]}, v, wait=False)
-				print 'ok 11'
 			if abs(positionFin["12"]-positionActu["12"])>seuil :
 				v = abs(positionFin["12"]-positionActu["12"])/vitesse
 				if v > temps_attente:
@@ -1349,7 +1357,7 @@ def goFirstPos(position, speed, init = False):
 				if v > temps_attente:
 					temps_attente = v
 				Poppyboid.goto_position({'r_ankle_y':positionFin["25"]}, v, wait=False)
-		print temps_attente
+		print "waiting "+str(temps_attente)+"s"
 		time.sleep(temps_attente)
 
 def GoMove(moveName, speed=5, rev=False, save=False, poppyParts=''):
@@ -1541,16 +1549,18 @@ def GoExo(exoName):
 	return 'Exercice has started'
 
 def StopExo():
+	global PLAYING_EXO
+	global PLAYING_MOVE
 	global EXO_ENABLE
 	global MOVING_ENABLE
 	global PAUSE
 	while PAUSE == True:		#si on est en pause inter-exo ou inter-mouvements
 		time.sleep(0.2)
-	if EXO_ENABLE == True:
+	if PLAYING_EXO == True:
 		EXO_ENABLE = False
 		MOVING_ENABLE = False
 		return 'exercice stopped'
-	elif MOVING_ENABLE == True:
+	elif PLAYING_MOVE == True:
 		EXO_ENABLE = False
 		MOVING_ENABLE = False
 		return 'movement stopped'
@@ -1875,7 +1885,7 @@ def addMove(moveName, moveType, moveFile):
 	print type(moveFile)
 	moveDir = directory(moveName)
 	if moveDir != '':
-		return "already exists"
+		return moveName+" already exists"
 	poppyParts = list()
 	print moveFile
 	if "tete" in moveFile["poppyParts"]:
@@ -1894,6 +1904,7 @@ def addMove(moveName, moveType, moveFile):
 	with open("./move/"+moveType+"/"+moveName+".json", 'w') as f:
 		json.dump(moveFile, f, indent=4)
 	majMoveList(moveType, moveName, poppyParts)
+	return moveName+" added"
 	
 def directory(moveName):
 	with open('./move/movelist.json', 'r') as f:
@@ -1967,5 +1978,8 @@ def poppyCompliant():
 
 def giveIP():
 	IPaddress = ([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
-	print IPaddress
 	return IPaddress
+
+
+#configuration logs
+logger = logging.getLogger('PoppyGRR_log')
