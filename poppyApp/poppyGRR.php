@@ -35,40 +35,35 @@ include "includes/header.php";
 			<tr id="compliantRow">
 				<td id="compliantPartT">Tete</td>
 				<td><input id='compliantT' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
-				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="tete" ></td>
+				<td id="semiMou"><input type="checkbox" id='semiMouT' name="poppyPartsMou" value="tete" ></td>
 			</tr>
 			<tr id="compliantRow">
 				<td id="compliantPartBG">BrasG</td> 
 				<td><input id='compliantBG' data-toggle="toggle" data-onstyle="warning" type="checkbox" data-size="mini"> </td>
-				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="bras_gauche"></td>
+				<td id="semiMou"><input type="checkbox" id='semiMouBG' name="poppyPartsMou" value="bras_gauche"></td>
 			</tr>
 			<tr id="compliantRow">
 				<td id="compliantPartBD">BrasD</td>
 				<td><input id='compliantBD' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
-				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="bras_droit" ></td>
+				<td id="semiMou"><input type="checkbox" id='semiMouBD' name="poppyPartsMou" value="bras_droit" ></td>
 			</tr>
 			<tr id="compliantRow">
 				<td id="compliantPartCol">Colonne </td>
 				<td><input id='compliantCol' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
-				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="colonne"></td>
+				<td id="semiMou"><input type="checkbox" id='semiMouCol' name="poppyPartsMou" value="colonne"></td>
 			</tr>
 			<tr id="compliantRow">
 				<td id="compliantPartJG">JambeG </td>
 				<td><input id='compliantJG' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
-				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="jambe_gauche"></td>
+				<td id="semiMou"><input type="checkbox" id='semiMouJG' name="poppyPartsMou" value="jambe_gauche"></td>
 			</tr>
 			<tr id="compliantRow">
 				<td id="compliantPartJD">JambeD </td>
 				<td><input id='compliantJD' data-toggle="toggle" data-onstyle="warning"type="checkbox" data-size="mini"> </td>
-				<td id="semiMou"><input type="checkbox" name="poppyPartsMou" value="jambe_droite"></td>
+				<td id="semiMou"><input type="checkbox" id='semiMouJD' name="poppyPartsMou" value="jambe_droite"></td>
 			</tr>
-			<!--tr id="compliantRow">
-				<td></td>
-				<td></td>
-				<td><input type="button" value="rafraichir" id='semicompliant' onclick='semiCompliant()'/></td>
-			</tr-->
+
 			</table>
-			<!--input type="button" value="switch ON" onclick='Compliant()' id='compliant'  /-->  
 			<br><section> <text id="title" style="font-size:16px;">Position initiale :</text> &nbsp 
 				<input type="button" value="debout" onclick='GoDebout()' id='goDebout' /> 
 				<input type="button" value="assis" onclick='GoAssis()' id='goAssis' /><br> 
@@ -103,7 +98,36 @@ include "includes/header.php";
 	      Compliant();
 	    })
 	  })
-	  //TODO !!!!!!!!!
+	  $(function() {
+	    $('#semiMouT').change(function() {
+	      PartNonCompliant();
+	    })
+	  })
+	  $(function() {
+	    $('#semiMouBG').change(function() {
+	      PartNonCompliant();
+	    })
+	  })
+	  $(function() {
+	    $('#semiMouBD').change(function() {
+	      PartNonCompliant();
+	    })
+	  })
+	  $(function() {
+	    $('#semiMouCol').change(function() {
+	      PartNonCompliant();
+	    })
+	  })
+	  $(function() {
+	    $('#semiMouJG').change(function() {
+	      PartNonCompliant();
+	    })
+	  })
+	  $(function() {
+	    $('#semiMouJD').change(function() {
+	      PartNonCompliant();
+	    })
+	  })
 	  $(function() {
 	    $('#compliantT').change(function() {
 	      PartNonCompliant();
