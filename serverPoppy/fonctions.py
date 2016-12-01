@@ -1,6 +1,7 @@
 from poppy_humanoid import PoppyHumanoid
 import time
 import os
+import shutil
 import pypot.primitive
 from pypot.dynamixel.io.abstract_io import AbstractDxlIO
 from pypot.dynamixel.__init__ import get_available_ports
@@ -11,6 +12,8 @@ import csv
 from collections import OrderedDict
 import logging
 from logging.handlers import RotatingFileHandler
+import tarfile
+
 #Creation de l'objet robot
 Poppyboid = PoppyHumanoid() 
 
@@ -43,6 +46,9 @@ EXO_TEMPS_LIMITE = 0				# valeur max de temps d'un exercice ou seance
 NUM_EXO = 0						# numero de l'exercice en cours
 NUM_MOV = 0						# numero du mouvement en cours
 SCANNING = 0					# en train de scanner les positions moteurs ou non
+# variables temporelles pour les logs
+year = int(time.strftime('%Y', time.localtime()))	#annee en cours
+month = int(time.strftime('%m', time.localtime()))	#mois en cours
 
 t0 = time.time()
 
@@ -726,14 +732,14 @@ def scanMotors(idmoteur, t0):
 	#sauvegarde csv si seconde compris entre 0 et 5 : 1 mesure/minute
 	seconds = int(time.strftime('%S', time.localtime()))
 	if (seconds>0 and seconds<=5):
-		with open("log/motor.csv", "a") as csvfile:
+		with open("log/logs_"+str(year)+"-"+str(month)+"/motor.csv", "a") as csvfile:
 			fieldnames=[ 'ID', 'posit.', 'U', 'temp.', 'couple']
 			writer = csv.writer(csvfile, delimiter='	')
 			writer.writerow([time.strftime('%d/%m/%Y %H:%M:%S', time.localtime()),''])
 			writer.writerow(fieldnames)
 
 		for imoteur in range(nbmoteurs):
-			with open("log/motor.csv", "a") as csvfile:
+			with open("log/logs_"+str(year)+"-"+str(month)+"/motor.csv", "a") as csvfile:
 				writer = csv.writer(csvfile, delimiter='	')
 				writer.writerow((idmoteur[imoteur], round(position[imoteur],2), round(voltage[imoteur],1), temperature[imoteur], couple[imoteur]))
 
@@ -1980,6 +1986,50 @@ def giveIP():
 	IPaddress = ([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
 	return IPaddress
 
+def send_logs(previous = False):
+	if previous == True:
+		if month == 1:
+			realMonth = 12
+			realYear = year-1
+		else:
+			realMonth = month-1
+			realYear = year
+	else:
+		realMonth = month
+		realYear = year
+	f = open("log/logs_"+str(realYear)+'-'+str(realMonth)+".tar.gz", 'rb')
+	logs = f.read()
+	f.close()
+	return logs
+
+def compress_log():
+	nb_logs = 0
+	for element in os.listdir('log/'):					#pour chaque fichier/dossier
+		if os.path.isdir('log/'+element):						#si c'est un dossier
+			if element != ('logs_'+str(year)+'-'+str(month)):	#si c'est pas les logs en cours
+				try:
+					make_tarfile("log/"+element+".tar.gz", "log/"+element)
+					shutil.rmtree("log/"+element)				#supprime le dossier logs compresse
+					nb_logs +=1
+				except:
+					return "error compressing logs : "+element
+			else:												#si c'est les logs en cours
+					if element+".tar.gz" in os.listdir('log/'):	#si les logs en cours existent en compresse
+						os.remove("log/"+element+".tar.gz")	# supprime
+					try:
+						make_tarfile("log/"+element+".tar.gz", "log/"+element)	#met a jour le compresse
+						nb_logs +=1
+					except:
+						return "error compressing logs : "+element
+	if nb_logs==0:
+		return "no logs compressed"
+	else:
+		print str(nb_logs)+" logs compressed"
+		return str(nb_logs)+" logs compressed"
+
+def make_tarfile(output_filename, source_dir):
+	with tarfile.open(output_filename, "w:gz") as tar:
+		tar.add(source_dir, arcname=os.path.basename(source_dir))
 
 #configuration logs
 logger = logging.getLogger('PoppyGRR_log')

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import os
 import socket
 import BaseHTTPServer
 from urlparse import urlparse
@@ -35,7 +36,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	#accuse que la communication s'est effectuee
 		try:
 			self.send_response(code)
-			self.send_header("Content-type", "text/html/json")
+			self.send_header("Content-type", "text/html/json/")
 			self.send_header("Access-Control-Allow-Origin","*")
 			self.end_headers()
 		except socket.error, e:
@@ -374,7 +375,6 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			self.send_headers()
 		logger.info(IPclient+" RESPONSE - "+text)
-
 	try:
 		self.wfile.write(text)
 	except socket.error, e:
@@ -445,11 +445,52 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 				logger.exception(IPclient+" ***** socket error ***** ")
 		logger.info(IPclient+" RESPONSE - "+IPAddress)
 
+	if 'Submit' in params.keys() and "getLogs" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - get logs")
+	    logs = fonctions.send_logs()
+	    self.send_response(200)
+	    self.send_header('Content-Type', 'application/gzip')
+	    self.send_header("Access-Control-Allow-Origin","*")
+	    self.send_header('Content-Disposition', 'attachment;''filename=logs_'+str(year)+'-'+str(month)+'.tar.gz')
+	    self.end_headers()
+	    try:
+			self.wfile.write(logs)
+	    except socket.error, e:
+			if e[0] == errno.EPIPE:
+				logger.error(IPclient+" disconnected ! ***** BROKEN PIPE *****")
+			else:
+				logger.exception(IPclient+" ***** socket error ***** ")
+	    logger.info(IPclient+" RESPONSE - logs sent")
+
+	if 'Submit' in params.keys() and "getPreviousLogs" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - get previous logs")
+	    logs = fonctions.send_logs(previous = True)
+	    self.send_response(200)
+	    self.send_header('Content-Type', 'application/gzip')
+	    self.send_header("Access-Control-Allow-Origin","*")
+	    if month ==1:
+			self.send_header('Content-Disposition', 'attachment;''filename=logs_'+str(year-1)+'-'+str(12)+'.tar.gz')
+	    else:
+			self.send_header('Content-Disposition', 'attachment;''filename=logs_'+str(year)+'-'+str(month-1)+'.tar.gz')
+	    self.end_headers()
+	    try:
+			self.wfile.write(logs)
+	    except socket.error, e:
+			if e[0] == errno.EPIPE:
+				logger.error(IPclient+" disconnected ! ***** BROKEN PIPE *****")
+			else:
+				logger.exception(IPclient+" ***** socket error ***** ")
+	    logger.info(IPclient+" RESPONSE - logs sent")
+
 #Configuration logs
+year = int(time.strftime('%Y', time.localtime()))		#annee en cours
+month = int(time.strftime('%m', time.localtime()))		#mois en cours
 logger = logging.getLogger('PoppyGRR_log')
 logger.setLevel(logging.DEBUG)
+if ("logs_"+str(year)+"-"+str(month)) not in os.listdir('log/'):
+	os.mkdir("log/logs_"+str(year)+"-"+str(month))
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', "%d/%m/%Y %I:%M:%S %p")
-handler = logging.handlers.RotatingFileHandler("./log/serverlog.log", mode="a", maxBytes= 100000000000, backupCount= 1, encoding="utf-8")
+handler = logging.handlers.RotatingFileHandler("./log/logs_"+str(year)+"-"+str(month)+"/serverlog.log", mode="a", maxBytes= 100000000000, backupCount= 1, encoding="utf-8")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 #CREATION du serveur web
@@ -460,6 +501,7 @@ server = BaseHTTPServer.HTTPServer
 handler = RequestHandler
 print "Serveur actif sur le port :", PORT
 fonctions.mesure()	#start scanning the motors
+fonctions.compress_log()	#compresse les logs anterieurs
 logger.info('initializing poppy server')
 httpd = server(server_address, handler)
 httpd.serve_forever()
