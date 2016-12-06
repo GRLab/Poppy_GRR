@@ -1,0 +1,35 @@
+{
+    "nb_fichiers": 6, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 6, 
+        "namefile": "elastiqueB"
+    }, 
+    "fichier3": {
+        "pause": 1, 
+        "vitesse": 6, 
+        "namefile": "elastiqueBRev"
+    }, 
+    "fichier1": {
+        "pause": 3, 
+        "vitesse": 8, 
+        "namefile": "elastiqueInit"
+    }, 
+    "fichier6": {
+        "pause": 0, 
+        "vitesse": 8, 
+        "namefile": "elastiqueInitRev"
+    }, 
+    "fichier4": {
+        "pause": 2, 
+        "vitesse": 6, 
+        "namefile": "elastiqueB"
+    }, 
+    "fichier5": {
+        "pause": 1, 
+        "vitesse": 6, 
+        "namefile": "elastiqueBRev"
+    }, 
+    "type": "exo", 
+    "nb_temps": 81
+}

@@ -174,3 +174,345 @@
 02/12/2016 01:40:28 AM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
 02/12/2016 01:40:28 AM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
 02/12/2016 01:40:28 AM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+02/12/2016 09:03:09 PM - INFO - initializing poppy server
+02/12/2016 09:04:19 PM - INFO - 192.168.0.164 REQUEST - stop !
+02/12/2016 09:04:19 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+02/12/2016 09:04:19 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+02/12/2016 09:04:19 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+02/12/2016 09:04:19 PM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
+02/12/2016 09:04:19 PM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+02/12/2016 09:04:47 PM - INFO - 192.168.0.164 REQUEST - stop !
+02/12/2016 09:04:47 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+02/12/2016 09:04:47 PM - INFO - 192.168.0.164 REQUEST - setting the robot compliant
+02/12/2016 09:04:47 PM - INFO - 192.168.0.164 RESPONSE - Poppy is compliant now
+02/12/2016 09:04:49 PM - INFO - 192.168.0.164 REQUEST - stop !
+02/12/2016 09:04:49 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+02/12/2016 09:04:49 PM - INFO - 192.168.0.164 REQUEST - setting the robot compliant
+02/12/2016 09:04:49 PM - INFO - 192.168.0.164 RESPONSE - Poppy is compliant now
+05/12/2016 08:09:51 PM - INFO - initializing poppy server
+05/12/2016 08:10:11 PM - INFO - 192.168.0.164 REQUEST - stop !
+05/12/2016 08:10:11 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+05/12/2016 08:10:11 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+05/12/2016 08:10:11 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+05/12/2016 08:10:11 PM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
+05/12/2016 08:10:12 PM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 REQUEST - stop !
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 REQUEST - stop !
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 REQUEST - sending Poppy IP
+05/12/2016 09:03:11 PM - INFO - 192.168.0.134 RESPONSE - 192.168.0.125
+06/12/2016 08:14:44 PM - INFO - initializing poppy server
+06/12/2016 08:15:29 PM - INFO - 192.168.0.164 REQUEST - going to initial position
+06/12/2016 08:15:31 PM - INFO - 192.168.0.164 RESPONSE - Poppy in initial position
+06/12/2016 08:16:10 PM - INFO - 192.168.0.164 REQUEST - setting the robot non-compliant
+06/12/2016 08:16:10 PM - INFO - 192.168.0.164 RESPONSE - Poppy is non-compliant now
+06/12/2016 08:21:40 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:21:40 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:21:40 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:21:40 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:21:40 PM - INFO - 192.168.0.134 REQUEST - sending Poppy IP
+06/12/2016 08:21:40 PM - INFO - 192.168.0.134 RESPONSE - 192.168.0.125
+06/12/2016 08:24:31 PM - INFO - initializing poppy server
+06/12/2016 08:24:37 PM - INFO - 192.168.0.134 REQUEST - saving ss mov : elastiqueBGInit, ['bras_gauche']
+06/12/2016 08:24:42 PM - INFO - 192.168.0.134 RESPONSE - move part saved
+06/12/2016 08:24:43 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:24:43 PM - INFO - 192.168.0.134 RESPONSE - file elastiqueBGInit has been sent
+06/12/2016 08:24:43 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:24:43 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:25:03 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:25:03 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:25:04 PM - INFO - 192.168.0.134 REQUEST - playing : elastiqueBGInit
+06/12/2016 08:25:04 PM - INFO - 192.168.0.134 RESPONSE - Move has started
+06/12/2016 08:25:07 PM - INFO - 192.168.0.134 RESPONSE - move finished
+06/12/2016 08:26:29 PM - INFO - 192.168.0.134 REQUEST - saving ss mov : elastiqueBG, ['bras_gauche']
+06/12/2016 08:26:36 PM - INFO - 192.168.0.134 RESPONSE - move part saved
+06/12/2016 08:26:36 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:26:36 PM - INFO - 192.168.0.134 RESPONSE - file elastiqueBG has been sent
+06/12/2016 08:26:36 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:26:36 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:26:42 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:26:42 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:26:43 PM - INFO - 192.168.0.134 REQUEST - playing : elastiqueBGInit
+06/12/2016 08:26:43 PM - INFO - 192.168.0.134 RESPONSE - Move has started
+06/12/2016 08:26:46 PM - INFO - 192.168.0.134 RESPONSE - move finished
+06/12/2016 08:26:47 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:26:47 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:26:48 PM - INFO - 192.168.0.134 REQUEST - playing : elastiqueBG
+06/12/2016 08:26:48 PM - INFO - 192.168.0.134 RESPONSE - Move has started
+06/12/2016 08:26:53 PM - INFO - 192.168.0.134 RESPONSE - move finished
+06/12/2016 08:26:55 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:26:55 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:26:56 PM - INFO - 192.168.0.134 REQUEST - playing : elastiqueBG
+06/12/2016 08:26:56 PM - INFO - 192.168.0.134 RESPONSE - Move has started
+06/12/2016 08:27:01 PM - INFO - 192.168.0.134 RESPONSE - move finished
+06/12/2016 08:27:03 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:27:03 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:27:04 PM - INFO - 192.168.0.134 REQUEST - playing : elastiqueBG
+06/12/2016 08:27:04 PM - INFO - 192.168.0.134 RESPONSE - Move has started
+06/12/2016 08:27:09 PM - INFO - 192.168.0.134 RESPONSE - move finished
+06/12/2016 08:27:14 PM - INFO - 192.168.0.134 REQUEST - removing : elastiqueBG
+06/12/2016 08:27:15 PM - INFO - 192.168.0.134 RESPONSE - file removed
+06/12/2016 08:27:15 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:27:15 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:27:17 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:27:17 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:27:18 PM - INFO - 192.168.0.134 REQUEST - playing : elastiqueBGInit
+06/12/2016 08:27:18 PM - INFO - 192.168.0.134 RESPONSE - Move has started
+06/12/2016 08:27:23 PM - INFO - 192.168.0.134 RESPONSE - move finished
+06/12/2016 08:27:50 PM - INFO - 192.168.0.134 REQUEST - saving ss mov : elastiqueBG, ['bras_gauche']
+06/12/2016 08:27:55 PM - INFO - 192.168.0.134 RESPONSE - move part saved
+06/12/2016 08:27:55 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:27:55 PM - INFO - 192.168.0.134 RESPONSE - file elastiqueBG has been sent
+06/12/2016 08:27:55 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:27:55 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:28:03 PM - INFO - 192.168.0.134 REQUEST - reverse of : elastiqueBG
+06/12/2016 08:28:03 PM - INFO - 192.168.0.134 RESPONSE - elastiqueBGRev created
+06/12/2016 08:28:03 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:28:03 PM - INFO - 192.168.0.134 RESPONSE - file elastiqueBGRev has been sent
+06/12/2016 08:28:03 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:28:03 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:28:17 PM - INFO - 192.168.0.134 REQUEST - reverse of : elastiqueBG
+06/12/2016 08:28:17 PM - INFO - 192.168.0.134 RESPONSE - reverse elastiqueBGRev already exists
+06/12/2016 08:28:32 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:28:32 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:28:32 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:28:32 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:28:32 PM - INFO - 192.168.0.134 REQUEST - sending Poppy IP
+06/12/2016 08:28:32 PM - INFO - 192.168.0.134 RESPONSE - 192.168.0.125
+06/12/2016 08:29:18 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 08:29:18 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 08:29:18 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:29:18 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:29:18 PM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
+06/12/2016 08:29:18 PM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+06/12/2016 08:31:35 PM - INFO - initializing poppy server
+06/12/2016 08:33:15 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:33:15 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGRev has been sent
+06/12/2016 08:33:16 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:33:16 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:33:37 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 08:33:37 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 08:33:37 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 08:33:37 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 08:33:37 PM - INFO - 192.168.0.134 REQUEST - sending Poppy IP
+06/12/2016 08:33:37 PM - INFO - 192.168.0.134 RESPONSE - 192.168.0.125
+06/12/2016 08:35:41 PM - INFO - 192.168.0.164 REQUEST - reverse of : elastiqueBGInit
+06/12/2016 08:35:42 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBGInitRev created
+06/12/2016 08:35:42 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:35:42 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitRev has been sent
+06/12/2016 08:35:42 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:35:42 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:39:37 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 08:39:37 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 08:39:37 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:37 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:39:37 PM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
+06/12/2016 08:39:37 PM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+06/12/2016 08:39:40 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:40 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitRev has been sent
+06/12/2016 08:39:41 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:41 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:39:46 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGInitRev
+06/12/2016 08:39:47 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:39:47 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:47 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:39:50 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 08:39:50 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 08:39:50 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:50 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:39:50 PM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
+06/12/2016 08:39:50 PM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+06/12/2016 08:39:56 PM - INFO - 192.168.0.164 REQUEST - reverse of : elastiqueBGInit
+06/12/2016 08:39:56 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBGInitRev created
+06/12/2016 08:39:56 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:56 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitRev has been sent
+06/12/2016 08:39:56 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:39:56 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:51:51 PM - INFO - initializing poppy server
+06/12/2016 08:51:58 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 08:51:58 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 08:51:58 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:51:58 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:51:58 PM - INFO - 192.168.0.164 REQUEST - sending Poppy IP
+06/12/2016 08:51:58 PM - INFO - 192.168.0.164 RESPONSE - 192.168.0.125
+06/12/2016 08:52:01 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:52:01 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitRev has been sent
+06/12/2016 08:52:02 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:52:02 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:52:10 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:52:10 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:52:27 PM - INFO - 192.168.0.164 REQUEST - symetry of : elastiqueBG
+06/12/2016 08:52:27 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBGSym created
+06/12/2016 08:52:27 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:52:27 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGSym has been sent
+06/12/2016 08:52:27 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:52:27 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:53:07 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:53:07 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGSym has been sent
+06/12/2016 08:53:08 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:53:08 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:54:34 PM - INFO - initializing poppy server
+06/12/2016 08:54:42 PM - INFO - 192.168.0.164 REQUEST - symetry of : elastiqueBGInit
+06/12/2016 08:54:42 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBGInitSym created
+06/12/2016 08:54:43 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:54:43 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitSym has been sent
+06/12/2016 08:54:43 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:54:43 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:55:14 PM - INFO - initializing poppy server
+06/12/2016 08:55:20 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:55:20 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitSym has been sent
+06/12/2016 08:55:21 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:55:21 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:55:24 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:55:24 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitSym has been sent
+06/12/2016 08:55:25 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:55:25 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:55:31 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:55:31 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitSym has been sent
+06/12/2016 08:55:32 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:55:32 PM - ERROR - client disconnected ! ***** BROKEN PIPE *****
+06/12/2016 08:55:32 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:56:26 PM - INFO - initializing poppy server
+06/12/2016 08:56:29 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:29 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitSym has been sent
+06/12/2016 08:56:29 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:29 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:56:43 PM - INFO - 192.168.0.164 REQUEST - symetry of : elastiqueBGInitRev
+06/12/2016 08:56:43 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBGInitRevSym created
+06/12/2016 08:56:43 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:43 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitRevSym has been sent
+06/12/2016 08:56:43 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:43 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:56:46 PM - INFO - 192.168.0.164 REQUEST - symetry of : elastiqueBGRev
+06/12/2016 08:56:46 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBGRevSym created
+06/12/2016 08:56:46 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:46 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGRevSym has been sent
+06/12/2016 08:56:46 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:46 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:56:49 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:49 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGRevSym has been sent
+06/12/2016 08:56:49 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:49 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBGInitRevSym has been sent
+06/12/2016 08:56:50 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:56:50 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:57:36 PM - INFO - 192.168.0.164 REQUEST - creating move : elastiqueInit
+06/12/2016 08:57:37 PM - INFO - 192.168.0.164 RESPONSE - moved
+06/12/2016 08:57:40 PM - INFO - 192.168.0.164 REQUEST - creating move : elastiqueInit
+06/12/2016 08:57:41 PM - INFO - 192.168.0.164 RESPONSE - move created
+06/12/2016 08:57:41 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:57:41 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueInit has been sent
+06/12/2016 08:57:41 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:57:41 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:08 PM - INFO - 192.168.0.164 REQUEST - creating move : elastiqueB
+06/12/2016 08:58:09 PM - INFO - 192.168.0.164 RESPONSE - moved
+06/12/2016 08:58:12 PM - INFO - 192.168.0.164 REQUEST - creating move : elastiqueB
+06/12/2016 08:58:12 PM - INFO - 192.168.0.164 RESPONSE - move created
+06/12/2016 08:58:12 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:12 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueB has been sent
+06/12/2016 08:58:12 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:12 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:31 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBG
+06/12/2016 08:58:33 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:58:33 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:33 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:37 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGInit
+06/12/2016 08:58:38 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:58:38 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:38 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:49 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGInitRev
+06/12/2016 08:58:50 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:58:50 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:50 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:52 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGInitRevSym
+06/12/2016 08:58:53 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:58:53 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:53 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:55 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGInitSym
+06/12/2016 08:58:56 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:58:56 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:56 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:58:57 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGRev
+06/12/2016 08:58:58 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:58:58 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:58:58 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:59:01 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGRevSym
+06/12/2016 08:59:02 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:59:02 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:02 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:59:04 PM - INFO - 192.168.0.164 REQUEST - removing : elastiqueBGSym
+06/12/2016 08:59:05 PM - INFO - 192.168.0.164 RESPONSE - file removed
+06/12/2016 08:59:05 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:05 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:59:09 PM - INFO - 192.168.0.164 REQUEST - reverse of : elastiqueInit
+06/12/2016 08:59:09 PM - INFO - 192.168.0.164 RESPONSE - elastiqueInitRev created
+06/12/2016 08:59:09 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:09 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueInitRev has been sent
+06/12/2016 08:59:09 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:09 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:59:10 PM - INFO - 192.168.0.164 REQUEST - reverse of : elastiqueB
+06/12/2016 08:59:10 PM - INFO - 192.168.0.164 RESPONSE - elastiqueBRev created
+06/12/2016 08:59:10 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:10 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBRev has been sent
+06/12/2016 08:59:10 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:10 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 08:59:13 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:13 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueBRev has been sent
+06/12/2016 08:59:13 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:13 PM - INFO - 192.168.0.164 RESPONSE - file elastiqueInitRev has been sent
+06/12/2016 08:59:14 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 08:59:14 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 09:01:20 PM - INFO - 192.168.0.164 REQUEST - creating exo or seance : elastique
+06/12/2016 09:01:20 PM - INFO - 192.168.0.164 RESPONSE - exercice created
+06/12/2016 09:01:20 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 09:01:20 PM - INFO - 192.168.0.164 RESPONSE - file elastique has been sent
+06/12/2016 09:01:20 PM - INFO - 192.168.0.164 GET REQUEST - receiving data
+06/12/2016 09:01:20 PM - INFO - 192.168.0.164 RESPONSE - file movelist has been sent
+06/12/2016 09:01:26 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 09:01:26 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 09:01:27 PM - INFO - 192.168.0.164 REQUEST - playing : elastique
+06/12/2016 09:01:28 PM - INFO - 192.168.0.164 RESPONSE - 
+06/12/2016 09:02:41 PM - INFO - initializing poppy server
+06/12/2016 09:02:44 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 09:02:44 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 09:02:45 PM - INFO - 192.168.0.164 REQUEST - playing : elastique
+06/12/2016 09:02:46 PM - INFO - 192.168.0.164 RESPONSE - 
+06/12/2016 09:02:52 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 09:02:52 PM - INFO - 192.168.0.164 RESPONSE - exercice stopped
+06/12/2016 09:03:19 PM - INFO - initializing poppy server
+06/12/2016 09:03:20 PM - INFO - 192.168.0.164 REQUEST - stop !
+06/12/2016 09:03:20 PM - INFO - 192.168.0.164 RESPONSE - no exercice or movement is running
+06/12/2016 09:03:20 PM - INFO - 192.168.0.164 REQUEST - playing : elastique
+06/12/2016 09:03:20 PM - INFO - Exercice : 0, Mouvement : 1
+06/12/2016 09:03:21 PM - INFO - 192.168.0.164 RESPONSE - 
+06/12/2016 09:03:26 PM - INFO - Exercice : 0, Mouvement : 2
+06/12/2016 09:03:31 PM - INFO - Exercice : 0, Mouvement : 3
+06/12/2016 09:03:35 PM - INFO - Exercice : 0, Mouvement : 4
+06/12/2016 09:03:40 PM - INFO - Exercice : 0, Mouvement : 5
+06/12/2016 09:03:44 PM - INFO - Exercice : 0, Mouvement : 6
+06/12/2016 09:03:49 PM - INFO - 192.168.0.164 RESPONSE - exo finished
+06/12/2016 09:04:20 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 09:04:20 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 09:04:20 PM - INFO - 192.168.0.134 GET REQUEST - receiving data
+06/12/2016 09:04:20 PM - INFO - 192.168.0.134 RESPONSE - file movelist has been sent
+06/12/2016 09:04:20 PM - INFO - 192.168.0.134 REQUEST - sending Poppy IP
+06/12/2016 09:04:20 PM - INFO - 192.168.0.134 RESPONSE - 192.168.0.125
+06/12/2016 09:05:07 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 09:05:07 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 09:05:08 PM - INFO - 192.168.0.134 REQUEST - playing : elastique
+06/12/2016 09:05:08 PM - INFO - Exercice : 0, Mouvement : 1
+06/12/2016 09:05:09 PM - INFO - 192.168.0.134 RESPONSE - 
+06/12/2016 09:05:13 PM - INFO - Exercice : 0, Mouvement : 2
+06/12/2016 09:05:18 PM - INFO - Exercice : 0, Mouvement : 3
+06/12/2016 09:05:22 PM - INFO - Exercice : 0, Mouvement : 4
+06/12/2016 09:05:27 PM - INFO - Exercice : 0, Mouvement : 5
+06/12/2016 09:05:31 PM - INFO - Exercice : 0, Mouvement : 6
+06/12/2016 09:05:33 PM - INFO - 192.168.0.134 RESPONSE - exo finished
+06/12/2016 09:08:35 PM - INFO - 192.168.0.134 REQUEST - going to initial position : debout
+06/12/2016 09:08:37 PM - INFO - 192.168.0.134 RESPONSE - Poppy in initial position
+06/12/2016 09:08:42 PM - INFO - 192.168.0.134 REQUEST - stop !
+06/12/2016 09:08:42 PM - INFO - 192.168.0.134 RESPONSE - no exercice or movement is running
+06/12/2016 09:08:42 PM - INFO - 192.168.0.134 REQUEST - setting the robot compliant
+06/12/2016 09:08:42 PM - INFO - 192.168.0.134 RESPONSE - Poppy is compliant now

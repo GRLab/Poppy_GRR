@@ -574,7 +574,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 					return
 				NUM_EXO +=1
 				NUM_MOV = 0
-				logger.info("Exercice : "+NUM_EXO+", Mouvement : "+NUM_MOV)
+				logger.info("Exercice : "+str(NUM_EXO)+", Mouvement : "+str(NUM_MOV))
 				if i==0:
 					time.sleep(1)
 				elif moveConfig["fichier"+str(i)]["pause"] == 0:
@@ -595,7 +595,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 				speed = moveConfig["fichier"+str(i+1)]["vitesse"]
 			#JOUE LE MOUVEMENT i+1
 				NUM_MOV +=1
-				logger.info("Exercice : "+NUM_EXO+", Mouvement : "+NUM_MOV)
+				logger.info("Exercice : "+str(NUM_EXO)+", Mouvement : "+str(NUM_MOV))
 				move = GoMove(namefile, speed)
 				if move == "stop":
 					print "---stop exo via stop move---"

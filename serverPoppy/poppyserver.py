@@ -115,7 +115,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    posName=""
 	    if params['posName']!="":
 		    posName = params['posName']
-	    logger.info(IPclient+" REQUEST - going to initial position")
+	    logger.info(IPclient+" REQUEST - going to initial position : "+posName)
 	    fonctions.GoPosInit(posName)
 	    text = 'Poppy in initial position'
 	    self.send_headers(201)
@@ -134,7 +134,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    poppyParts=[]
 	    if params['poppyParts']!="":
 			poppyParts = params['poppyParts'].split(",")
-	    logger.info(IPclient+" REQUEST - saving ss mov : "+moveName+", "+poppyParts)
+	    logger.info(IPclient+" REQUEST - saving ss mov : "+moveName+", "+str(poppyParts))
 	    text = fonctions.SaveMovePart(poppyParts, moveName, semiMou, playedMove)
 	    if text == 'move part saved':
 		    self.send_headers(201)
