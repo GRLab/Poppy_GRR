@@ -66,6 +66,7 @@ include "includes/header.php";
 			</table>
 			<br><section> <text id="title" style="font-size:16px;">Position initiale :</text> &nbsp 
 				<input type="button" value="debout" onclick='GoDebout()' id='goDebout' /> 
+				<input type="button" value="chaise" onclick='GoChaise()' id='goChaise' /> 
 				<input type="button" value="assis" onclick='GoAssis()' id='goAssis' /><br> 
 				</section>
 			</section>

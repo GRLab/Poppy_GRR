@@ -218,7 +218,9 @@ function GoInitPos(pos = "undefined") {
 function GoDebout(){
 	GoInitPos(pos="debout");
 }
-
+function GoChaise(){
+	GoInitPos(pos="chaise");
+}
 function GoAssis(){
 	GoInitPos(pos="assis");
 }
@@ -1430,6 +1432,9 @@ function AfficheMovelist(playerOnly = "false"){
 			source: movelistTags
 		});
 		$('#mov_1').autocomplete({
+			source: movelistTags
+		});
+		$('#nom_playedMove').autocomplete({
 			source: movelistTags
 		});
 
