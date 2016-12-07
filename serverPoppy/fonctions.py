@@ -257,6 +257,7 @@ class positionPrimitive(pypot.primitive.Primitive):
 Poppyboid.attach_primitive(positionPrimitive(Poppyboid), 'scanPosition')
 Poppyboid.attach_primitive(positionPrimitive(Poppyboid, 'debout'), 'initDebout')
 Poppyboid.attach_primitive(positionPrimitive(Poppyboid, 'assis'), 'initAssis')
+Poppyboid.attach_primitive(positionPrimitive(Poppyboid, 'chaise'), 'initChaise')
 		
 #primitive mise en position
 class miseEnPosPrimitive(pypot.primitive.Primitive):
@@ -964,6 +965,8 @@ def SavePosInit(namePos):
 	#positionPrimitive(Poppyboid, namePos).start
 	if namePos == 'debout':
 		Poppyboid.initDebout.start()
+	elif namePos == 'chaise':
+		Poppyboid.initChaise.start()
 	elif namePos == 'assis':
 		Poppyboid.initAssis.start()
 	time.sleep(1.5)
@@ -971,12 +974,12 @@ def SavePosInit(namePos):
 def GoPosInit(namePos):
 	print ('going to initial position')
 	speed = {}
-	speed["tete"] = 0.1
-	speed["colonne"] = 0.1
-	speed["bras_gauche"] = 0.1
-	speed["bras_droit"] = 0.1
-	speed["jambe_gauche"] = 0.1
-	speed["jambe_droite"] = 0.1
+	speed["tete"] = 0.15
+	speed["colonne"] = 0.15
+	speed["bras_gauche"] = 0.15
+	speed["bras_droit"] = 0.15
+	speed["jambe_gauche"] = 0.15
+	speed["jambe_droite"] = 0.15
 	with open('./position/'+namePos+'.json', 'r') as f:
 		    position = json.load(f)
 	NonCompliant()
@@ -1032,6 +1035,8 @@ def rename(previousName, newName):
 	moveDir = directory(previousName)
 	if moveDir == '':
 		return previousName+' does not exist'
+	if directory(newName) != '':
+		return newName+' already exists'
 	previousFile = './move/'+moveDir+'/'+previousName+'.json'
 	newFile = './move/'+moveDir+'/'+newName+'.json'
 	os.rename(previousFile, newFile)	#MAJ fichier json

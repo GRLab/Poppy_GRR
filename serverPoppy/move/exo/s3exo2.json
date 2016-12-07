@@ -1,0 +1,45 @@
+{
+    "nb_fichiers": 8, 
+    "fichier8": {
+        "pause": 0, 
+        "vitesse": 6, 
+        "namefile": "solEcarteJRev"
+    }, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 6, 
+        "namefile": "solEcarteBras"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "vitesse": 8, 
+        "namefile": "s3exo2rotg"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 6, 
+        "namefile": "solEcarteJ"
+    }, 
+    "fichier6": {
+        "pause": 1, 
+        "vitesse": 8, 
+        "namefile": "s3exo2rotgSymRev"
+    }, 
+    "fichier7": {
+        "pause": 0, 
+        "vitesse": 7, 
+        "namefile": "solEcarteBrasRev"
+    }, 
+    "fichier4": {
+        "pause": 1, 
+        "vitesse": 8, 
+        "namefile": "s3exo2rotgRev"
+    }, 
+    "fichier5": {
+        "pause": 2, 
+        "vitesse": 8, 
+        "namefile": "s3exo2rotgSym"
+    }, 
+    "type": "exo", 
+    "nb_temps": 174
+}

@@ -1,0 +1,15 @@
+{
+    "fichier2": {
+        "pause": 5, 
+        "vitesse": 5, 
+        "namefile": "s3exo1pencheRev"
+    }, 
+    "nb_fichiers": 2, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "s3exo1penche"
+    }, 
+    "type": "exo", 
+    "nb_temps": 45
+}
