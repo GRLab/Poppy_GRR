@@ -1,7 +1,9 @@
+<!DOCTYPE html>
+<html>
 <head>
-	<meta charset="UTF-8"></meta>
+	<meta charset="UTF-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-	<link href="includes/images/iconegr.ico" type="image/x-icon" rel="shortcut icon" ></link>
+	<link href="includes/images/iconegr.ico" type="image/x-icon" rel="shortcut icon" >
     <title> Poppy GRR</title>
 	
     <link rel="stylesheet" href="css/styles.css">
@@ -21,4 +23,6 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+	<script type="text/javascript" src="JS/highlighting/jquery.maphilight.min.js"></script>
 </head>

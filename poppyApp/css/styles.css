@@ -36,7 +36,7 @@ ul li input[type="text"], ul li input[type="password"] {
     width:200px;
 }
 
-#title{
+#text-decoration-line: {
 	color : #ffffff;
 	font-weight: bold;
 	font-size:20px;
@@ -47,7 +47,7 @@ ul li input[type="text"], ul li input[type="password"] {
 	color:#ffffff;
 	font-size:14px;
 }
-#compliantRow{
+.compliantRow{
 	height:23px;
 }
 #firstLine{
@@ -56,7 +56,7 @@ ul li input[type="text"], ul li input[type="password"] {
 #compliantPartT, #compliantPartBD, #compliantPartBG, #compliantPartCol, #compliantPartJD, #compliantPartJG{
 	width:130px;
 }
-#semiMou{
+.semiMou{
 	padding-left:30px;
 	font-size:13px;
 	font-style:italic;
@@ -82,11 +82,15 @@ h2 {
 #logogr{ 
     height:30px;
 }
+#logogr:hover{
+    background-color:#222222;
+    cursor : pointer;
+}
 #logopo{ 
     height:180px;
 }
 #poppyImage{ 
-    width:280px;
+    //width:280px;
 	float: left;
 }
 /*Logo Mot*/
@@ -96,6 +100,17 @@ h2 {
     padding:10px;
     width:auto;
     color:rgba(255, 255, 255, 1);
+}
+
+#title, #titlePosition, .title2 {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+#titlePosition{
+    font-size:16px;
 }
 
 
@@ -133,10 +148,11 @@ body {
     font-weight:normal;
     width:150px;
 }
-#tempMax{
+#tempMax, #temperatureMax{
     float:right;
     margin-right: 10px;
     margin-top:4.5px;
+    font-weight: bold;
 }
 #temperatureMax{
     font-weight: normal;
@@ -228,7 +244,7 @@ body {
 
 header {
     height: auto;
-    float:center; 
+    text-align:center; 
     width:1250px;
     padding-top:20px;
     margin:auto;
@@ -329,7 +345,6 @@ aside {
     border-top:3px dashed rgba(76, 206, 187, 0.86);
     width:1250px; 
     background-color:#222;
-    float:center; 
     height:auto;
     padding:20px; 
     color:#fff;
@@ -349,8 +364,7 @@ aside {
 /* Bloc exoConfig */
 #exoConfig{
 	width:342px;
-	margin-right:5px;
-	float:right;
+	margin : auto;
 	height:auto;
 	overflow:auto;
 	background-color:white;
@@ -408,4 +422,24 @@ aside {
 
 .ui-autocomplete{
     z-index: 1051!important;
+}
+
+.modal-lg{
+    width:40% !important;
+}
+
+#add_ss_mov, #add_mov{
+    width : 100%;
+}
+
+.padding-right{
+    padding-right:10px
+}
+
+area{
+    cursor : default;
+}
+
+.map{
+    margin : auto;
 }

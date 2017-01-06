@@ -27,12 +27,12 @@ function Compliant() {
 		if(compliant==false){
 			//arrete tout (AU)
 			StopExo()
-			$('#compliantT').bootstrapToggle("off");
-			$('#compliantBG').bootstrapToggle("off");
-			$('#compliantBD').bootstrapToggle("off");
-			$('#compliantCol').bootstrapToggle("off");
-			$('#compliantJD').bootstrapToggle("off");
-			$('#compliantJG').bootstrapToggle("off");
+			$('#compliantT').prop('checked') ? $('#compliantT').bootstrapToggle("off") : "";
+			$('#compliantBG').prop('checked') ? $('#compliantBG').bootstrapToggle("off"): "";
+			$('#compliantBD').prop('checked') ? $('#compliantBD').bootstrapToggle("off"): "";
+			$('#compliantCol').prop('checked') ? $('#compliantCol').bootstrapToggle("off"): "";
+			$('#compliantJD').prop('checked') ? $('#compliantJD').bootstrapToggle("off"): "";
+			$('#compliantJG').prop('checked') ? $('#compliantJG').bootstrapToggle("off"): "";
 			$.ajax({
 				url: 'http://'+poppyName+':4567/?Submit=set+robot+compliant&poppyParts=',
 				type:'POST',
@@ -76,6 +76,8 @@ function PartNonCompliant(poppyParts="") {
 	var nbParts = 0;
 	var semiPoppyParts = [];
 	var nbsemiNbParts = 0;
+
+
 	
 	if(partComp==false){
 		partComp = true;
@@ -113,8 +115,22 @@ function PartNonCompliant(poppyParts="") {
 		});
         //MAJ bouton ON/OFF de Poppy entier
 		if(nbParts==0){
-			partComp=false;
+			//partComp=false;
 			$('#compliant').bootstrapToggle("off");
+
+			$.ajax({
+				url: 'http://'+poppyName+':4567/?Submit=set+robot+compliant&poppyParts=',
+				type:'POST',
+				statusCode: {
+					200: function() {
+						console.log("Poppy is compliant" );
+					},
+					0:function(data){		//error, not connected
+						console.log('error : Poppy is not connected');
+						document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+					}
+				}
+			});
 		}
 		else{
 			$('#compliant').bootstrapToggle("on"); //MAJ de l'affichage bouton ON/OFF seulement
@@ -135,6 +151,8 @@ function PartNonCompliant(poppyParts="") {
 				}
 			});
 		}
+
+		
 	}
 	if(nbsemiNbParts!=0){
 		semiCompliant(semiPoppyParts);
@@ -737,11 +755,11 @@ function verifFinMov(){
 function clickFleche(){
 	if ($(this).hasClass('active')){
 		  $(this).next().slideToggle();		          
-		  $(this).children().html('â–¸');    
+		  $(this).children().html('&#9656;');    
 		  $(this).removeClass('active');
 	} else {
 		$(this).next().slideToggle();	
-		$(this).children().html('â–¾');
+		$(this).children().html('&#9662;');
 		$(this).addClass('active');
 	}  	
 }
@@ -815,7 +833,7 @@ function Go(exoName) {
 					$('#exoConfig').append('<div id="nom_seance">' + exoName + '</div>' );
 					for (i=1; i<=jsondata['nb_fichiers']; i++){
 						if (jsondata[i]['nb_fichiers'] >0){
-							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">â–¾</span> ' + jsondata[i]['nom']+'</div>');
+							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+'</div>');
 							var texte = "";
 							texte+= '<div class="containerMvts">';
 							for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
@@ -1103,6 +1121,24 @@ function SendFile() {
 	});
 }
 
+function putHighlightTmp(id, value){
+	var data = $(id).data('maphilight') || {};
+    data.alwaysOn = value;
+    $(id).data('maphilight', data).trigger('alwaysOn.maphilight');
+}
+
+function checkActiveArea(id){
+	var data = $("#actif_"+id+"_warning").data('maphilight') || {};
+    var data2 = $("#actif_"+id+"_stop").data('maphilight') || {};
+
+    if (data.alwaysOn == true || data2.alwaysOn == true){
+    	return true;
+    } else {
+    	return false;
+    }
+
+}
+
 function ScanResults() {
 	$.ajax({
 		url: 'http://'+poppyName+':4567/?Submit=getMesure',
@@ -1132,6 +1168,10 @@ function ScanResults() {
 						}
 						$('#compliantPart'+key).css('color','rgb(255,100,30)');
 						$('#compliantPart'+key).css('font-weight','bold');
+
+						putHighlightTmp("#actif_"+key, false);
+						putHighlightTmp("#actif_"+key+"_warning", true);
+						putHighlightTmp("#actif_"+key+"_stop", false);
 					}
 					else if (data['poppyPart_alert'][key]=='stop'){
 						if ($('#compliantPart'+key).css('color') != 'rgb(255, 30, 30)'){
@@ -1139,10 +1179,19 @@ function ScanResults() {
 						}
 						$('#compliantPart'+key).css('color','rgb(255,30,30)');
 						$('#compliantPart'+key).css('font-weight','bold');
+
+						putHighlightTmp("#actif_"+key, false);
+						putHighlightTmp("#actif_"+key+"_warning", false);
+						putHighlightTmp("#actif_"+key+"_stop", true);
 					}
 					else if (data['poppyPart_alert'][key]=='ok'){
 						$('#compliantPart'+key).css('color','rgb(255,255,255)');
 						$('#compliantPart'+key).css('font-weight','');
+
+						$('#compliant'+key).prop('checked') ? putHighlightTmp("#actif_"+key, false) : putHighlightTmp("#actif_"+key, true) 
+						
+						putHighlightTmp("#actif_"+key+"_warning", false);
+						putHighlightTmp("#actif_"+key+"_stop", false);
 					}
 				}
 				if(playAlert==true){
@@ -1158,59 +1207,109 @@ function ScanResults() {
 				$('#poppyName').val(poppyName);
 				if (data['compliant']=="u'True'"){
 					partComp=true;
-					$('#compliant').bootstrapToggle("off");
+					$('#compliant').prop('checked') ? $('#compliant').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliant').bootstrapToggle('on');
+					!$('#compliant').prop('checked') ? $('#compliant').bootstrapToggle('on') : "";
 				}
 				if (data['compliantT']=="u'True'"){
 					partComp=true;
-					$('#compliantT').bootstrapToggle("off");
+					$('#compliantT').prop('checked') ?$('#compliantT').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliantT').bootstrapToggle('on');
+					!$('#compliantT').prop('checked') ?$('#compliantT').bootstrapToggle('on') : "";
 				}
 				if (data['compliantBG']=="u'True'"){
 					partComp=true;
-					$('#compliantBG').bootstrapToggle("off");
+					$('#compliantBG').prop('checked') ?$('#compliantBG').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliantBG').bootstrapToggle('on');
+					!$('#compliantBG').prop('checked') ?$('#compliantBG').bootstrapToggle('on') : "";
 				}
 				if (data['compliantBD']=="u'True'"){
 					partComp=true;
-					$('#compliantBD').bootstrapToggle("off");
+					$('#compliantBD').prop('checked') ?$('#compliantBD').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliantBD').bootstrapToggle('on');
+					!$('#compliantBD').prop('checked') ?$('#compliantBD').bootstrapToggle('on') : "";
 				}
 				if (data['compliantCol']=="u'True'"){
 					partComp=true;
-					$('#compliantCol').bootstrapToggle("off");
+					$('#compliantCol').prop('checked') ?$('#compliantCol').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliantCol').bootstrapToggle('on');
+					!$('#compliantCol').prop('checked') ?$('#compliantCol').bootstrapToggle('on') : "";
 				}
 				if (data['compliantJD']=="u'True'"){
 					partComp=true;
-					$('#compliantJD').bootstrapToggle("off");
+					$('#compliantJD').prop('checked') ?$('#compliantJD').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliantJD').bootstrapToggle('on');
+					!$('#compliantJD').prop('checked') ?$('#compliantJD').bootstrapToggle('on') : "";
 				}
 				if (data['compliantJG']=="u'True'"){
 					partComp=true;
-					$('#compliantJG').bootstrapToggle("off");
+					$('#compliantJG').prop('checked') ?$('#compliantJG').bootstrapToggle("off") : "";
 				}
 				else{
 					partComp=true;
-					$('#compliantJG').bootstrapToggle('on');
+					!$('#compliantJG').prop('checked') ?$('#compliantJG').bootstrapToggle('on') : "";
+				}
+				
+				//semi compliant
+				if (data['semiCompliantT']=="u'True'"){
+					partComp=true;
+					$('#semiMouT').prop("checked",true);
+				}
+				else{
+					partComp=true;
+					$('#semiMouT').prop("checked", false);
+				}
+				if (data['semiCompliantBG']=="u'True'"){
+					partComp=true;
+					$('#semiMouBG').prop("checked",true);
+				}
+				else{
+					partComp=true;
+					$('#semiMouBG').prop("checked", false);
+				}
+				if (data['semiCompliantBD']=="u'True'"){
+					partComp=true;
+					$('#semiMouBD').prop("checked",true);
+				}
+				else{
+					partComp=true;
+					$('#semiMouBD').prop("checked", false);
+				}
+				if (data['semiCompliantCol']=="u'True'"){
+					partComp=true;
+					$('#semiMouCol').prop("checked",true);
+				}
+				else{
+					partComp=true;
+					$('#semiMouCol').prop("checked", false);
+				}
+				if (data['semiCompliantJD']=="u'True'"){
+					partComp=true;
+					$('#semiMouJD').prop("checked",true);
+				}
+				else{
+					partComp=true;
+					$('#semiMouJD').prop("checked", false);
+				}
+				if (data['semiCompliantJG']=="u'True'"){
+					partComp=true;
+					$('#semiMouJG').prop("checked",true);
+				}
+				else{
+					partComp=true;
+					$('#semiMouJG').prop("checked", false);
 				}
 				partComp=false;
 				if (uptodate==true){
@@ -1265,61 +1364,110 @@ function ReceiveFile(namefile = 'nothg', BDD = "false") {
 				console.log(jsondata) 
 				if (namefile == 'movelist'){
 					dataListe = jsondata;		// maj variable globale
-					if (jsondata['compliant']=="u'True'"){
+					if (data['compliant']=="u'True'"){
 						partComp=true;
-						$('#compliant').bootstrapToggle("off");
+						$('#compliant').prop('checked') ? $('#compliant').bootstrapToggle("off") : "";
 					}
 					else{
 						partComp=true;
-						$('#compliant').bootstrapToggle('on');
+						!$('#compliant').prop('checked') ? $('#compliant').bootstrapToggle('on') : "";
 					}
-					if (jsondata['compliantT']=="u'True'"){
+					if (data['compliantT']=="u'True'"){
 						partComp=true;
-						$('#compliantT').bootstrapToggle("off");
-					}
-					else{
-						partComp=true;
-						$('#compliantT').bootstrapToggle('on');
-					}
-					if (jsondata['compliantBG']=="u'True'"){
-						partComp=true;
-						$('#compliantBG').bootstrapToggle("off");
+						$('#compliantT').prop('checked') ?$('#compliantT').bootstrapToggle("off") : "";
 					}
 					else{
 						partComp=true;
-						$('#compliantBG').bootstrapToggle('on');
+						!$('#compliantT').prop('checked') ?$('#compliantT').bootstrapToggle('on') : "";
 					}
-					if (jsondata['compliantBD']=="u'True'"){
+					if (data['compliantBG']=="u'True'"){
 						partComp=true;
-						$('#compliantBD').bootstrapToggle("off");
-					}
-					else{
-						partComp=true;
-						$('#compliantBD').bootstrapToggle('on');
-					}
-					if (jsondata['compliantCol']=="u'True'"){
-						partComp=true;
-						$('#compliantCol').bootstrapToggle("off");
+						$('#compliantBG').prop('checked') ?$('#compliantBG').bootstrapToggle("off") : "";
 					}
 					else{
 						partComp=true;
-						$('#compliantCol').bootstrapToggle('on');
+						!$('#compliantBG').prop('checked') ?$('#compliantBG').bootstrapToggle('on') : "";
 					}
-					if (jsondata['compliantJD']=="u'True'"){
+					if (data['compliantBD']=="u'True'"){
 						partComp=true;
-						$('#compliantJD').bootstrapToggle("off");
-					}
-					else{
-						partComp=true;
-						$('#compliantJD').bootstrapToggle('on');
-					}
-					if (jsondata['compliantJG']=="u'True'"){
-						partComp=true;
-						$('#compliantJG').bootstrapToggle("off");
+						$('#compliantBD').prop('checked') ?$('#compliantBD').bootstrapToggle("off") : "";
 					}
 					else{
 						partComp=true;
-						$('#compliantJG').bootstrapToggle('on');
+						!$('#compliantBD').prop('checked') ?$('#compliantBD').bootstrapToggle('on') : "";
+					}
+					if (data['compliantCol']=="u'True'"){
+						partComp=true;
+						$('#compliantCol').prop('checked') ?$('#compliantCol').bootstrapToggle("off") : "";
+					}
+					else{
+						partComp=true;
+						!$('#compliantCol').prop('checked') ?$('#compliantCol').bootstrapToggle('on') : "";
+					}
+					if (data['compliantJD']=="u'True'"){
+						partComp=true;
+						$('#compliantJD').prop('checked') ?$('#compliantJD').bootstrapToggle("off") : "";
+					}
+					else{
+						partComp=true;
+						!$('#compliantJD').prop('checked') ?$('#compliantJD').bootstrapToggle('on') : "";
+					}
+					if (data['compliantJG']=="u'True'"){
+						partComp=true;
+						$('#compliantJG').prop('checked') ?$('#compliantJG').bootstrapToggle("off") : "";
+					}
+					else{
+						partComp=true;
+						!$('#compliantJG').prop('checked') ?$('#compliantJG').bootstrapToggle('on') : "";
+					}
+					//semi compliant
+					if (data['semiCompliantT']=="u'True'"){
+						partComp=true;
+						$('#semiMouT').prop("checked",true);
+					}
+					else{
+						partComp=true;
+						$('#semiMouT').prop("checked", false);
+					}
+					if (data['semiCompliantBG']=="u'True'"){
+						partComp=true;
+						$('#semiMouBG').prop("checked",true);
+					}
+					else{
+						partComp=true;
+						$('#semiMouBG').prop("checked", false);
+					}
+					if (data['semiCompliantBD']=="u'True'"){
+						partComp=true;
+						$('#semiMouBD').prop("checked",true);
+					}
+					else{
+						partComp=true;
+						$('#semiMouBD').prop("checked", false);
+					}
+					if (data['semiCompliantCol']=="u'True'"){
+						partComp=true;
+						$('#semiMouCol').prop("checked",true);
+					}
+					else{
+						partComp=true;
+						$('#semiMouCol').prop("checked", false);
+					}
+					if (data['semiCompliantJD']=="u'True'"){
+						partComp=true;
+						$('#semiMouJD').prop("checked",true);
+					}
+					else{
+						partComp=true;
+						$('#semiMouJD').prop("checked", false);
+					}
+					if (data['semiCompliantJG']=="u'True'"){
+						partComp=true;
+						$('#semiMouJG').prop("checked",true);
+					}
+					else{
+						partComp=true;
+						$('#semiMouJG').prop("checked", false);
 					}
 					partComp=false;
 					CheckIfPoppyUptodate(jsondata['nb_mov'], jsondata['nb_exo'],jsondata['nb_seance']);
@@ -1369,7 +1517,7 @@ function AfficheMovelist(playerOnly = "false"){
 		data = JSON.parse(database);
 		console.log(data);
 		
-		$('#majBdD').nextAll().remove();
+		$('#stopPoppy').nextAll().remove();
 		$('#tableMoves_wrapper').remove();
 		$('#movelist').append('<table id="tableMoves" class="table table-striped table-bordered">'+
 								'<thead>'+
@@ -1464,6 +1612,13 @@ function AfficheMovelist(playerOnly = "false"){
 			},
 			stateSave: true 	//save state of the table to load at the same state
 		} );
+	});
+}
+
+function stopPoppy() {
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=stopServer',
+		type:'GET'
 	});
 }
 

@@ -1,10 +1,9 @@
 <header>
 
-<center> <img src="includes/images/logo.png" id="logopo" ></center> 
+	<img src="includes/images/logo.png" id="logopo" alt="Logo Poppy" >
     <div id="menu">
 	<h1 class="title">Poppy GRR</h1>
     </div>
-    <?php include "includes/menu.php"?>
 
     <div class="clear"></div>
 

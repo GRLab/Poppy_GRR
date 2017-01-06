@@ -14,7 +14,7 @@ class Connexion{
 		try {
 			self::$oConnexion = new PDO($dsn, $utilisateur , $motdepasse);
 		} catch (PDOException $exception) {
-			echo 'Ca a foire : ', $exception -> getMessage();
+			echo 'La connexion à la base de données a échouée : ', $exception -> getMessage();
 			die; 
 		}
 	}
