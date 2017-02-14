@@ -1,21 +1,31 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import os
 import socket
 import BaseHTTPServer
 from urlparse import urlparse
-import fonctions 
 import json
 import time
 from collections import OrderedDict
 import logging
 from logging.handlers import RotatingFileHandler
+from threading import Thread
+from fonctions import *
+
+#arret http server
+class stopServer(Thread):
+	def __init__(self, httpd):
+		Thread.__init__(self)
+		self.httpd = httpd
+
+	def run(self):
+		self.httpd.shutdown()
 
 #Gestion des requetes
 class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
     
     def send_data(self, jsonfile, BDD = "false"):
 		try:
-			jsondata = fonctions.loadData(jsonfile, BDD)
+			jsondata = poppy.loadData(jsonfile, BDD)
 		except:
 			logger.exception("***** load data error *****")
 		print jsondata
@@ -24,17 +34,17 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
     def read_data(self, moveName, previsu = False):
 		moveconfig = self.rfile.read(int(self.headers['Content-Length']))
 		try:
-			succeed = fonctions.readConfig(moveconfig, moveName)
+			succeed = poppy.readConfig(moveconfig, moveName)
 		except:
 			logger.exception("***** read config error *****")
 		if previsu == True :
 			print " bien en previsu mode"
 			try:
-				fonctions.GoMove(moveName)
+				poppy.GoMove(moveName)
 			except:
 				logger.exception("***** GoMove error *****")
 			try:
-				fonctions.RemoveMove(moveName)
+				poppy.RemoveMove(moveName)
 			except:
 				logger.exception("***** RemoveMove error *****")
 			succeed = 'moved'
@@ -71,19 +81,19 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	
 	text=""
 	#request verification and application
-        
+
 	if 'Submit' in params.keys() and "set+robot+compliant" == params['Submit']:
 	    poppyParts=[]
 	    logger.info(IPclient+" REQUEST - setting the robot compliant")
 	    if params['poppyParts']!="":
 			poppyParts = params['poppyParts'].split(",")
 			try:
-				fonctions.Compliant(poppyParts)
+				poppy.Compliant(poppyParts)
 			except:
 				logger.exception("***** Part Compliant error *****")
 	    else:
 			try:
-				fonctions.Compliant()
+				poppy.Compliant()
 			except:
 				logger.exception("***** Compliant error *****")
 	    self.send_headers()
@@ -96,12 +106,12 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    if params['poppyParts']!="":
 			poppyParts = params['poppyParts'].split(",")
 			try:
-				fonctions.NonCompliant(poppyParts, notMoving = True)
+				poppy.NonCompliant(poppyParts, notMoving = True)
 			except:
 				logger.exception("***** Part NonCompliant error *****")
 	    else:
 			try:
-				fonctions.NonCompliant()
+				poppy.NonCompliant()
 			except:
 				logger.exception("***** NonCompliant error *****")
 	    self.send_headers()
@@ -114,7 +124,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			poppyParts = params['poppyParts'].split(",")
 	    logger.info(IPclient+" REQUEST - setting the robot semi-compliant")  
 	    try:
-			fonctions.semiCompliant(poppyParts)
+			poppy.semiCompliant(poppyParts)
 	    except:
 			logger.exception("***** semiCompliant error *****")
 	    self.send_headers()
@@ -125,7 +135,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    self.send_headers()
 	    logger.info(IPclient+" REQUEST - setting the robot in initial position")
 	    try:
-			fonctions.PosInit()
+			poppy.PosInit()
 	    except:
 			logger.exception("***** PosInit error *****")
 	    text="Poppy is in his initial position"
@@ -137,7 +147,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    posName = params['posName']
 	    logger.info(IPclient+" REQUEST - saving initial position "+posName)
 	    try:
-			fonctions.SavePosInit(posName)
+			poppy.SavePosInit(posName)
 	    except:
 			logger.exception("***** SavePosInit error *****")
 	    text = 'initial position saved'
@@ -150,7 +160,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    posName = params['posName']
 	    logger.info(IPclient+" REQUEST - going to initial position : "+posName)
 	    try:
-			fonctions.GoPosInit(posName)
+			poppy.GoPosInit(posName)
 	    except:
 			logger.exception("***** GoPosInit error *****")
 	    text = 'Poppy in initial position'
@@ -172,7 +182,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			poppyParts = params['poppyParts'].split(",")
 	    logger.info(IPclient+" REQUEST - saving ss mov : "+moveName+", "+str(poppyParts))
 	    try:
-			text = fonctions.SaveMovePart(poppyParts, moveName, semiMou, playedMove)
+			text = poppy.SaveMovePart(poppyParts, moveName, semiMou, playedMove)
 	    except:
 			logger.exception("***** saveMovePart error *****")
 	    if text == 'move part saved':
@@ -191,7 +201,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    previsual = True
 	    logger.info(IPclient+" REQUEST - creating move : "+moveName)
 	    try:
-			exist = fonctions.directory(moveName)
+			exist = poppy.directory(moveName)
 	    except:
 			logger.exception("***** directory error *****")
 	    if exist == '':
@@ -207,7 +217,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			exoName = params['exoName']
 	    logger.info(IPclient+" REQUEST - creating exo or seance : "+exoName)
 	    try:
-			exist = fonctions.directory(exoName)
+			exist = poppy.directory(exoName)
 	    except:
 			logger.exception("***** directory error *****")
 	    if exist == '':
@@ -222,7 +232,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    newName = params['newName']
 	    logger.info(IPclient+" REQUEST - renaming : "+previousName+" -> "+newName)
 	    try:
-			text = fonctions.rename(previousName, newName)
+			text = poppy.rename(previousName, newName)
 	    except:
 			logger.exception("***** rename error *****")
 	    if 'exist' in text:
@@ -237,7 +247,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			moveName = params['moveName']
 	    logger.info(IPclient+" REQUEST - symetry of : "+moveName)
 	    try:
-			text = fonctions.symetry(moveName)
+			text = poppy.symetry(moveName)
 	    except:
 			logger.exception("***** symetry error *****")
 	    if 'exist' in text:
@@ -252,7 +262,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			moveName = params['moveName']
 	    logger.info(IPclient+" REQUEST - reverse of : "+moveName)
 	    try:
-			text = fonctions.reverse(moveName)
+			text = poppy.reverse(moveName)
 	    except:
 			logger.exception("***** reverse error *****")
 	    if 'exist' in text:
@@ -267,7 +277,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			moveName = params['moveName']
 	    logger.info(IPclient+" REQUEST - removing : "+moveName)
 	    try:
-			remove = fonctions.RemoveMove(moveName)
+			remove = poppy.RemoveMove(moveName)
 	    except:
 			logger.exception("***** RemoveMove error *****")
 	    if remove == True:
@@ -290,7 +300,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			poppyParts = params['poppyParts'].split(",")
 	    logger.info(IPclient+" REQUEST - playing move : "+moveName+", speed : "+speed)
 	    try:
-			text = fonctions.GoMove(moveName, speed, poppyParts = poppyParts)
+			text = poppy.GoMove(moveName, speed, poppyParts = poppyParts)
 	    except:
 			logger.exception("***** GoMove error *****")
 	    if text == 'Poppy moved':
@@ -308,7 +318,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    speed = params['speed']
 	    logger.info(IPclient+" REQUEST - playing reverse move : "+moveName+", speed : "+speed)
 	    try:
-			text = fonctions.GoMove(moveName, speed, rev=True)
+			text = poppy.GoMove(moveName, speed, rev=True)
 	    except:
 			logger.exception("***** reverse GoMove error *****")
 	    if text == 'Poppy moved':
@@ -323,7 +333,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    exoName = params['exoName']
 	    logger.info(IPclient+" REQUEST - playing exo : "+exoName)
 	    try:
-			text = fonctions.GoExo(exoName)
+			text = poppy.GoExo(exoName)
 	    except:
 			logger.exception("***** GoExo error *****")
 	    if text == 'Exercice has started':
@@ -347,12 +357,12 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			exoName = params['exoName']
 	    logger.info(IPclient+" REQUEST - playing : "+exoName)
 	    try:
-			dir = fonctions.directory(exoName)
+			dir = poppy.directory(exoName)
 	    except:
 			logger.exception("***** directory error *****")
 	    if dir == 'exo' or dir == 'seance':
 			try:
-				text = fonctions.GoExo(exoName)
+				text = poppy.GoExo(exoName)
 			except:
 				logger.exception("***** GoExo error *****")
 			if text == 'Exercice has started':
@@ -370,7 +380,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 				self.send_headers()
 	    else :
 			try:
-				text = fonctions.GoMove(exoName)
+				text = poppy.GoMove(exoName)
 			except:
 				logger.exception("***** GoMove error *****")
 			if text == 'Move has started':
@@ -382,7 +392,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "stop+exo" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - stop !")
 	    try:
-			text = fonctions.StopExo()
+			text = poppy.StopExo()
 	    except:
 			logger.exception("***** StopExo error *****")
 	    if  'stopped' in text:
@@ -394,7 +404,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "pause+exo" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - pause !")
 	    try:
-			text = fonctions.PauseExo()
+			text = poppy.PauseExo()
 	    except:
 			logger.exception("***** PauseExo error *****")
 	    if text == 'move paused':
@@ -406,7 +416,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "resume+exo" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - resume !")
 	    try:
-			text = fonctions.ResumeExo()
+			text = poppy.ResumeExo()
 	    except:
 			logger.exception("***** ResumeExo error *****")
 	    if 'resumed' in text:
@@ -417,7 +427,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 
 	if 'Submit' in params.keys() and "verif+fin+exo" == params['Submit']:
 	    try:
-			verif = fonctions.verifFinExo()
+			verif = poppy.verifFinExo()
 	    except:
 			logger.exception("***** verifFinExo error *****")
 	    if verif["info"] == 'end':
@@ -435,7 +445,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    
 	if 'Submit' in params.keys() and "verif+fin+mov" == params['Submit']:
 	    try:
-			verif = fonctions.verifFinMov()
+			verif = poppy.verifFinMov()
 	    except:
 			logger.exception("***** verifFinMov error *****")
 	    if verif == 'end':
@@ -460,7 +470,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		logger.info(IPclient+" REQUEST - adding "+moveType+" in Poppy : "+moveName)
 		moveFile = self.rfile.read(int(self.headers['Content-Length']))
 		try:
-			text=fonctions.addMove(moveName, moveType, moveFile)
+			text=poppy.addMove(moveName, moveType, moveFile)
 		except:
 			logger.exception("***** addMove error *****")
 		if text == "added":
@@ -515,7 +525,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    
 	if 'Submit' in params.keys() and "getMesure" == params['Submit']:
 		try:
-			results = fonctions.scanResults()
+			results = poppy.scanResults()
 		except:
 			logger.exception("***** scanResults error *****")
 		results = json.dumps(results)
@@ -531,7 +541,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "getIP" == params['Submit']:
 		logger.info(IPclient+" REQUEST - sending Poppy IP")
 		try:
-			IPAddress = fonctions.giveIP()
+			IPAddress = poppy.giveIP()
 		except:
 			logger.exception("***** giveIP error *****")
 		self.send_headers(200)
@@ -547,7 +557,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "getLogs" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - get logs")
 	    try:
-			logs = fonctions.send_logs()
+			logs = poppy.send_logs()
 	    except:
 			logger.exception("***** send_logs error *****")
 	    self.send_response(200)
@@ -567,7 +577,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "getPreviousLogs" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - get previous logs")
 	    try:
-			logs = fonctions.send_logs(previous = True)
+			logs = poppy.send_logs(previous = True)
 	    except:
 			logger.exception("***** previous send_logs error *****")
 	    self.send_response(200)
@@ -587,33 +597,67 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 				logger.exception(IPclient+" ***** socket error ***** ")
 	    logger.info(IPclient+" RESPONSE - logs sent")
 
+	if 'Submit' in params.keys() and "stopServer" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - stopServer")
+	    print "stop server"
+	    poppy.stopAll()
+	    time.sleep(1)
+	    stopThread = stopServer(httpd)
+	    stopThread.start()
+	    pygame.quit()
+
 #Configuration logs
 year = int(time.strftime('%Y', time.localtime()))		#annee en cours
 month = int(time.strftime('%m', time.localtime()))		#mois en cours
 logger = logging.getLogger('PoppyGRR_log')
 logger.setLevel(logging.DEBUG)
-if ("logs_"+str(year)+"-"+str(month)) not in os.listdir('log/'):
-	os.mkdir("log/logs_"+str(year)+"-"+str(month))
+if ("logs_"+str(year)+"-"+str(month)) not in os.listdir('./log/'):
+	os.mkdir("./log/logs_"+str(year)+"-"+str(month))
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', "%d/%m/%Y %I:%M:%S %p")
 handler = logging.handlers.RotatingFileHandler("./log/logs_"+str(year)+"-"+str(month)+"/serverlog.log", mode="a", maxBytes= 100000000000, backupCount= 1, encoding="utf-8")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 #CREATION du serveur web
 PORT = 4567
-poppyName = "poppygr"
+poppyName = "poppy"
 server_address = (poppyName+".local", PORT) #changer l'IP en fonction
 server = BaseHTTPServer.HTTPServer
 handler = RequestHandler
 print "Serveur actif sur le port :", PORT
 logger.info('initializing poppy server')
-try:
-	fonctions.mesure()	#start scanning the motors
-except:
-	logger.exception("***** mesure error *****")
-try:
-	fonctions.compress_log()	#compresse les logs anterieurs
-except:
-	logger.exception("***** ResumeExo error *****")
-httpd = server(server_address, handler)
-httpd.serve_forever()
+#initialisation de l ecran
+time.sleep(2)
+print "ecran initialise"
+#initialisation du son
+#attente avant initialisation, pour demarrage au boot RPi
+time.sleep(8)
+moteursInitialise = False
+moteursInitEssai = 0
+while not moteursInitialise:
+	logger.info("essai initialisation moteur "+str(moteursInitEssai))
+	try:
+		time.sleep(2)
+		poppy=PoppyGRR()
+		moteursInitialise = True
+		logger.info("----- moteurs initialises -----")
+	except:
+		logger.exception("***** motor init error *****")
+		moteursInitEssai +=1
+		if moteursInitEssai ==3:
+			time.sleep(3)
+			break
 
+if moteursInitialise:
+	try:
+		poppy.mesure()	#start scanning the motors
+	except:
+		logger.exception("***** mesure error *****")
+	try:
+		poppy.compress_log()	#compresse les logs anterieurs
+	except:
+		logger.exception("***** compress_log error *****")
+	time.sleep(0.5)
+
+	httpd = server(server_address, handler)
+	time.sleep(0.8)
+	httpd.serve_forever()
