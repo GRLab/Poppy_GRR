@@ -324,7 +324,7 @@ include "includes/header.php";
 						<td class="padding-right"><fieldset class="form-group">
 							<input type="text" title="Décalage temporel entre le début du mouvement et le début du sous mouvement. L'unité est l'incrément (environ 0.25s en vitesse normale, cette valeur augmente si la vitesse diminue). Plus l'offset est grand, et plus le mouvement démarrera avec du retard." class="form-control" id="offset_1" placeholder="offset" />
 						</fieldset></td>
-						<td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td>
+						<!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td-->
 					</tr>
 				</table>
 				<button type="button" class="btn btn-info" onclick="add_one_ss_mov()">Ajouter</button>
@@ -367,7 +367,7 @@ include "includes/header.php";
 						<td class="padding-right"><fieldset class="form-group">
 							<input type="text" title="Correspond à la pause après le mouvement ou l'exercice concerné. La pause est en secondes." class="form-control" id="pause_1" placeholder="pause" />
 						</fieldset></td>
-						<td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td>
+						<!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td-->
 					</tr>
 				</table>
 				<button type="button" class="btn btn-info" onclick="add_one_mov()">Ajouter</button>
@@ -483,7 +483,7 @@ include "includes/header.php";
 		nb_ss_mov = 1
 		function add_one_ss_mov(){
 			nb_ss_mov = nb_ss_mov+1;
-			$('#add_ss_mov').append('<tr><td class="padding-right"><fieldset class="form-group"><input type="text" title="Nom du sous mouvement composant le mouvement." class="form-control" id="ss_mov_'+nb_ss_mov+'" placeholder="ss_mov_name" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 9 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="form-control" id="speed_'+nb_ss_mov+'" placeholder="speed [1-10] (normal=9)" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Décalage temporel entre le début du mouvement et le début du sous mouvement. L\'unité est l\'incrément (environ 0.25s en vitesse normale, cette valeur augmente si la vitesse diminue). Plus l\'offset est grand, et plus le mouvement démarrera avec du retard." class="form-control" class="form-control" id="offset_'+nb_ss_mov+'" placeholder="offset" /></fieldset></td><td class="pull-right"><fieldset class="form-group"><button class="btn btn-danger supp_ligne" title="Supprimer la ligne"><span class="glyphicon glyphicon-trash"></span></button></fieldset></td></tr>');
+			$('#add_ss_mov').append('<tr><td class="padding-right"><fieldset class="form-group"><input type="text" title="Nom du sous mouvement composant le mouvement." class="form-control" id="ss_mov_'+nb_ss_mov+'" placeholder="ss_mov_name" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 9 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="form-control" id="speed_'+nb_ss_mov+'" placeholder="speed [1-10] (normal=9)" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Décalage temporel entre le début du mouvement et le début du sous mouvement. L\'unité est l\'incrément (environ 0.25s en vitesse normale, cette valeur augmente si la vitesse diminue). Plus l\'offset est grand, et plus le mouvement démarrera avec du retard." class="form-control" class="form-control" id="offset_'+nb_ss_mov+'" placeholder="offset" /></fieldset></td><!--td class="pull-right"><fieldset class="form-group"><button class="btn btn-danger supp_ligne" title="Supprimer la ligne"><span class="glyphicon glyphicon-trash"></span></button></fieldset></td--></tr>');
 			$('#ss_mov_'+nb_ss_mov).autocomplete({
 				source: movelistTags
 			});
@@ -492,7 +492,7 @@ include "includes/header.php";
 		nb_mov = 1
 		function add_one_mov(){
 			nb_mov = nb_mov+1;
-			$('#add_mov').append('<tr><td class="padding-right"><fieldset class="form-group"><input type="text" class="form-control" id="mov_'+nb_mov+'" title="Nom du mouvement ou de l\'exercice composant le fichier à créer." placeholder="mov_name" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="form-control" id="speedexo_'+nb_mov+'" placeholder="vitesse [1-10] (normal=5)" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Correspond à la pause après le mouvement ou l\'exercice concerné. La pause est en secondes." class="form-control" id="pause_'+nb_mov+'" placeholder="pause" /></fieldset></td><td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td></tr>');
+			$('#add_mov').append('<tr><td class="padding-right"><fieldset class="form-group"><input type="text" class="form-control" id="mov_'+nb_mov+'" title="Nom du mouvement ou de l\'exercice composant le fichier à créer." placeholder="mov_name" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="form-control" id="speedexo_'+nb_mov+'" placeholder="vitesse [1-10] (normal=5)" /></fieldset></td><td class="padding-right"><fieldset class="form-group"><input type="text" title="Correspond à la pause après le mouvement ou l\'exercice concerné. La pause est en secondes." class="form-control" id="pause_'+nb_mov+'" placeholder="pause" /></fieldset></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--></tr>');
 			$('#mov_'+nb_mov).autocomplete({
 				source: movelistTags
 			});

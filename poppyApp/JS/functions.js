@@ -562,6 +562,7 @@ function CreateExo() {
 			listeFiles.push(namefile);
 		}
 		else{
+			console.log(namefile)
 			vide = vide +1;
 		}
 	}
