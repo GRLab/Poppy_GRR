@@ -19,6 +19,7 @@ class stopServer(Thread):
 
 	def run(self):
 		self.httpd.shutdown()
+		self.httpd.socket.close()
 
 #Gestion des requetes
 class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
@@ -600,11 +601,10 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "stopServer" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - stopServer")
 	    print "stop server"
-	    poppy.stopAll()
 	    time.sleep(1)
 	    stopThread = stopServer(httpd)
 	    stopThread.start()
-	    pygame.quit()
+	    poppy.stopAll()
 
 #Configuration logs
 year = int(time.strftime('%Y', time.localtime()))		#annee en cours
