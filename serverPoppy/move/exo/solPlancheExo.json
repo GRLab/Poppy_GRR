@@ -1,0 +1,30 @@
+{
+    "nb_fichiers": 5, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "solPlancheInitBras"
+    }, 
+    "fichier3": {
+        "pause": 3, 
+        "vitesse": 7, 
+        "namefile": "solPlanche"
+    }, 
+    "fichier1": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "solTendJambes"
+    }, 
+    "fichier4": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "solPlancheRev"
+    }, 
+    "fichier5": {
+        "pause": 0, 
+        "vitesse": 5, 
+        "namefile": "solPlancheInitBrasRev"
+    }, 
+    "type": "exo", 
+    "nb_temps": 93
+}

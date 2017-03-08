@@ -487,6 +487,18 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			logger.exception(IPclient+" ***** socket error ***** ")
 
+	if 'Submit' in params.keys() and "set+volume" == params['Submit']:
+		if params['volume']!="":
+			volume=params['volume']
+		logger.info(IPclient+" REQUEST - set volume "+str(volume))
+		try:
+			text=poppy.setVolume(volume)
+		except:
+			logger.exception("***** setVolume error *****")
+		self.send_headers()
+		logger.info(IPclient+" RESPONSE - "+text)
+		print (text)
+
     def do_GET(self):
 	#print self.path	#pour voir ce qui a ete recu avant traitement
 	parsed_path = urlparse(self.path) #recupere l'url de la requete
@@ -601,6 +613,8 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "stopServer" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - stopServer")
 	    print "stop server"
+	    self.send_headers(200)
+	    self.wfile.write('')
 	    time.sleep(1)
 	    stopThread = stopServer(httpd)
 	    stopThread.start()
@@ -625,10 +639,6 @@ server = BaseHTTPServer.HTTPServer
 handler = RequestHandler
 print "Serveur actif sur le port :", PORT
 logger.info('initializing poppy server')
-#initialisation de l ecran
-time.sleep(2)
-print "ecran initialise"
-#initialisation du son
 #attente avant initialisation, pour demarrage au boot RPi
 time.sleep(8)
 moteursInitialise = False
@@ -637,7 +647,6 @@ while not moteursInitialise:
 	logger.info("essai initialisation moteur "+str(moteursInitEssai))
 	try:
 		time.sleep(2)
-		poppy=PoppyGRR()
 		moteursInitialise = True
 		logger.info("----- moteurs initialises -----")
 	except:

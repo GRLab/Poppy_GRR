@@ -5,7 +5,7 @@ var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
 var init = false;
-var poppyName = "192.168.0.125";//"poppygr.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppy.local";//"poppy.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
@@ -76,8 +76,6 @@ function PartNonCompliant(poppyParts="") {
 	var nbParts = 0;
 	var semiPoppyParts = [];
 	var nbsemiNbParts = 0;
-
-
 	
 	if(partComp==false){
 		partComp = true;
@@ -1636,6 +1634,30 @@ function GetIP() {
 		}
 	});
 }
+
+function setRobotVolume(){
+	var volume = prompt('Please enter the volume (0-1)','0.5');
+	if (volume == null || volume == "") {
+		console.log("error volume")
+		volume=0.5
+		return;
+	}
+	console.log(volume)
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=set+volume&volume='+volume,
+		type:'POST',
+		statusCode: {
+			200: function(data) {
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
+
 
 function WaitBeforeScan(){
 	setTimeout("ScanResults()", 5000);

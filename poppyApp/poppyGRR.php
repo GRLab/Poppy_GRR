@@ -100,6 +100,7 @@ include "includes/header.php";
 	<div id="contenu">
 		<input type="button" value="Mettre à jour le robot" id="majPoppy" onclick="majPoppy()" />
 		<input type="button" value="Mettre à jour la base" id="majBdD" onclick="majBdD()" />
+		<input type="button" value="volume" id="volume" onclick="setRobotVolume()" />
 		<input type="button" value="Eteindre Poppy" id="stopPoppy" onclick="stopPoppy()" />
 		<br><br>
 	</div>

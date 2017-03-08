@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module eyes</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>eyes</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/poppy/poppy_dev/serverPoppy/eyes/eyes.py">/home/poppy/poppy_dev/serverPoppy/eyes/eyes.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+<a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+<a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+<a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="eyes.html#AccessoryManager">AccessoryManager</a>
+</font></dt><dt><font face="helvetica, arial"><a href="eyes.html#EyeManager">EyeManager</a>
+</font></dt><dt><font face="helvetica, arial"><a href="eyes.html#Face">Face</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AccessoryManager">class <strong>AccessoryManager</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>manage&nbsp;the&nbsp;accessories&nbsp;on&nbsp;the&nbsp;face<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="AccessoryManager-__init__"><strong>__init__</strong></a>(self, datapath, screen_width, screen_height)</dt><dd><tt>:param&nbsp;datapath&nbsp;(string):&nbsp;path&nbsp;to&nbsp;the&nbsp;images&nbsp;repertory<br>
+:param&nbsp;screen_width&nbsp;(int):&nbsp;width&nbsp;of&nbsp;the&nbsp;screen&nbsp;in&nbsp;pixel<br>
+:param&nbsp;screen_height&nbsp;(int):&nbsp;height&nbsp;of&nbsp;the&nbsp;screen&nbsp;in&nbsp;pixel</tt></dd></dl>
+
+<dl><dt><a name="AccessoryManager-getAccessory"><strong>getAccessory</strong></a>(self)</dt><dd><tt>returns&nbsp;the&nbsp;pygame&nbsp;image&nbsp;of&nbsp;the&nbsp;current&nbsp;accessory</tt></dd></dl>
+
+<dl><dt><a name="AccessoryManager-getPosition"><strong>getPosition</strong></a>(self)</dt><dd><tt>returns&nbsp;the&nbsp;x&nbsp;and&nbsp;y&nbsp;accessory&nbsp;position&nbsp;of&nbsp;the&nbsp;current&nbsp;accessory</tt></dd></dl>
+
+<dl><dt><a name="AccessoryManager-initAccessory"><strong>initAccessory</strong></a>(self)</dt><dd><tt>initialise&nbsp;the&nbsp;accessory&nbsp;configuration</tt></dd></dl>
+
+<dl><dt><a name="AccessoryManager-updateAccessory"><strong>updateAccessory</strong></a>(self, state)</dt><dd><tt>update&nbsp;the&nbsp;accessory&nbsp;depending&nbsp;on&nbsp;the&nbsp;state<br>
+:param&nbsp;state&nbsp;(string):&nbsp;the&nbsp;new&nbsp;state&nbsp;of&nbsp;the&nbsp;robot&nbsp;screen&nbsp;eyes</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="EyeManager">class <strong>EyeManager</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>manage&nbsp;each&nbsp;eye&nbsp;on&nbsp;the&nbsp;face<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="EyeManager-__init__"><strong>__init__</strong></a>(self, datapath, side, screen_width, screen_height)</dt><dd><tt>:param&nbsp;datapath&nbsp;(string):&nbsp;path&nbsp;to&nbsp;the&nbsp;images&nbsp;repertory<br>
+:param&nbsp;side&nbsp;(string):&nbsp;'left'&nbsp;or&nbsp;'right'&nbsp;eye<br>
+:param&nbsp;screen_width&nbsp;(int):&nbsp;width&nbsp;of&nbsp;the&nbsp;screen&nbsp;in&nbsp;pixel<br>
+:param&nbsp;screen_height&nbsp;(int):&nbsp;height&nbsp;of&nbsp;the&nbsp;screen&nbsp;in&nbsp;pixel</tt></dd></dl>
+
+<dl><dt><a name="EyeManager-getEye"><strong>getEye</strong></a>(self, part)</dt><dd><tt>returns&nbsp;the&nbsp;pygame&nbsp;image&nbsp;of&nbsp;the&nbsp;current&nbsp;eye<br>
+:param&nbsp;part&nbsp;(string):&nbsp;part&nbsp;of&nbsp;the&nbsp;eye&nbsp;to&nbsp;display&nbsp;(eyebrow,&nbsp;eye,&nbsp;pupil,&nbsp;eyelid)</tt></dd></dl>
+
+<dl><dt><a name="EyeManager-getPosition"><strong>getPosition</strong></a>(self, part)</dt><dd><tt>returns&nbsp;the&nbsp;x&nbsp;and&nbsp;y&nbsp;eye&nbsp;part&nbsp;position&nbsp;of&nbsp;the&nbsp;current&nbsp;eye<br>
+:param&nbsp;part&nbsp;(string):&nbsp;part&nbsp;of&nbsp;the&nbsp;eye&nbsp;to&nbsp;display&nbsp;(eyebrow,&nbsp;eye,&nbsp;pupil,&nbsp;eyelid)</tt></dd></dl>
+
+<dl><dt><a name="EyeManager-initEye"><strong>initEye</strong></a>(self)</dt><dd><tt>initialise&nbsp;the&nbsp;eye&nbsp;configuration</tt></dd></dl>
+
+<dl><dt><a name="EyeManager-updateEye"><strong>updateEye</strong></a>(self, state, direction)</dt><dd><tt>update&nbsp;the&nbsp;eye&nbsp;depending&nbsp;on&nbsp;the&nbsp;state&nbsp;and&nbsp;direction<br>
+:param&nbsp;state&nbsp;(string):&nbsp;the&nbsp;new&nbsp;state&nbsp;of&nbsp;the&nbsp;robot&nbsp;screen&nbsp;eyes<br>
+:param&nbsp;direction&nbsp;(string):&nbsp;the&nbsp;new&nbsp;looking-direction&nbsp;of&nbsp;the&nbsp;robot&nbsp;screen&nbsp;eyes</tt></dd></dl>
+
+<dl><dt><a name="EyeManager-wink"><strong>wink</strong></a>(self)</dt><dd><tt>winks&nbsp;or&nbsp;blinks.&nbsp;Puts&nbsp;the&nbsp;correct&nbsp;eyes&nbsp;keeping&nbsp;the&nbsp;current&nbsp;eyebrow</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Face">class <strong>Face</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>manages&nbsp;the&nbsp;eyes/face&nbsp;display&nbsp;on&nbsp;the&nbsp;screen&nbsp;and&nbsp;animation<br>
+contains&nbsp;the&nbsp;left_eye(<a href="#EyeManager">EyeManager</a>),&nbsp;right_eye(<a href="#EyeManager">EyeManager</a>),&nbsp;accessory(<a href="#AccessoryManager">AccessoryManager</a>)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Face-__init__"><strong>__init__</strong></a>(self, datapath, screen_width<font color="#909090">=480</font>, screen_height<font color="#909090">=320</font>, bgcolor<font color="#909090">=[240, 240, 255]</font>, fullscreen<font color="#909090">=True</font>)</dt><dd><tt>:param&nbsp;datapath&nbsp;(string):&nbsp;path&nbsp;to&nbsp;the&nbsp;images&nbsp;repertory<br>
+:param&nbsp;screen_width&nbsp;(int):&nbsp;width&nbsp;of&nbsp;the&nbsp;screen&nbsp;in&nbsp;pixel<br>
+:param&nbsp;screen_height&nbsp;(int):&nbsp;height&nbsp;of&nbsp;the&nbsp;screen&nbsp;in&nbsp;pixel<br>
+:param&nbsp;bgcolor&nbsp;(int&nbsp;list[3]):&nbsp;RGB&nbsp;color&nbsp;of&nbsp;the&nbsp;background<br>
+:param&nbsp;fullscreen&nbsp;(bool):&nbsp;set&nbsp;to&nbsp;False&nbsp;if&nbsp;do&nbsp;not&nbsp;want&nbsp;fullscreen&nbsp;display</tt></dd></dl>
+
+<dl><dt><a name="Face-blink"><strong>blink</strong></a>(self, side<font color="#909090">=''</font>)</dt><dd><tt>animation:&nbsp;makes&nbsp;poppy&nbsp;blink&nbsp;or&nbsp;wink<br>
+:param&nbsp;side(string):&nbsp;''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;blink<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;&nbsp;&nbsp;--&gt;&nbsp;left&nbsp;wink<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;&nbsp;--&gt;&nbsp;right&nbsp;wink</tt></dd></dl>
+
+<dl><dt><a name="Face-display"><strong>display</strong></a>(self, picName<font color="#909090">=''</font>)</dt><dd><tt>update&nbsp;the&nbsp;screen&nbsp;picture&nbsp;considering&nbsp;the&nbsp;state&nbsp;and&nbsp;looking-direction<br>
+if&nbsp;a&nbsp;picture&nbsp;name&nbsp;is&nbsp;passed&nbsp;in&nbsp;parameter,&nbsp;this&nbsp;picture&nbsp;is&nbsp;displayed<br>
+&nbsp;<br>
+:param&nbsp;picName&nbsp;(str):&nbsp;path&nbsp;and&nbsp;file&nbsp;name&nbsp;of&nbsp;the&nbsp;picture</tt></dd></dl>
+
+<dl><dt><a name="Face-lookAround"><strong>lookAround</strong></a>(self, height<font color="#909090">=''</font>)</dt><dd><tt>animation&nbsp;:&nbsp;looks&nbsp;left&nbsp;and&nbsp;right,&nbsp;at&nbsp;top,&nbsp;middle&nbsp;or&nbsp;bottom<br>
+:param&nbsp;height(string):&nbsp;look&nbsp;at&nbsp;top,&nbsp;middle&nbsp;or&nbsp;bottom</tt></dd></dl>
+
+<dl><dt><a name="Face-playRandomAnimation"><strong>playRandomAnimation</strong></a>(self)</dt><dd><tt>plays&nbsp;a&nbsp;random&nbsp;animation</tt></dd></dl>
+
+<dl><dt><a name="Face-runAnimation"><strong>runAnimation</strong></a>(self)</dt><dd><tt>animation&nbsp;definition&nbsp;(blinking,&nbsp;random&nbsp;actions)<br>
+Automatic&nbsp;Thread.&nbsp;Use&nbsp;startAnimation&nbsp;and&nbsp;stopAnimation</tt></dd></dl>
+
+<dl><dt><a name="Face-setBackgroundColor"><strong>setBackgroundColor</strong></a>(self, bgcolor<font color="#909090">=''</font>)</dt><dd><tt>:param&nbsp;bgcolor&nbsp;(int&nbsp;list[3]):&nbsp;RGB&nbsp;color&nbsp;of&nbsp;the&nbsp;background</tt></dd></dl>
+
+<dl><dt><a name="Face-setDirection"><strong>setDirection</strong></a>(self, newDirection)</dt><dd><tt>sets&nbsp;the&nbsp;robot&nbsp;eyes&nbsp;looking-direction&nbsp;with&nbsp;newDirection&nbsp;and&nbsp;updates&nbsp;the&nbsp;eyes<br>
+:param&nbsp;newDirection(string):&nbsp;the&nbsp;newDirection.&nbsp;Value&nbsp;=&nbsp;one&nbsp;of&nbsp;the&nbsp;self.<strong>availableDirections</strong></tt></dd></dl>
+
+<dl><dt><a name="Face-setState"><strong>setState</strong></a>(self, newState)</dt><dd><tt>sets&nbsp;the&nbsp;robot&nbsp;screen&nbsp;state&nbsp;with&nbsp;newState&nbsp;and&nbsp;updates&nbsp;the&nbsp;eyes&nbsp;and&nbsp;accessory<br>
+:param&nbsp;newState(string):&nbsp;the&nbsp;newState.&nbsp;Value&nbsp;=&nbsp;one&nbsp;of&nbsp;the&nbsp;self.<strong>availableStates</strong></tt></dd></dl>
+
+<dl><dt><a name="Face-squint"><strong>squint</strong></a>(self)</dt><dd><tt>animation:&nbsp;funny&nbsp;animation&nbsp;(loucher)</tt></dd></dl>
+
+<dl><dt><a name="Face-startAnimation"><strong>startAnimation</strong></a>(self)</dt><dd><tt>starts&nbsp;the&nbsp;animation&nbsp;thread&nbsp;(blinking,&nbsp;random&nbsp;actions)</tt></dd></dl>
+
+<dl><dt><a name="Face-stop"><strong>stop</strong></a>(self)</dt><dd><tt>stops&nbsp;the&nbsp;display</tt></dd></dl>
+
+<dl><dt><a name="Face-stopAnimation"><strong>stopAnimation</strong></a>(self)</dt><dd><tt>stops&nbsp;the&nbsp;animation&nbsp;thread&nbsp;(random&nbsp;actions,&nbsp;keep&nbsp;blinking)</tt></dd></dl>
+
+<dl><dt><a name="Face-stopCurrentAnimation"><strong>stopCurrentAnimation</strong></a>(self)</dt><dd><tt>stops&nbsp;the&nbsp;playing&nbsp;animation</tt></dd></dl>
+
+<dl><dt><a name="Face-update"><strong>update</strong></a>(self, newState<font color="#909090">=''</font>, newDirection<font color="#909090">=''</font>, forceDisplay<font color="#909090">=False</font>)</dt><dd><tt>sets&nbsp;the&nbsp;new&nbsp;robot&nbsp;screen&nbsp;state&nbsp;and&nbsp;direction,&nbsp;updates&nbsp;the&nbsp;eyes&nbsp;and&nbsp;accessory&nbsp;and&nbsp;display&nbsp;it<br>
+:param&nbsp;newState(string):&nbsp;the&nbsp;newState.&nbsp;Value&nbsp;=&nbsp;one&nbsp;of&nbsp;the&nbsp;self.<strong>availableStates</strong><br>
+:param&nbsp;newDirection(string):&nbsp;the&nbsp;newDirection.&nbsp;Value&nbsp;=&nbsp;one&nbsp;of&nbsp;the&nbsp;self.<strong>availableDirections</strong><br>
+:param&nbsp;forceDisplay(bool):&nbsp;display&nbsp;in&nbsp;anycase&nbsp;even&nbsp;if&nbsp;there&nbsp;is&nbsp;no&nbsp;change<br>
+availableStates&nbsp;=&nbsp;['happy',&nbsp;'confused',&nbsp;'angry',&nbsp;'bored',&nbsp;'sad',&nbsp;'forcing',&nbsp;'asleep',&nbsp;'dead']<br>
+availableDirections&nbsp;=&nbsp;['topleft',&nbsp;'top',&nbsp;'topright',&nbsp;'left',&nbsp;'center',&nbsp;'right',&nbsp;'bottomleft',&nbsp;'bottom',&nbsp;'bottomright']</tt></dd></dl>
+
+<dl><dt><a name="Face-updateEyes"><strong>updateEyes</strong></a>(self)</dt><dd><tt>updates&nbsp;the&nbsp;eyes&nbsp;and&nbsp;accessory</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-Lock"><strong>Lock</strong></a> = allocate_lock(...)</dt><dd><tt>allocate_lock()&nbsp;-&gt;&nbsp;lock&nbsp;object<br>
+(allocate()&nbsp;is&nbsp;an&nbsp;obsolete&nbsp;synonym)<br>
+&nbsp;<br>
+Create&nbsp;a&nbsp;new&nbsp;lock&nbsp;object.&nbsp;&nbsp;See&nbsp;help(LockType)&nbsp;for&nbsp;information&nbsp;about&nbsp;locks.</tt></dd></dl>
+</td></tr></table>
+</body></html>

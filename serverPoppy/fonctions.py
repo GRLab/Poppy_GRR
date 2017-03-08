@@ -437,7 +437,7 @@ class goMovePrimitive(pypot.primitive.Primitive):
 	def run(self):
 		while self.PoppyGRR.PLAYING_MOVE:	# attente que la partie du mouvement precedent se termine
 			time.sleep(0.1)
-		self.PoppyGRR.PLAYING_MOVE = True
+		self.PoppyGRR.PLAYING_MOVE = True		
 		#time.sleep(0.5)		#attente le temps que mov precedent se termine
 		print "startTime : "+str(self.startTime)+", endTime : "+str(self.endTime)
 		with open('./move/'+self.moveType+'/'+self.moveName+'.json', 'r') as f:
@@ -608,6 +608,8 @@ class semiCompliantPrimitive(pypot.primitive.Primitive):
 class scanMotorsLoop(pypot.primitive.Primitive):
 	def __init__(self, poppy):
 		self.PoppyGRR=poppy
+		self.surchauffeState=False
+		self.surchauffeTimer=0
 		pypot.primitive.Primitive.__init__(self, self.PoppyGRR.Poppyboid)
 
 	def run(self):
@@ -653,11 +655,27 @@ class scanMotorsLoop(pypot.primitive.Primitive):
 					self.PoppyGRR.poppyPart_alert[poppyPart]=""
 				if self.PoppyGRR.poppyPart_alert[poppyPart]!="stop" and round(self.PoppyGRR.temperature[imoteur],1)<self.PoppyGRR.SEUIL_TEMP_ARRET:
 					self.PoppyGRR.poppyPart_alert[poppyPart]="warning"
+					if self.surchauffeState==False and not self.PoppyGRR.poppyCompliant():
+						self.surchauffeState=True
+						self.surchauffeTimer=6
+					else:
+						self.surchauffeTimer-=1
+						if self.surchauffeTimer==0:
+							self.surchauffeState=False
 				elif round(self.PoppyGRR.temperature[imoteur],1)>=self.PoppyGRR.SEUIL_TEMP_ARRET:
 					self.PoppyGRR.poppyPart_alert[poppyPart]="stop"
-					self.PoppyGRR.logger.warning("motor %s is overheating ! Preparing security mode.", idmoteur[imoteur])
+					self.PoppyGRR.logger.warning("motor %s is overheating ! Preparing security mode.", self.PoppyGRR.idmoteur[imoteur])
 					stop = True
 			imoteur=imoteur+1
+
+		resetSurchauffeState=True
+	 	for key,value in self.PoppyGRR.poppyPart_alert.iteritems():
+			if value!="ok":
+				resetSurchauffeState=False
+		if resetSurchauffeState:
+			print "---reset surchauffe state---"
+			surchauffeState=False
+
 		if stop == True and self.PoppyGRR.SecurityStop == False:
 			if not self.PoppyGRR.poppyCompliant():
 				self.PoppyGRR.logger.warning("set security mode")
@@ -705,8 +723,8 @@ class PoppyGRR:
 		self.temperature=range(self.nbmoteurs)			#variable temperature
 		self.couple=range(self.nbmoteurs)				#variable pourcentage of couple
 		self.poppyPart_alert = {}			# dict contenant les parties du robot en surchauffe
-		self.SEUIL_TEMP = 54					# seuil de temperature pour alerter
-		self.SEUIL_TEMP_ARRET = 56			# seuil de temperature pour arreter le moteur
+		self.SEUIL_TEMP = 52					# seuil de temperature pour alerter
+		self.SEUIL_TEMP_ARRET = 55			# seuil de temperature pour arreter le moteur
 		self.SecurityStop = False
 		#Ivalue=0					#variable intensite
 		self.TIME_LIMIT = 10
@@ -725,6 +743,7 @@ class PoppyGRR:
 		self.NUM_EXO = 0						# numero de l'exercice en cours
 		self.NUM_MOV = 0						# numero du mouvement en cours
 		self.SCANNING = 0					# en train de scanner les positions moteurs ou non
+		
 		# variables temporelles pour les logs
 		self.year = int(time.strftime('%Y', time.localtime()))	#annee en cours
 		self.month = int(time.strftime('%m', time.localtime()))	#mois en cours
@@ -1016,7 +1035,6 @@ class PoppyGRR:
 					return poppyParts[i]+' is already in the move to play' 
 		self.NonCompliant(poppyParts)
 		time.sleep(0.5)
-		time.sleep(0.5)
 		if semiMou == 'True':
 			self.semiCompliant(poppyParts)
 		else:
@@ -1133,7 +1151,7 @@ class PoppyGRR:
 		with open(symFile,'w') as f:
 			json.dump(symData, f, indent=4)
 		self.majMoveList(dir, symName, poppyParts)
-		return symName+" created"
+		return dir
 		
 	def reverse(self, moveName):
 		dir = self.directory(moveName)
@@ -1208,7 +1226,7 @@ class PoppyGRR:
 		with open(revFile,'w') as f:
 			json.dump(revData, f, indent=4)
 		self.majMoveList(dir, revName, poppyParts)
-		return revName+" created"
+		return dir
 
 	def RemoveMove(self, moveName):
 		remove = False
@@ -1469,7 +1487,7 @@ class PoppyGRR:
 		print "verif si playing move"
 		while self.PLAYING_MOVE:
 			time.sleep(0.1)
-		self.PLAYING_MOVE=True
+		self.PLAYING_MOVE=True		
 		print "startTime : "+str(startTime)+", endTime : "+str(endTime)
 		with open('./move/'+moveType+'/'+moveName+'.json', 'r') as f:
 			moveFile = json.load(f)
@@ -1886,17 +1904,17 @@ class PoppyGRR:
 			return moveName+" already exists"
 		poppyParts = list()
 		print moveFile
-		if "tete" in moveFile["poppyParts"]:
+		if "tete" in moveFile["poppyParts"].iteritems():
 			poppyParts.append("tete")
-		if "bras_gauche" in moveFile["poppyParts"]:
+		if "bras_gauche" in moveFile["poppyParts"].iteritems():
 			poppyParts.append("bras_gauche")
-		if "bras_droit" in moveFile["poppyParts"]:
+		if "bras_droit" in moveFile["poppyParts"].iteritems():
 			poppyParts.append("bras_droit")
-		if "colonne" in moveFile["poppyParts"]:
+		if "colonne" in moveFile["poppyParts"].iteritems():
 			poppyParts.append("colonne")
-		if "jambe_gauche" in moveFile["poppyParts"]:
+		if "jambe_gauche" in moveFile["poppyParts"].iteritems():
 			poppyParts.append("jambe_gauche")
-		if "jambe_droite" in moveFile["poppyParts"]:
+		if "jambe_droite" in moveFile["poppyParts"].iteritems():
 			poppyParts.append("jambe_droite")
 		del moveFile["poppyParts"]
 		with open("./move/"+moveType+"/"+moveName+".json", 'w') as f:

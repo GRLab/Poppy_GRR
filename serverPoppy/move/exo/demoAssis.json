@@ -1,30 +1,45 @@
 {
-    "nb_fichiers": 5, 
-    "fichier2": {
-        "pause": 2, 
+    "nb_fichiers": 8, 
+    "fichier8": {
+        "pause": 5, 
         "vitesse": 5, 
-        "namefile": "respi"
+        "namefile": "salutAssisD"
+    }, 
+    "fichier2": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "regardRev"
     }, 
     "fichier3": {
-        "pause": 3, 
+        "pause": 1, 
         "vitesse": 5, 
-        "namefile": "respi3"
+        "namefile": "salutAssisG"
     }, 
     "fichier1": {
-        "pause": 3, 
-        "vitesse": 5, 
-        "namefile": "respi2"
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "regard"
+    }, 
+    "fichier6": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "regard"
+    }, 
+    "fichier7": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "regardRev"
     }, 
     "fichier4": {
-        "pause": 3, 
+        "pause": 5, 
         "vitesse": 5, 
-        "namefile": "respi"
+        "namefile": "assisDance"
     }, 
     "fichier5": {
-        "pause": 2, 
+        "pause": 1, 
         "vitesse": 5, 
-        "namefile": "respi"
+        "namefile": "assisDanceRev"
     }, 
     "type": "exo", 
-    "nb_temps": 115
+    "nb_temps": 461
 }

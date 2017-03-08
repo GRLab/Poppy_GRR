@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sound</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>sound</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/damiend/damien/poppy_dev/serverPoppy/sound/sound.py">/home/damiend/damien/poppy_dev/serverPoppy/sound/sound.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="sound.html#Sound">Sound</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Sound">class <strong>Sound</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>manage&nbsp;the&nbsp;sound&nbsp;player&nbsp;(mp3),&nbsp;by&nbsp;playing&nbsp;sounds&nbsp;or&nbsp;doing&nbsp;text&nbsp;to&nbsp;speech<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Sound-__init__"><strong>__init__</strong></a>(self, language<font color="#909090">='fr'</font>, frequence<font color="#909090">=29000</font>, volume<font color="#909090">=0.7</font>)</dt><dd><tt>:param&nbsp;language&nbsp;(string):&nbsp;language&nbsp;for&nbsp;the&nbsp;robot&nbsp;voice<br>
+:param&nbsp;frequence&nbsp;(int):&nbsp;voice&nbsp;frequence&nbsp;(~20000&nbsp;=&nbsp;male,&nbsp;~26000=female,&nbsp;~30000=child),&nbsp;but&nbsp;low&nbsp;=&nbsp;low&nbsp;speed&nbsp;speaking<br>
+:param&nbsp;volume&nbsp;(int):&nbsp;voice&nbsp;volume&nbsp;[0-1]</tt></dd></dl>
+
+<dl><dt><a name="Sound-play"><strong>play</strong></a>(self, filename)</dt><dd><tt>plays&nbsp;an&nbsp;existing&nbsp;sound<br>
+:param&nbsp;filename&nbsp;(string):&nbsp;mp3&nbsp;file&nbsp;name</tt></dd></dl>
+
+<dl><dt><a name="Sound-say"><strong>say</strong></a>(self, text, filename<font color="#909090">=''</font>, remove<font color="#909090">=True</font>)</dt><dd><tt>say&nbsp;a&nbsp;text<br>
+:param&nbsp;text&nbsp;(string):&nbsp;text&nbsp;to&nbsp;say<br>
+:param&nbsp;filename&nbsp;(string):&nbsp;mp3&nbsp;file&nbsp;name<br>
+:param&nbsp;remove&nbsp;(bool):&nbsp;if&nbsp;remove&nbsp;the&nbsp;mp3&nbsp;file&nbsp;or&nbsp;not&nbsp;after&nbsp;saying&nbsp;the&nbsp;text</tt></dd></dl>
+
+<dl><dt><a name="Sound-setFrequence"><strong>setFrequence</strong></a>(self, frequence<font color="#909090">=29000</font>)</dt><dd><tt>change&nbsp;the&nbsp;voice&nbsp;frequence<br>
+:param&nbsp;frequence&nbsp;(int):&nbsp;voice&nbsp;frequence&nbsp;(~20000&nbsp;=&nbsp;male,&nbsp;~26000=female,&nbsp;~30000=child),&nbsp;but&nbsp;low&nbsp;=&nbsp;low&nbsp;speed&nbsp;speaking</tt></dd></dl>
+
+<dl><dt><a name="Sound-setVolume"><strong>setVolume</strong></a>(self, volume<font color="#909090">=0.7</font>)</dt><dd><tt>set&nbsp;the&nbsp;voice&nbsp;volume&nbsp;(0-1)<br>
+:param&nbsp;volume&nbsp;(int):&nbsp;volume&nbsp;[0-1]</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-Lock"><strong>Lock</strong></a> = allocate_lock(...)</dt><dd><tt>allocate_lock()&nbsp;-&gt;&nbsp;lock&nbsp;object<br>
+(allocate()&nbsp;is&nbsp;an&nbsp;obsolete&nbsp;synonym)<br>
+&nbsp;<br>
+Create&nbsp;a&nbsp;new&nbsp;lock&nbsp;object.&nbsp;&nbsp;See&nbsp;help(LockType)&nbsp;for&nbsp;information&nbsp;about&nbsp;locks.</tt></dd></dl>
+</td></tr></table>
+</body></html>

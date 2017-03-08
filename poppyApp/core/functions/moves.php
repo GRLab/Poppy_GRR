@@ -15,7 +15,7 @@ if(isset($_GET["action"])){
 		echo  json_encode($_POST["moveName"]." added to the database");
 	} else if ($_GET["action"] == "symetry"){
 		$changed = doSymetry($_POST["moveName"]);
-		echo  json_encode(" symetry ok for ".$_POST["moveName"]." : ".$changed);
+		echo  json_encode(" symetry ok for ".$_POST["moveName"]);
 	}else if ($_GET["action"] == "rename"){
 		$changed = doRename($_POST["ancienNom"], $_POST["nouveauNom"]);
 		echo  json_encode(" rename of ".$_POST["ancienNom"]." in ".$_POST["nouveauNom"].": ".$changed);
@@ -272,7 +272,7 @@ function checkIfExists($sKey){
 function checkJson(){
 	$sSQL = "SELECT `moveName`
 			 FROM `movelist`
-			 WHERE `nb_temps` = 0";
+			 WHERE `nb_temps` IS NULL";
 			 
 	$requete = Connexion::getInstance()->prepare($sSQL);
 
