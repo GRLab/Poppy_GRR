@@ -1364,6 +1364,8 @@ class PoppyGRR:
 	def goFirstPos(self, position, speed, init = False):
 			self.Poppyboid.scanPosition.start()
 			time.sleep(0.1)
+			while self.SCANNING == 1:
+				time.sleep(0.05)
 			if init == True:
 				vitesse = 40
 			else:
