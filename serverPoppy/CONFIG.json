@@ -1,0 +1,34 @@
+{
+	"poppyName" : {
+		"value" : "poppy",
+		"description" : "name of the poppy robot"
+	},
+	"kinectName" : { 
+		"value" : "none",
+		"descritpion" : "name of the kinect server, 'none' if no kinect"
+	},
+	"wrists" : {
+		"value" : "False",
+		"description" : "articulated wrists : True/False"
+	},
+	"screenOn" : {
+		"value" : "False",
+		"description" : "activate the screen/eyes : True/False"
+	},
+	"fullScreen" : {
+		"value" : "False",
+		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
+	},
+	"Volume" : {
+		"value" :  0,
+		"description" : "volume of the Poppy voice [0-1]"
+	},
+	"internet" : {
+		"value" : "False",
+		"description" : "True if internet connection exists, False if no"
+	},
+	"creature" : {
+		"value" : "humanoid",
+		"description" : "'humanoid' or 'torso'"
+	}
+}

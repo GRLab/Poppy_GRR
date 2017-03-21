@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import json
 import socket
 import BaseHTTPServer
 from urlparse import urlparse
@@ -9,7 +10,21 @@ from collections import OrderedDict
 import logging
 from logging.handlers import RotatingFileHandler
 from threading import Thread
+from eyes.eyes import *
+from sound.sound import Sound
 from fonctions import *
+
+#importation des configurations
+with open('./CONFIG.json', 'r') as f:
+	config = json.load(f)
+	poppyName = config["poppyName"]["value"]
+	kinectName = config["kinectName"]["value"]
+	screenOn = True if config["screenOn"]["value"] == "True" else False
+	fullScreen = True if config["fullScreen"]["value"] == "True" else False
+	Volume = config["Volume"]["value"]
+	internet = True if config["internet"]["value"] == "True" else False
+	wrists = True if config["wrists"]["value"] == "True" else False
+	creature = config["creature"]["value"]
 
 #arret http server
 class stopServer(Thread):
@@ -209,6 +224,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			text = self.read_data(moveName, previsu = previsual)
 	    else:
 		    self.send_headers()
+		    voice.play("./sound/sounds/existedeja.mp3")
 		    text="move already exists"
 	    logger.info(IPclient+" RESPONSE - "+text)
 
@@ -225,6 +241,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			text = self.read_data(exoName)
 	    else:
 			self.send_headers()
+			voice.play("./sound/sounds/existedeja.mp3")
 			text="move already exists"
 	    logger.info(IPclient+" RESPONSE - "+text)
 
@@ -499,6 +516,44 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		logger.info(IPclient+" RESPONSE - "+text)
 		print (text)
 
+	if 'Submit' in params.keys() and "kinect+ready" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - kinect ready !")
+	    try:
+			text = poppy.kinectReady()
+	    except:
+			logger.exception("***** kinect Ready error *****")
+	    if 'resumed' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "kinect+feedback" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - kinect feedback !")
+	    feedback = self.rfile.read(int(self.headers['Content-Length']))
+	    print feedback
+	    try:
+			text = poppy.kinectFeedback(feedback)
+	    except:
+			logger.exception("***** kinect Feedback error *****")
+	    if 'ok' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "kinect+end" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - kinect end !")
+	    try:
+			text = poppy.kinectEnd()
+	    except:
+			logger.exception("***** kinectEnd error *****")
+	    if 'ended' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
     def do_GET(self):
 	#print self.path	#pour voir ce qui a ete recu avant traitement
 	parsed_path = urlparse(self.path) #recupere l'url de la requete
@@ -613,11 +668,17 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "stopServer" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - stopServer")
 	    print "stop server"
+	    voice.play("./sound/sounds/aurevoir.mp3")
+	    if face!='none':
+			face.update('asleep')
 	    self.send_headers(200)
 	    self.wfile.write('')
 	    time.sleep(1)
 	    stopThread = stopServer(httpd)
 	    stopThread.start()
+	    if face!='none':
+			face.stopAnimation()
+	    pygame.quit()
 	    poppy.stopAll()
 
 #Configuration logs
@@ -633,30 +694,44 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 #CREATION du serveur web
 PORT = 4567
-poppyName = "poppy"
 server_address = (poppyName+".local", PORT) #changer l'IP en fonction
 server = BaseHTTPServer.HTTPServer
 handler = RequestHandler
 print "Serveur actif sur le port :", PORT
 logger.info('initializing poppy server')
+#initialisation de l ecran
+time.sleep(2)
+if screenOn:
+	face = Face(datapath="/home/poppy/poppy_dev/serverPoppy/eyes/", bgcolor=[220,230,255], fullscreen=fullScreen)
+	print "ecran initialise"
+else:
+	face = 'none'
+#initialisation du son
+voice = Sound(volume=Volume)
+voice.play("./sound/sounds/init.mp3")
 #attente avant initialisation, pour demarrage au boot RPi
 time.sleep(8)
+voice.play("./sound/sounds/motorInit.mp3")
 moteursInitialise = False
 moteursInitEssai = 0
 while not moteursInitialise:
 	logger.info("essai initialisation moteur "+str(moteursInitEssai))
 	try:
 		time.sleep(2)
+		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists)
 		moteursInitialise = True
 		logger.info("----- moteurs initialises -----")
 	except:
 		logger.exception("***** motor init error *****")
 		moteursInitEssai +=1
 		if moteursInitEssai ==3:
+			voice.play("./sound/sounds/errorMotorInit.mp3")
 			time.sleep(3)
 			break
 
 if moteursInitialise:
+	if face!='none':
+		face.update('happy', 'center')
 	try:
 		poppy.mesure()	#start scanning the motors
 	except:
@@ -668,5 +743,10 @@ if moteursInitialise:
 	time.sleep(0.5)
 
 	httpd = server(server_address, handler)
+	voice.play("./sound/sounds/pret.mp3")
 	time.sleep(0.8)
+	if internet:
+		voice.say("Au faite, mon nom est "+poppyName)
 	httpd.serve_forever()
+elif face!='none':
+	face.stop()

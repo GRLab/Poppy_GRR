@@ -32,10 +32,11 @@
         ]
     }, 
     "nb_seance": 5, 
-    "nb_mov": 111, 
+    "nb_mov": 112, 
     "list_mov": {
-        "rotationTroncGSym": [
-            "colonne"
+        "elastiqueB": [
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "etirementLateralG": [
             "bras_gauche", 
@@ -71,10 +72,9 @@
             "bras_gauche", 
             "colonne"
         ], 
-        "penchageavant": [
-            "jambe_gauche", 
-            "jambe_droite", 
-            "colonne"
+        "elastiqueInitRev": [
+            "bras_droit", 
+            "bras_gauche"
         ], 
         "solLateralGSymRev": [
             "bras_droit", 
@@ -101,6 +101,11 @@
         ], 
         "respi2": [
             "colonne", 
+            "tete"
+        ], 
+        "bowRev": [
+            "bras_droit", 
+            "bras_gauche", 
             "tete"
         ], 
         "salutAssisD": [
@@ -181,9 +186,10 @@
         "coucouBG": [
             "bras_gauche"
         ], 
-        "elastiqueInitRev": [
-            "bras_droit", 
-            "bras_gauche"
+        "penchageavant": [
+            "jambe_gauche", 
+            "jambe_droite", 
+            "colonne"
         ], 
         "s3exo1pencheRev": [
             "bras_droit", 
@@ -280,8 +286,8 @@
             "jambe_droite", 
             "jambe_gauche"
         ], 
-        "solRedresseCou": [
-            "colonne"
+        "leveBDSym": [
+            "bras_gauche"
         ], 
         "tetebrasse": [
             "tete"
@@ -317,13 +323,14 @@
             "tete"
         ], 
         "assisDanceRev": [
-            "bras_droit", 
-            "bras_gauche", 
-            "tete"
-        ], 
-        "demo": [
+            "tete", 
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "montreheure": [
+            "bras_gauche", 
+            "bras_droit", 
+            "tete"
         ], 
         "rotationTroncG": [
             "colonne"
@@ -348,8 +355,8 @@
         "desesperecol": [
             "colonne"
         ], 
-        "pencheagearriere": [
-            "colonne"
+        "leveJD": [
+            "jambe_droite"
         ], 
         "solOrienteBciel": [
             "bras_gauche", 
@@ -393,23 +400,22 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "leveBDSym": [
-            "bras_gauche"
+        "solRedresseCou": [
+            "colonne"
         ], 
         "up": [
             "bras_gauche", 
             "bras_droit"
         ], 
-        "montreheure": [
+        "demo": [
             "bras_gauche", 
-            "bras_droit", 
-            "tete"
+            "bras_droit"
         ], 
         "leveJG": [
             "jambe_gauche"
         ], 
-        "leveJD": [
-            "jambe_droite"
+        "pencheagearriere": [
+            "colonne"
         ], 
         "solEcarteBras": [
             "bras_gauche", 
@@ -438,9 +444,8 @@
             "bras_gauche", 
             "colonne"
         ], 
-        "elastiqueB": [
-            "bras_gauche", 
-            "bras_droit"
+        "rotationTroncGSym": [
+            "colonne"
         ], 
         "s3exo2rotgSymRev": [
             "bras_droit", 
@@ -462,9 +467,9 @@
             "bras_droit"
         ], 
         "assisDance": [
+            "tete", 
             "bras_gauche", 
-            "bras_droit", 
-            "tete"
+            "bras_droit"
         ], 
         "inspiration": [
             "colonne"
@@ -487,19 +492,21 @@
     }, 
     "nb_exo": 20, 
     "list_exo": {
-        "solLateraux": [
-            "jambe_droite", 
-            "jambe_gauche", 
-            "tete", 
-            "colonne", 
-            "bras_gauche", 
-            "bras_droit"
-        ], 
         "giveCard": [
             "bras_gauche"
         ], 
-        "levetete": [
-            "tete"
+        "demoDeboutJ": [
+            "tete", 
+            "bras_gauche", 
+            "jambe_droite", 
+            "jambe_gauche", 
+            "bras_droit"
+        ], 
+        "solPlancheExo": [
+            "jambe_droite", 
+            "jambe_gauche", 
+            "bras_gauche", 
+            "bras_droit"
         ], 
         "nageur": [
             "tete", 
@@ -533,10 +540,9 @@
             "tete", 
             "bras_droit"
         ], 
-        "cacheTete": [
+        "elastique": [
             "bras_gauche", 
-            "bras_droit", 
-            "colonne"
+            "bras_droit"
         ], 
         "impatient": [
             "bras_gauche", 
@@ -549,22 +555,21 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "solPlancheExo": [
+        "levetete": [
+            "tete"
+        ], 
+        "solLateraux": [
             "jambe_droite", 
             "jambe_gauche", 
-            "bras_gauche", 
-            "bras_droit"
-        ], 
-        "elastique": [
-            "bras_gauche", 
-            "bras_droit"
-        ], 
-        "demoDeboutJ": [
             "tete", 
+            "colonne", 
             "bras_gauche", 
-            "jambe_droite", 
-            "jambe_gauche", 
             "bras_droit"
+        ], 
+        "cacheTete": [
+            "bras_gauche", 
+            "bras_droit", 
+            "colonne"
         ], 
         "demoDebout": [
             "tete", 
