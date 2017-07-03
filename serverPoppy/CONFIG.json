@@ -20,11 +20,11 @@
 		"descritpion" : "very low threshold for the kinect feedback (useful if kinect exists)"
 	},
 	"wrists" : {
-		"value" : "True",
+		"value" : "False",
 		"description" : "articulated wrists : True/False"
 	},
 	"screenOn" : {
-		"value" : "True",
+		"value" : "False",
 		"description" : "activate the screen/eyes : True/False"
 	},
 	"fullScreen" : {
@@ -32,11 +32,11 @@
 		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
 	},
 	"Volume" : {
-		"value" : 0.5,
+		"value" : 0,
 		"description" : "volume of the Poppy voice [0-1]"
 	},
 	"internet" : {
-		"value" : "True",
+		"value" : "False",
 		"description" : "True if internet connection exists, False if no"
 	},
 	"creature" : {
@@ -45,6 +45,6 @@
 	},
 	"repetitions" : {
 		"value" : "False",
-		"description" : "robot shows exercise while the user is moving or not (useful if kinect exists)"
+		"description" : "robot shows exercise while the user is moving or not (useful if kinect exists - not functional)"
 	}
 }
