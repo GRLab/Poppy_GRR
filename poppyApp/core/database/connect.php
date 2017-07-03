@@ -10,7 +10,7 @@ class Connexion{
 	private static function connected(){
 		$dsn = 'mysql:host=localhost;dbname=ProjetKERAAL;charset=utf8';
 		$utilisateur = 'root';
-		$motdepasse = 'ilovepoppy';
+		$motdepasse = '';
 		try {
 			self::$oConnexion = new PDO($dsn, $utilisateur , $motdepasse);
 		} catch (PDOException $exception) {

@@ -1,13 +1,10 @@
 {
 	"poppyName" : {
-		"value" : "poppypi",
+		"value" : "poppy",
 		"description" : "name of the poppy robot"
 	},
 	"kinectName" : { 
 		"value" : "none",
-		"value2" : "PC-EQI06687",
-		"valuefa" : "EQI06343",
-		"valueFake" : "192.168.1.101",
 		"descritpion" : "name of the kinect server, 'none' if no kinect"
 	},
 	"seuil_bien" : { 
