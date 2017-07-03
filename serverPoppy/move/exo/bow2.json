@@ -11,5 +11,9 @@
         "namefile": "bow"
     }, 
     "type": "exo", 
-    "nb_temps": 101
+    "nb_temps": 101,
+	"description":{
+		"12": "descriptiontest.mp3",
+		"59": "descriptiontest.mp3"
+	}
 }

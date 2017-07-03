@@ -1,0 +1,44 @@
+{
+    "nb_fichiers": 6, 
+    "fichier2": {
+        "pause": 4, 
+        "vitesse": 6, 
+        "namefile": "rotationTroncGSym"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "rotationTroncGRevSym"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 8, 
+        "namefile": "ecarteBras"
+    }, 
+    "fichier6": {
+        "pause": 0, 
+        "vitesse": 8, 
+        "namefile": "ecarteBrasRev"
+    }, 
+    "fichier4": {
+        "pause": 5, 
+        "vitesse": 6, 
+        "namefile": "rotationTroncG"
+    }, 
+    "fichier5": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "rotationTroncGRev"
+    }, 
+    "type": "exo", 
+    "nb_temps": 128,
+	"description": {
+		"4": "ecarteBras.mp3",
+		"15": "inspire.mp3",
+		"19": "rotationTroncG.mp3",
+		"47": "derotationTronc.mp3",
+		"65": "rotationTroncD.mp3",
+		"91": "rotationTroncFin.mp3",
+		"115": "rotationTroncFin2.mp3"
+	}
+}

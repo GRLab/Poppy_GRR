@@ -16,5 +16,11 @@
         "namefile": "inittete"
     }, 
     "type": "exo", 
-    "nb_temps": 171
+    "nb_temps": 171,
+	
+	"description": {
+		"12": "descriptiontest.mp3",
+		"92": "descriptiontest.mp3",
+		"154": "descriptiontest.mp3"
+	}
 }

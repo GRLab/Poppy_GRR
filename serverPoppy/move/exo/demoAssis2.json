@@ -1,0 +1,23 @@
+{
+    "nb_fichiers": 3, 
+    "description": {
+        "50": "regardez moi danser !"
+    }, 
+    "fichier2": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "salutAssisG"
+    }, 
+    "fichier3": {
+        "pause": 0, 
+        "vitesse": 5, 
+        "namefile": "danseAssis"
+    }, 
+    "fichier1": {
+        "pause": 2, 
+        "vitesse": 5, 
+        "namefile": "salutAssisD"
+    }, 
+    "type": "exo", 
+    "nb_temps": 232
+}

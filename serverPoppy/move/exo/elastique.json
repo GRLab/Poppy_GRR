@@ -31,5 +31,12 @@
         "namefile": "elastiqueBRev"
     }, 
     "type": "exo", 
-    "nb_temps": 81
+    "nb_temps": 81,
+	"description": {
+		"0": "prendreElastique.mp3",
+		"16": "elastiqueEcarte.mp3",
+		"35": "elastiqueRepos.mp3",
+		"44": "refaire.mp3",
+		"62": "elastiqueFin.mp3"
+	}
 }

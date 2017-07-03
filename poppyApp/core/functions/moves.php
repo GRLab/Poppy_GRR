@@ -38,6 +38,9 @@ if(isset($_GET["action"])){
 		header('Content-type: application/json');
 		$movesNumber = getMovesNumber();
 		echo  json_encode($movesNumber);
+	} else if ($_GET["action"] == "getTimeMov"){
+		$iTime = getTimeMov($_POST["movename"]);
+		echo $iTime;
 	}
 }
 
@@ -312,6 +315,20 @@ function getMovesNumber(){
 	}
 
 	return $movesNumber; 
+}
+
+function getTimeMov($sMove){
+	$sSQL = "SELECT `nb_temps`
+			 FROM `movelist`
+			 WHERE `moveName` = :movename";
+
+	$requete = Connexion::getInstance()->prepare($sSQL);
+
+	$requete->execute(array("movename" => $sMove));
+			
+	$aDatas = $requete->fetch( PDO::FETCH_ASSOC);
+	
+	return $aDatas["nb_temps"];
 }
 
 ?>

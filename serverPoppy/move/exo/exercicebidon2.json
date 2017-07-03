@@ -1,0 +1,75 @@
+{
+    "nb_fichiers": 14, 
+    "fichier8": {
+        "pause": 9, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "fichier9": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier2": {
+        "pause": 9, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "fichier3": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier1": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier6": {
+        "pause": 9, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "fichier7": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier4": {
+        "pause": 9, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "fichier5": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier10": {
+        "pause": 9, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "fichier11": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier12": {
+        "pause": 9, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "fichier13": {
+        "pause": 7, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "fichier14": {
+        "pause": 0, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "type": "exo", 
+    "nb_temps": 649
+}

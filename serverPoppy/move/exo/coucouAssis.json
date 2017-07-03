@@ -1,0 +1,16 @@
+{
+    "nb_fichiers": 2, 
+    "description": {}, 
+    "fichier2": {
+        "pause": 0, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouDroit"
+    }, 
+    "nb_temps": 81, 
+    "fichier1": {
+        "pause": 3, 
+        "vitesse": 5, 
+        "namefile": "kineCoucouGauche"
+    }, 
+    "type": "exo"
+}

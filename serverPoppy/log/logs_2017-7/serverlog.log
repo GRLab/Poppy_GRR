@@ -1,0 +1,354 @@
+03/07/2017 08:38:02 AM - INFO - initializing poppy server
+03/07/2017 08:38:15 AM - INFO - essai initialisation moteur 0
+03/07/2017 08:38:33 AM - ERROR - ***** motor init error *****
+Traceback (most recent call last):
+  File "/home/poppy/poppy_dev/serverPoppy/poppyserver.py", line 791, in <module>
+    poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions)
+  File "/home/poppy/poppy_dev/serverPoppy/fonctions.py", line 913, in __init__
+    self.Poppyboid = PoppyHumanoid()
+  File "/usr/local/lib/python2.7/dist-packages/poppy/creatures/abstractcreature.py", line 121, in __new__
+    raise IOError('Connection to the robot failed! {}'.format(str(e)))
+IOError: Connection to the robot failed! No suitable port found for ids [31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 51, 52, 53, 54]. These ids are missing [32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 51, 52, 53, 54, 31] !
+03/07/2017 08:38:33 AM - INFO - essai initialisation moteur 1
+03/07/2017 08:38:50 AM - ERROR - ***** motor init error *****
+Traceback (most recent call last):
+  File "/home/poppy/poppy_dev/serverPoppy/poppyserver.py", line 791, in <module>
+    poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions)
+  File "/home/poppy/poppy_dev/serverPoppy/fonctions.py", line 913, in __init__
+    self.Poppyboid = PoppyHumanoid()
+  File "/usr/local/lib/python2.7/dist-packages/poppy/creatures/abstractcreature.py", line 121, in __new__
+    raise IOError('Connection to the robot failed! {}'.format(str(e)))
+IOError: Connection to the robot failed! No suitable port found for ids [31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 51, 52, 53, 54]. These ids are missing [32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 51, 52, 53, 54, 31] !
+03/07/2017 08:38:50 AM - INFO - essai initialisation moteur 2
+03/07/2017 08:39:07 AM - ERROR - ***** motor init error *****
+Traceback (most recent call last):
+  File "/home/poppy/poppy_dev/serverPoppy/poppyserver.py", line 791, in <module>
+    poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions)
+  File "/home/poppy/poppy_dev/serverPoppy/fonctions.py", line 913, in __init__
+    self.Poppyboid = PoppyHumanoid()
+  File "/usr/local/lib/python2.7/dist-packages/poppy/creatures/abstractcreature.py", line 121, in __new__
+    raise IOError('Connection to the robot failed! {}'.format(str(e)))
+IOError: Connection to the robot failed! No suitable port found for ids [31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 51, 52, 53, 54]. These ids are missing [32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 51, 52, 53, 54, 31] !
+03/07/2017 09:08:41 AM - INFO - initializing poppy server
+03/07/2017 09:08:54 AM - INFO - essai initialisation moteur 0
+03/07/2017 09:09:13 AM - INFO - ----- moteurs initialises -----
+03/07/2017 09:11:49 AM - INFO - 192.168.0.113 REQUEST - stop !
+03/07/2017 09:11:49 AM - INFO - 192.168.0.113 RESPONSE - no exercice or movement is running
+03/07/2017 09:11:49 AM - INFO - 192.168.0.113 REQUEST - sending Poppy IP
+03/07/2017 09:11:49 AM - INFO - 192.168.0.113 RESPONSE - 192.168.0.136
+03/07/2017 09:11:49 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:11:49 AM - INFO - 192.168.0.113 RESPONSE - file movelist has been sent
+03/07/2017 09:12:21 AM - INFO - 192.168.0.113 REQUEST - stop !
+03/07/2017 09:12:21 AM - INFO - 192.168.0.113 RESPONSE - no exercice or movement is running
+03/07/2017 09:12:21 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:21 AM - INFO - 192.168.0.113 RESPONSE - file movelist has been sent
+03/07/2017 09:12:21 AM - INFO - 192.168.0.113 REQUEST - sending Poppy IP
+03/07/2017 09:12:21 AM - INFO - 192.168.0.113 RESPONSE - 192.168.0.136
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file demoDeboutJ2 has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file movelist has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file demoAssisSalon has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file demoDebout3 has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file demoDeboutJ3 has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file exempleSeance has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file aaaaatest has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file sport has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file rotationTroncGSym has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file etirementLateralG has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file solEtirejdRev has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 RESPONSE - file regardRev has been sent
+03/07/2017 09:12:25 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file ecarteBrasRev has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file solPlancheB has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file elastiqueBRev has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file solPlancheJ has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file solLateralG has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file elastiqueInitRev has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file solLateralGSymRev has been sent
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:26 AM - INFO - 192.168.0.113 RESPONSE - file etirementGCol has been sent
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 RESPONSE - file inittete has been sent
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 RESPONSE - file elastiqueInit has been sent
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 RESPONSE - file coucou has been sent
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 RESPONSE - file respi3 has been sent
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 RESPONSE - file respi2 has been sent
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:27 AM - INFO - 192.168.0.113 RESPONSE - file bowRev has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file salutAssisD has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file salutAssisG has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file aapoignets has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file salut has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file solLeveTete has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file rotationTroncGRev has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 RESPONSE - file solEcarteJambes has been sent
+03/07/2017 09:12:28 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solEcarteBrasRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file cacheTeteBrasRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file cacheTeteBras has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file rotationTroncGRevSym has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file ecarteBras has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file etirementLateralGRevSym has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solLateralGSym has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solPlancheInitBrasRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solEcarteJRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file pointedevant has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file baissebd has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file s3exo2rotgRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file coucouBG has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file penchageavant has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file s3exo1pencheRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solOrienteBcielRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solTendJambes has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solLeveBras has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solRedresseTeteRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file montreheurestab has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solPlancheInitBras has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file montreheurebras has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solPlieGenouxRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solPlanche has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file regardCiel has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file cacheTeteInspiRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solRedresseTete has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 RESPONSE - file solPlancheRev has been sent
+03/07/2017 09:12:29 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file solEtirejgRev has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file flechijambes has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file bow has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file cacheTeteInspi has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file baisseTete has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file down has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file solTendJambesRev has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file leveBDSym has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file tetebrasse has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file cacheTeteOuvreB has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file danseAssis has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file etirementGBG has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file solEcarteJ has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file pointedevantbg has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file montreheuretete has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file s3exo2rotg has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file s3exo1penche has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file montreheure has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file rotationTroncG has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file brasse has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file desesperetorse has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file solLeveBrasRev has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file regard has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 RESPONSE - file desesperecol has been sent
+03/07/2017 09:12:30 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file leveJD has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file solOrienteBciel has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file bonjour has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file kineCoucouGauche has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file s3exo2rotgSym has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file solEtirejd has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file solEtirejg has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file etirementLateralGSym has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file tetebrasseRev has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file inspirationRev has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file coucouBGdown has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file kineCoucouDroit has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file dansepoignet has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file solRedresseCou has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file up has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file demo has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file leveJG has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file pencheagearriere has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file solEcarteBras has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file solPlieGenoux has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file bowSym has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file regardCielRev has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file demoG has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file demoD has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file etirementLateralGRev has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file elastiqueB has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file s3exo2rotgSymRev has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 RESPONSE - file respi has been sent
+03/07/2017 09:12:31 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file solLateralGRev has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file solEloigneBras has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file inspiration has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file atestbidon has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file leveBD has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file desesperebras has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file mainsenlair has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file papbras has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file s3exo2 has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file bonjourExo has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file levetete has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file salutG has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file salutD has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file demoAssis2 has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file nageur has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file exercicebidon has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file cacheTeteKine has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file bow2 has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file aaatest has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file demoAssis3 has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file solLateraux has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file demoDebout has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file etirementLaterauxKine has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file exercicebidon4 has been sent
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:32 AM - INFO - 192.168.0.113 RESPONSE - file exercicebidon2 has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file exercicebidon3 has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file rotationTroncKine has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file bowexo has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file demoAssis has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file demoDeboutJ has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file elastique has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file salut2 has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file impatient has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file solEtireJ has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file solPlancheExo has been sent
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:33 AM - INFO - 192.168.0.113 RESPONSE - file coucouAssis has been sent
+03/07/2017 09:12:54 AM - INFO - 192.168.0.113 REQUEST - stop !
+03/07/2017 09:12:54 AM - INFO - 192.168.0.113 RESPONSE - no exercice or movement is running
+03/07/2017 09:12:54 AM - INFO - 192.168.0.113 GET REQUEST - receiving data
+03/07/2017 09:12:54 AM - INFO - 192.168.0.113 RESPONSE - file movelist has been sent
+03/07/2017 09:12:54 AM - INFO - 192.168.0.113 REQUEST - sending Poppy IP
+03/07/2017 09:12:54 AM - INFO - 192.168.0.113 RESPONSE - 192.168.0.136
+03/07/2017 09:14:34 AM - INFO - 192.168.0.113 REQUEST - stopServer
+03/07/2017 09:17:21 AM - INFO - initializing poppy server
+03/07/2017 12:09:07 PM - INFO - essai initialisation moteur 0
+03/07/2017 12:09:26 PM - INFO - ----- moteurs initialises -----

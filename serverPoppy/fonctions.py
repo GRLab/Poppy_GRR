@@ -17,6 +17,8 @@ from logging.handlers import RotatingFileHandler
 import tarfile
 from threading import Thread
 import requests
+from random import randint
+import pygame
 
 #PRIMITIVES
 #primitive enregistrement partie de sous-mouvement
@@ -263,217 +265,246 @@ class miseEnPosPrimitive(pypot.primitive.Primitive):
 	
 		positionFin = self.position
 		#print self.speed.keys()	
-		if "jambe_gauche" in self.speed.keys() and "11" in positionFin and self.PoppyGRR.creature == "humanoid":
-			if abs(positionFin["11"]-positionActu["11"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["11"]-positionActu["11"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["11"]-positionActu["11"]>0:
-						positionFin["11"]=positionActu["11"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["11"]=positionActu["11"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_hip_x':positionFin["11"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
-			if abs(positionFin["12"]-positionActu["12"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["12"]-positionActu["12"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["12"]-positionActu["12"]>0:
-						positionFin["12"]=positionActu["12"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["12"]=positionActu["12"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_hip_z':positionFin["12"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
-			if abs(positionFin["13"]-positionActu["13"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["13"]-positionActu["13"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["13"]-positionActu["13"]>0:
-						positionFin["13"]=positionActu["13"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["13"]=positionActu["13"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_hip_y':positionFin["13"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
-			if abs(positionFin["14"]-positionActu["14"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["14"]-positionActu["14"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["14"]-positionActu["14"]>0:
-						positionFin["14"]=positionActu["14"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["14"]=positionActu["14"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_knee_y': positionFin["14"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
-			if abs(positionFin["15"]-positionActu["15"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["15"]-positionActu["15"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["15"]-positionActu["15"]>0:
-						positionFin["15"]=positionActu["15"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["15"]=positionActu["15"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_ankle_y':positionFin["15"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
-		if "jambe_droite" in self.speed.keys() and "21" in positionFin and self.PoppyGRR.creature == "humanoid":
-			if abs(positionFin["21"]-positionActu["21"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["21"]-positionActu["21"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["21"]-positionActu["21"]>0:
-						positionFin["21"]=positionActu["21"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["21"]=positionActu["21"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_hip_x':positionFin["21"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
-			if abs(positionFin["22"]-positionActu["22"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["22"]-positionActu["22"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["22"]-positionActu["22"]>0:
-						positionFin["22"]=positionActu["22"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["22"]=positionActu["22"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_hip_z':positionFin["22"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
-			if abs(positionFin["23"]-positionActu["23"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["23"]-positionActu["23"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["23"]-positionActu["23"]>0:
-						positionFin["23"]=positionActu["23"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["23"]=positionActu["23"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_hip_y': positionFin["23"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
-			if abs(positionFin["24"]-positionActu["24"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["24"]-positionActu["24"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["24"]-positionActu["24"]>0:
-						positionFin["24"]=positionActu["24"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["24"]=positionActu["24"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_knee_y':positionFin["24"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
-			if abs(positionFin["25"]-positionActu["25"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["25"]-positionActu["25"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["25"]-positionActu["25"]>0:
-						positionFin["25"]=positionActu["25"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["25"]=positionActu["25"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_ankle_y':positionFin["25"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
-		if "colonne" in self.speed.keys() and "31" in positionFin:
-			if abs(positionFin["31"]-positionActu["31"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["31"]-positionActu["31"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["31"]-positionActu["31"]>0:
-						positionFin["31"]=positionActu["31"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["31"]=positionActu["31"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'abs_y':positionFin["31"]}, timeMultiplier*self.speed["colonne"], wait=False)
-			if abs(positionFin["32"]-positionActu["32"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["32"]-positionActu["32"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["32"]-positionActu["32"]>0:
-						positionFin["32"]=positionActu["32"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["32"]=positionActu["32"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'abs_x':positionFin["32"]}, timeMultiplier*self.speed["colonne"], wait=False)
-			if abs(positionFin["33"]-positionActu["33"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["33"]-positionActu["33"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["33"]-positionActu["33"]>0:
-						positionFin["33"]=positionActu["33"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["33"]=positionActu["33"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'abs_z':positionFin["33"]}, timeMultiplier*self.speed["colonne"], wait=False)
-			if abs(positionFin["34"]-positionActu["34"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["34"]-positionActu["34"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["34"]-positionActu["34"]>0:
-						positionFin["34"]=positionActu["34"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["34"]=positionActu["34"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'bust_y':positionFin["34"]}, timeMultiplier*self.speed["colonne"], wait=False)
-			if abs(positionFin["35"]-positionActu["35"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["35"]-positionActu["35"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["35"]-positionActu["35"]>0:
-						positionFin["35"]=positionActu["35"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["35"]=positionActu["35"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'bust_x':positionFin["35"]}, timeMultiplier*self.speed["colonne"], wait=False)
-		if "bras_droit" in self.speed.keys() and "51" in positionFin:
-			if abs(positionFin["51"]-positionActu["51"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["51"]-positionActu["51"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["51"]-positionActu["51"]>0:
-						positionFin["51"]=positionActu["51"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["51"]=positionActu["51"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_shoulder_y':positionFin["51"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
-			if abs(positionFin["52"]-positionActu["52"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["52"]-positionActu["52"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["52"]-positionActu["52"]>0:
-						positionFin["52"]=positionActu["52"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["52"]=positionActu["52"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_shoulder_x':positionFin["52"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
-			if abs(positionFin["53"]-positionActu["53"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["53"]-positionActu["53"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["53"]-positionActu["53"]>0:
-						positionFin["53"]=positionActu["53"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["53"]=positionActu["53"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_arm_z':positionFin["53"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
-			if abs(positionFin["54"]-positionActu["54"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["54"]-positionActu["54"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["54"]-positionActu["54"]>0:
-						positionFin["54"]=positionActu["54"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["54"]=positionActu["54"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'r_elbow_y': positionFin["54"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
-			if "55" in positionFin and self.PoppyGRR.wrists:
-				if abs(positionFin["55"]-positionActu["55"])>self.PoppyGRR.SEUIL_ANGLE :
-					if abs(positionFin["55"]-positionActu["55"])>self.PoppyGRR.LIMITE_ANGLE:
-						if positionFin["55"]-positionActu["55"]>0:
-							positionFin["55"]=positionActu["55"]+self.PoppyGRR.LIMITE_ANGLE
+		if "jambe_gauche" in self.speed.keys() and self.PoppyGRR.creature == "humanoid":
+			if "11" in positionFin:
+ 				if abs(positionFin["11"]-positionActu["11"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["11"]-positionActu["11"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["11"]-positionActu["11"]>0:
+							positionFin["11"]=positionActu["11"]+self.PoppyGRR.LIMITE_ANGLE
 						else:
-							positionFin["55"]=positionActu["55"]-self.PoppyGRR.LIMITE_ANGLE
-					self.Poppyboid.goto_position({'r_wrist_z': positionFin["55"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
-				if abs(positionFin["56"]-positionActu["56"])>self.PoppyGRR.SEUIL_ANGLE :
-					if abs(positionFin["56"]-positionActu["56"])>self.PoppyGRR.LIMITE_ANGLE:
-						if positionFin["56"]-positionActu["56"]>0:
-							positionFin["56"]=positionActu["56"]+self.PoppyGRR.LIMITE_ANGLE
+							positionFin["11"]=positionActu["11"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_hip_x':positionFin["11"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
+			if "12" in positionFin:
+				if abs(positionFin["12"]-positionActu["12"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["12"]-positionActu["12"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["12"]-positionActu["12"]>0:
+							positionFin["12"]=positionActu["12"]+self.PoppyGRR.LIMITE_ANGLE
 						else:
-							positionFin["56"]=positionActu["56"]-self.PoppyGRR.LIMITE_ANGLE
-					self.Poppyboid.goto_position({'r_wrist_x': positionFin["56"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
-		if "bras_gauche" in self.speed.keys() and "41" in positionFin:
-			if abs(positionFin["41"]-positionActu["41"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["41"]-positionActu["41"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["41"]-positionActu["41"]>0:
-						positionFin["41"]=positionActu["41"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["41"]=positionActu["41"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_shoulder_y':positionFin["41"]},timeMultiplier*self.speed["bras_gauche"], wait=False)
-			if abs(positionFin["42"]-positionActu["42"])>self.PoppyGRR.SEUIL_ANGLE:
-				if abs(positionFin["42"]-positionActu["42"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["42"]-positionActu["42"]>0:
-						positionFin["42"]=positionActu["42"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["42"]=positionActu["42"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_shoulder_x':positionFin["42"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
-			if abs(positionFin["43"]-positionActu["43"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["43"]-positionActu["43"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["43"]-positionActu["43"]>0:
-						positionFin["43"]=positionActu["43"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["43"]=positionActu["43"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_arm_z':positionFin["43"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
-			if abs(positionFin["44"]-positionActu["44"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["44"]-positionActu["44"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["44"]-positionActu["44"]>0:
-						positionFin["44"]=positionActu["44"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["44"]=positionActu["44"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'l_elbow_y': positionFin["44"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
-			if "45" in positionFin and self.PoppyGRR.wrists:
-				if abs(positionFin["45"]-positionActu["45"])>self.PoppyGRR.SEUIL_ANGLE :
-					if abs(positionFin["45"]-positionActu["45"])>self.PoppyGRR.LIMITE_ANGLE:
-						if positionFin["45"]-positionActu["45"]>0:
-							positionFin["45"]=positionActu["45"]+self.PoppyGRR.LIMITE_ANGLE
+							positionFin["12"]=positionActu["12"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_hip_z':positionFin["12"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
+			if "13" in positionFin:
+				if abs(positionFin["13"]-positionActu["13"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["13"]-positionActu["13"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["13"]-positionActu["13"]>0:
+							positionFin["13"]=positionActu["13"]+self.PoppyGRR.LIMITE_ANGLE
 						else:
-							positionFin["45"]=positionActu["45"]-self.PoppyGRR.LIMITE_ANGLE
-					self.Poppyboid.goto_position({'l_wrist_z': positionFin["45"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
-				if abs(positionFin["46"]-positionActu["46"])>self.PoppyGRR.SEUIL_ANGLE :
-					if abs(positionFin["46"]-positionActu["46"])>self.PoppyGRR.LIMITE_ANGLE:
-						if positionFin["46"]-positionActu["46"]>0:
-							positionFin["46"]=positionActu["46"]+self.PoppyGRR.LIMITE_ANGLE
+							positionFin["13"]=positionActu["13"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_hip_y':positionFin["13"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
+			if "14" in positionFin:
+				if abs(positionFin["14"]-positionActu["14"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["14"]-positionActu["14"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["14"]-positionActu["14"]>0:
+							positionFin["14"]=positionActu["14"]+self.PoppyGRR.LIMITE_ANGLE
 						else:
-							positionFin["46"]=positionActu["46"]-self.PoppyGRR.LIMITE_ANGLE
-					self.Poppyboid.goto_position({'l_wrist_x': positionFin["46"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
-		if "tete" in self.speed.keys() and "36" in positionFin:
-			if abs(positionFin["36"]-positionActu["36"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["36"]-positionActu["36"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["36"]-positionActu["36"]>0:
-						positionFin["36"]=positionActu["36"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["36"]=positionActu["36"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'head_z':positionFin["36"]}, timeMultiplier*self.speed["tete"], wait=False)
-			if abs(positionFin["37"]-positionActu["37"])>self.PoppyGRR.SEUIL_ANGLE :
-				if abs(positionFin["37"]-positionActu["37"])>self.PoppyGRR.LIMITE_ANGLE:
-					if positionFin["37"]-positionActu["37"]>0:
-						positionFin["37"]=positionActu["37"]+self.PoppyGRR.LIMITE_ANGLE
-					else:
-						positionFin["37"]=positionActu["37"]-self.PoppyGRR.LIMITE_ANGLE
-				self.Poppyboid.goto_position({'head_y':positionFin["37"]}, timeMultiplier*self.speed["tete"], wait=False)
+							positionFin["14"]=positionActu["14"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_knee_y': positionFin["14"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
+			if "15" in positionFin:
+				if abs(positionFin["15"]-positionActu["15"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["15"]-positionActu["15"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["15"]-positionActu["15"]>0:
+							positionFin["15"]=positionActu["15"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["15"]=positionActu["15"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_ankle_y':positionFin["15"]}, timeMultiplier*self.speed["jambe_gauche"], wait=False)
+		if "jambe_droite" in self.speed.keys() and self.PoppyGRR.creature == "humanoid":
+			if "21" in positionFin:
+				if abs(positionFin["21"]-positionActu["21"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["21"]-positionActu["21"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["21"]-positionActu["21"]>0:
+							positionFin["21"]=positionActu["21"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["21"]=positionActu["21"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_hip_x':positionFin["21"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
+			if "22" in positionFin:
+				if abs(positionFin["22"]-positionActu["22"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["22"]-positionActu["22"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["22"]-positionActu["22"]>0:
+							positionFin["22"]=positionActu["22"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["22"]=positionActu["22"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_hip_z':positionFin["22"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
+			if "23" in positionFin:
+				if abs(positionFin["23"]-positionActu["23"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["23"]-positionActu["23"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["23"]-positionActu["23"]>0:
+							positionFin["23"]=positionActu["23"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["23"]=positionActu["23"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_hip_y': positionFin["23"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
+			if "24" in positionFin:
+				if abs(positionFin["24"]-positionActu["24"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["24"]-positionActu["24"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["24"]-positionActu["24"]>0:
+							positionFin["24"]=positionActu["24"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["24"]=positionActu["24"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_knee_y':positionFin["24"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
+			if "25" in positionFin:
+				if abs(positionFin["25"]-positionActu["25"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["25"]-positionActu["25"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["25"]-positionActu["25"]>0:
+							positionFin["25"]=positionActu["25"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["25"]=positionActu["25"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_ankle_y':positionFin["25"]}, timeMultiplier*self.speed["jambe_droite"], wait=False)
+		if "colonne" in self.speed.keys():
+			if "31" in positionFin:
+				if abs(positionFin["31"]-positionActu["31"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["31"]-positionActu["31"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["31"]-positionActu["31"]>0:
+							positionFin["31"]=positionActu["31"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["31"]=positionActu["31"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'abs_y':positionFin["31"]}, timeMultiplier*self.speed["colonne"], wait=False)
+			if "32" in positionFin:
+				if abs(positionFin["32"]-positionActu["32"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["32"]-positionActu["32"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["32"]-positionActu["32"]>0:
+							positionFin["32"]=positionActu["32"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["32"]=positionActu["32"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'abs_x':positionFin["32"]}, timeMultiplier*self.speed["colonne"], wait=False)
+			if "33" in positionFin:
+				if abs(positionFin["33"]-positionActu["33"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["33"]-positionActu["33"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["33"]-positionActu["33"]>0:
+							positionFin["33"]=positionActu["33"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["33"]=positionActu["33"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'abs_z':positionFin["33"]}, timeMultiplier*self.speed["colonne"], wait=False)
+			if "34" in positionFin:
+				if abs(positionFin["34"]-positionActu["34"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["34"]-positionActu["34"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["34"]-positionActu["34"]>0:
+							positionFin["34"]=positionActu["34"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["34"]=positionActu["34"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'bust_y':positionFin["34"]}, timeMultiplier*self.speed["colonne"], wait=False)
+			if "35" in positionFin:
+				if abs(positionFin["35"]-positionActu["35"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["35"]-positionActu["35"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["35"]-positionActu["35"]>0:
+							positionFin["35"]=positionActu["35"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["35"]=positionActu["35"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'bust_x':positionFin["35"]}, timeMultiplier*self.speed["colonne"], wait=False)
+		if "bras_droit" in self.speed.keys():
+			if "51" in positionFin:
+				if abs(positionFin["51"]-positionActu["51"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["51"]-positionActu["51"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["51"]-positionActu["51"]>0:
+							positionFin["51"]=positionActu["51"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["51"]=positionActu["51"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_shoulder_y':positionFin["51"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
+			if "52" in positionFin:
+				if abs(positionFin["52"]-positionActu["52"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["52"]-positionActu["52"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["52"]-positionActu["52"]>0:
+							positionFin["52"]=positionActu["52"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["52"]=positionActu["52"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_shoulder_x':positionFin["52"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
+			if "53" in positionFin:
+				if abs(positionFin["53"]-positionActu["53"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["53"]-positionActu["53"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["53"]-positionActu["53"]>0:
+							positionFin["53"]=positionActu["53"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["53"]=positionActu["53"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_arm_z':positionFin["53"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
+			if "54" in positionFin:
+				if abs(positionFin["54"]-positionActu["54"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["54"]-positionActu["54"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["54"]-positionActu["54"]>0:
+							positionFin["54"]=positionActu["54"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["54"]=positionActu["54"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'r_elbow_y': positionFin["54"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
+			if self.PoppyGRR.wrists:
+				if "55" in positionFin:
+					if abs(positionFin["55"]-positionActu["55"])>self.PoppyGRR.SEUIL_ANGLE :
+						if abs(positionFin["55"]-positionActu["55"])>self.PoppyGRR.LIMITE_ANGLE:
+							if positionFin["55"]-positionActu["55"]>0:
+								positionFin["55"]=positionActu["55"]+self.PoppyGRR.LIMITE_ANGLE
+							else:
+								positionFin["55"]=positionActu["55"]-self.PoppyGRR.LIMITE_ANGLE
+						self.Poppyboid.goto_position({'r_wrist_z': positionFin["55"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
+				if "56" in positionFin:
+					if abs(positionFin["56"]-positionActu["56"])>self.PoppyGRR.SEUIL_ANGLE :
+						if abs(positionFin["56"]-positionActu["56"])>self.PoppyGRR.LIMITE_ANGLE:
+							if positionFin["56"]-positionActu["56"]>0:
+								positionFin["56"]=positionActu["56"]+self.PoppyGRR.LIMITE_ANGLE
+							else:
+								positionFin["56"]=positionActu["56"]-self.PoppyGRR.LIMITE_ANGLE
+						self.Poppyboid.goto_position({'r_wrist_x': positionFin["56"]}, timeMultiplier*self.speed["bras_droit"], wait=False)
+		if "bras_gauche" in self.speed.keys():
+			if "41" in positionFin:
+				if abs(positionFin["41"]-positionActu["41"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["41"]-positionActu["41"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["41"]-positionActu["41"]>0:
+							positionFin["41"]=positionActu["41"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["41"]=positionActu["41"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_shoulder_y':positionFin["41"]},timeMultiplier*self.speed["bras_gauche"], wait=False)
+			if "42" in positionFin:
+				if abs(positionFin["42"]-positionActu["42"])>self.PoppyGRR.SEUIL_ANGLE:
+					if abs(positionFin["42"]-positionActu["42"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["42"]-positionActu["42"]>0:
+							positionFin["42"]=positionActu["42"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["42"]=positionActu["42"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_shoulder_x':positionFin["42"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
+			if "43" in positionFin:
+				if abs(positionFin["43"]-positionActu["43"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["43"]-positionActu["43"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["43"]-positionActu["43"]>0:
+							positionFin["43"]=positionActu["43"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["43"]=positionActu["43"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_arm_z':positionFin["43"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
+			if "44" in positionFin:
+				if abs(positionFin["44"]-positionActu["44"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["44"]-positionActu["44"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["44"]-positionActu["44"]>0:
+							positionFin["44"]=positionActu["44"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["44"]=positionActu["44"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'l_elbow_y': positionFin["44"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
+			if self.PoppyGRR.wrists:
+				if "45" in positionFin:
+					if abs(positionFin["45"]-positionActu["45"])>self.PoppyGRR.SEUIL_ANGLE :
+						if abs(positionFin["45"]-positionActu["45"])>self.PoppyGRR.LIMITE_ANGLE:
+							if positionFin["45"]-positionActu["45"]>0:
+								positionFin["45"]=positionActu["45"]+self.PoppyGRR.LIMITE_ANGLE
+							else:
+								positionFin["45"]=positionActu["45"]-self.PoppyGRR.LIMITE_ANGLE
+						self.Poppyboid.goto_position({'l_wrist_z': positionFin["45"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
+				if "46" in positionFin:
+					if abs(positionFin["46"]-positionActu["46"])>self.PoppyGRR.SEUIL_ANGLE :
+						if abs(positionFin["46"]-positionActu["46"])>self.PoppyGRR.LIMITE_ANGLE:
+							if positionFin["46"]-positionActu["46"]>0:
+								positionFin["46"]=positionActu["46"]+self.PoppyGRR.LIMITE_ANGLE
+							else:
+								positionFin["46"]=positionActu["46"]-self.PoppyGRR.LIMITE_ANGLE
+						self.Poppyboid.goto_position({'l_wrist_x': positionFin["46"]}, timeMultiplier*self.speed["bras_gauche"], wait=False)
+		if "tete" in self.speed.keys():
+			if "36" in positionFin:
+				if abs(positionFin["36"]-positionActu["36"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["36"]-positionActu["36"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["36"]-positionActu["36"]>0:
+							positionFin["36"]=positionActu["36"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["36"]=positionActu["36"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'head_z':positionFin["36"]}, timeMultiplier*self.speed["tete"], wait=False)
+			if "37" in positionFin:
+				if abs(positionFin["37"]-positionActu["37"])>self.PoppyGRR.SEUIL_ANGLE :
+					if abs(positionFin["37"]-positionActu["37"])>self.PoppyGRR.LIMITE_ANGLE:
+						if positionFin["37"]-positionActu["37"]>0:
+							positionFin["37"]=positionActu["37"]+self.PoppyGRR.LIMITE_ANGLE
+						else:
+							positionFin["37"]=positionActu["37"]-self.PoppyGRR.LIMITE_ANGLE
+					self.Poppyboid.goto_position({'head_y':positionFin["37"]}, timeMultiplier*self.speed["tete"], wait=False)
 		#Pour laisser le temps au robot d'effectuer le mouvement : t_sleep>t_mouvement
 		#time.sleep(1)     
 
@@ -547,18 +578,26 @@ class goMovePrimitive(pypot.primitive.Primitive):
 
 #primitive jouer un exo ou une seance
 class goExoPrimitive(pypot.primitive.Primitive):
-	def __init__(self, poppy, exoName, exoType):
+	def __init__(self, poppy, exoName, exoType, tempsPause=0):
 		self.PoppyGRR=poppy
 		self.exoName=exoName
 		self.exoType=exoType
+		self.tempsPause=tempsPause
 		pypot.primitive.Primitive.__init__(self, self.PoppyGRR.Poppyboid)
 
 	def run(self):
 		self.PoppyGRR.NUM_MOV = 0
 		with open('./move/'+self.exoType+'/'+self.exoName+'.json', 'r') as f:
 			moveConfig= json.load(f)
-
-		for i in range(moveConfig["nb_fichiers"]):		#verifie les parametres du fichier config
+		#VOIX
+		if self.exoType == "exo":
+			self.nbTemps = moveConfig["nb_temps"]
+			description = {}
+			if "description" in moveConfig.keys():
+				description = moveConfig["description"]
+				description["offset"] = self.PoppyGRR.EXO_TEMPS
+				
+		for i in range(int(moveConfig["nb_fichiers"])):		#verifie les parametres du fichier config
 			while self.PoppyGRR.EXO_SLEEP == True and self.PoppyGRR.EXO_ENABLE == True:				#tant que l'exercice est en pause
 				time.sleep(0.05)
 			if self.PoppyGRR.EXO_ENABLE == False:					#si ordre d'arreter la primitive
@@ -566,9 +605,15 @@ class goExoPrimitive(pypot.primitive.Primitive):
 			namefile = moveConfig["fichier"+str(i+1)]["namefile"]
 			#Si c'est un exercice
 			if self.PoppyGRR.directory(namefile) == "exo":
+				self.PoppyGRR.PLAYING_SEANCE=True
 				time.sleep(1.5)
-				while (self.PoppyGRR.PLAYING_EXO == True):	#on attend que pas d'exo en cours
+				while (self.PoppyGRR.PLAYING_EXO == True or self.PoppyGRR.EXO_SLEEP):	#on attend que pas d'exo en cours
 					time.sleep(0.2)
+				while self.PoppyGRR.WAIT_REPET:
+					time.sleep(0.5)
+				if self.PoppyGRR.kinectName != 'none' and self.PoppyGRR.repetitions:
+					time.sleep(0.5)
+					self.PoppyGRR.waitVoice()
 				if self.PoppyGRR.EXO_ENABLE == False:			#si ordre d'arreter la primitive
 					print "---stop seance 1---"
 					return
@@ -577,19 +622,13 @@ class goExoPrimitive(pypot.primitive.Primitive):
 				self.PoppyGRR.logger.info("Exercice : "+str(self.PoppyGRR.NUM_EXO)+", Mouvement : "+str(self.PoppyGRR.NUM_MOV))
 				if i==0:
 					time.sleep(1)
-				elif moveConfig["fichier"+str(i)]["pause"] == 0:
-					time.sleep(1)
-				else:
-					self.PoppyGRR.PAUSE = True
-					time.sleep(moveConfig["fichier"+str(i)]["pause"])
-					self.PoppyGRR.PAUSE = False
-					self.PoppyGRR.EXO_TEMPS += int(moveConfig["fichier"+str(i)]["pause"])
 				if self.PoppyGRR.EXO_ENABLE == False:			#si ordre d'arreter la primitive
 					print "---stop seance 2---"
 					return
 				#communication kinect
 				if self.PoppyGRR.kinectName != "none":
 					self.PoppyGRR.waitKinect = True
+					print "give exoname : "+namefile+" to "+self.PoppyGRR.kinectName
 					kinect = requests.post("http://"+self.PoppyGRR.kinectName+".local:4567/?Submit=give+exoname&exoname="+namefile)
 					if kinect.status_code==200:
 						print "attention, la kinect ne connait pas l'exercice !"
@@ -598,48 +637,108 @@ class goExoPrimitive(pypot.primitive.Primitive):
 						print "kinect ok pour nom exo"
 					while self.PoppyGRR.waitKinect:
 						time.sleep(0.5)
-				goExoPrimitive(self.PoppyGRR,namefile, "exo").start()
+				self.PoppyGRR.NUM_PHASE = 0
+				print "goExoPrimitive : "+namefile
+				self.PoppyGRR.logger.warning("goExoPrimitive : "+namefile)
+				goExoPrimitive(self.PoppyGRR,namefile, "exo", moveConfig["fichier"+str(i+1)]["pause"]).start()
 				time.sleep(1)
 			#si c'est un mouvement
-			else: 
+			else:
 				self.PoppyGRR.PLAYING_EXO = True
+				self.PoppyGRR.waitVoice()
 				speed = moveConfig["fichier"+str(i+1)]["vitesse"]
 			#JOUE LE MOUVEMENT i+1
 				self.PoppyGRR.NUM_MOV +=1
 				self.PoppyGRR.logger.info("Exercice : "+str(self.PoppyGRR.NUM_EXO)+", Mouvement : "+str(self.PoppyGRR.NUM_MOV))
-				move = self.PoppyGRR.GoMove(namefile, speed)
+				move = self.PoppyGRR.GoMove(namefile, speed, description=description)
 				if move == "stop":
 					print "---stop exo via stop move---"
+					self.PoppyGRR.logger.warning("stop exo via stop move")
 					self.PoppyGRR.PLAYING_EXO = False
+					self.PoppyGRR.PLAYING_SEANCE = False
 					return
 				if self.PoppyGRR.EXO_ENABLE == False:			#si ordre d'arreter la primitive
 					print "---stop exo 1---"
+					self.PoppyGRR.logger.warning("stop exo 1")
 					self.PoppyGRR.PLAYING_EXO = False
+					self.PoppyGRR.PLAYING_SEANCE = False
 					return
 				self.PoppyGRR.PAUSE = True
 				if moveConfig["fichier"+str(i+1)]["pause"]!=0:
-					time.sleep(moveConfig["fichier"+str(i+1)]["pause"])
+					time.sleep(float(moveConfig["fichier"+str(i+1)]["pause"]))
 				self.PoppyGRR.PAUSE = False
-				self.PoppyGRR.EXO_TEMPS += moveConfig["fichier"+str(i+1)]["pause"]
+				self.PoppyGRR.EXO_TEMPS += int(moveConfig["fichier"+str(i+1)]["pause"])
 				if self.PoppyGRR.EXO_ENABLE == False:			#si ordre d'arreter la primitive
 					print "---stop exo 2---"
+					self.PoppyGRR.logger.warning("stop exo 2")
 					self.PoppyGRR.PLAYING_EXO = False
+					self.PoppyGRR.PLAYING_SEANCE = False
 					return
 
-		if self.PoppyGRR.directory(namefile) == "mov":
-			if self.PoppyGRR.kinectName != "none":
-				print "pause apres exo"
-				self.PoppyGRR.PauseExo()							#pause entre chaque exercice d'une seance
-				kinect = requests.post("http://"+self.PoppyGRR.kinectName+".local:4567/?Submit=start+kinect&nb_repetition=3")
-				#if kinect.status_code==201:
-				#	print "kinect commence"
-				while self.PoppyGRR.EXO_SLEEP and self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
-					time.sleep(0.5)
+		if self.PoppyGRR.directory(namefile) == "mov": 		#dernier mov
+			if not self.PoppyGRR.REPET:						#si pas une repetition de l exercice
+				if self.PoppyGRR.kinectName != "none":
+					self.PoppyGRR.waitFeedback = True
+					print "pause apres exo"
+					self.PoppyGRR.PauseExo()							#pause entre chaque exercice d'une seance
+					startKinectTh = Thread(target=self.startKinect)
+					startKinectTh.start()
+					time.sleep(1.5)
+					while self.PoppyGRR.EXO_SLEEP and self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE or self.PoppyGRR.REPET:
+						time.sleep(0.5)
+				if self.tempsPause == 0:
+					time.sleep(1)
+				else:
+					self.PoppyGRR.PAUSE = True
+					self.PoppyGRR.EXO_TEMPS += int(self.tempsPause)
+					if self.tempsPause>2:
+						self.tempsPause-=2
+					time.sleep(self.tempsPause)
+					self.PoppyGRR.PAUSE = False
+				if self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
+					while self.PoppyGRR.waitFeedback:
+						time.sleep(0.5)
+					rand = randint(1,3)
+					if self.PoppyGRR.PLAYING_SEANCE:
+						self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
+				elif self.PoppyGRR.NUM_EXO!=0:
+					while self.PoppyGRR.waitFeedback:
+						time.sleep(0.5)
+					#if self.PoppyGRR.PLAYING_SEANCE:
+					self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
+			else:										# si en cours de repetition
+				self.PoppyGRR.PauseExo()
+				self.PoppyGRR.REPET = False
+			time.sleep(2)
 			self.PoppyGRR.PLAYING_EXO = False
+			self.PoppyGRR.PLAYING_SEANCE = False
+			if not self.PoppyGRR.REPET and self.PoppyGRR.WAIT_REPET:
+				self.PoppyGRR.WAIT_REPET = False
 
-		if self.PoppyGRR.EXO_TEMPS>=self.PoppyGRR.EXO_TEMPS_LIMITE:
+		if self.PoppyGRR.EXO_TEMPS>=self.PoppyGRR.EXO_TEMPS_LIMITE and not self.PoppyGRR.REPET:
+			print "fini : "+str(self.PoppyGRR.EXO_TEMPS)+"/"+str(self.PoppyGRR.EXO_TEMPS_LIMITE)
 			self.PoppyGRR.EXO_ENABLE = False
 		#return "played"
+
+	def startKinect(self):
+		kinect = requests.post("http://"+self.PoppyGRR.kinectName+".local:4567/?Submit=start+kinect&nb_repetition=1")
+		if kinect.status_code==201:
+			print "kinect commence"
+		print "a toi !"
+		self.PoppyGRR.voice.play('./sound/sounds/atoi.mp3')
+		if self.PoppyGRR.repetitions:
+			self.PoppyGRR.REPET = True
+			self.PoppyGRR.WAIT_REPET = True
+			time.sleep(0.25)
+			self.PoppyGRR.NUM_PHASE = 0
+			#self.PoppyGRR.NUM_MOV = 0
+			#self.PoppyGRR.NUM_EXO -= 1
+			self.PoppyGRR.EXO_TEMPS -= self.nbTemps
+			self.PoppyGRR.EXO_SLEEP = False
+			goExoPrimitive(self.PoppyGRR,self.exoName, "exo").start()
+			time.sleep(1)
+			while self.PoppyGRR.PLAYING_EXO:
+				time.sleep(0.5)
 
 #primitive mode semi-mou
 class semiCompliantPrimitive(pypot.primitive.Primitive):
@@ -729,7 +828,8 @@ class scanMotorsLoop(pypot.primitive.Primitive):
 		for m in self.PoppyGRR.Poppyboid.motors:
 			self.PoppyGRR.position[imoteur] = m.present_position
 			self.PoppyGRR.voltage[imoteur] = m.present_voltage
-			self.PoppyGRR.temperature[imoteur] = m.present_temperature
+			if m.present_temperature<60: 	#erreur de communication moteur sinon
+				self.PoppyGRR.temperature[imoteur] = m.present_temperature
 			self.PoppyGRR.couple[imoteur] = m.present_load
 			if round(self.PoppyGRR.temperature[imoteur], 1)>=self.PoppyGRR.SEUIL_TEMP:
 				if self.PoppyGRR.creature == "humanoid":
@@ -753,7 +853,7 @@ class scanMotorsLoop(pypot.primitive.Primitive):
 					if self.surchauffeState==False and not self.PoppyGRR.poppyCompliant():
 						self.surchauffeState=True
 						self.surchauffeTimer=6
-						self.PoppyGRR.voice.play("./sound/sounds/surchauffe.mp3")
+						#self.PoppyGRR.voice.play("./sound/sounds/surchauffe.mp3")
 					else:
 						self.surchauffeTimer-=1
 						if self.surchauffeTimer==0:
@@ -806,7 +906,7 @@ class PoppyGRR:
 		contains all the functions managing the robot and the motors
 	"""
 
-	def __init__(self, face, voice, kinectName, internet, creature, wrists):
+	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions):
 		#Creation de l'objet robot
 		self.creature = creature
 		if creature == "humanoid":
@@ -817,6 +917,12 @@ class PoppyGRR:
 		self.voice = voice
 		self.internet = internet
 		self.wrists = wrists
+		self.repetitions = repetitions
+		#feedbacks
+		self.SEUIL_BIEN = seuil_bien
+		self.SEUIL_NUL = seuil_nul
+		self.SEUIL_MINABLE = seuil_minable
+		self.NUM_PHASE = 0
 		#variables moteurs
 		self.idmoteur=[m.id for m in self.Poppyboid.motors]	#variable ID
 		self.nbmoteurs=len(self.idmoteur)				#nombre de moteurs
@@ -839,6 +945,7 @@ class PoppyGRR:
 		self.MOVING_ENABLE = False				# autorisation mouvement (False = stop mouvement)
 		self.PLAYING_EXO = False				# exercice en cours ou non
 		self.EXO_ENABLE = False					# autorise exercice (False = stop exercice)
+		self.PLAYING_SEANCE = False				# seance en cours ou non
 		self.EXO_SLEEP = False					# pause exercice
 		self.PAUSE = False						# pause inter mouvement ou inter exercice
 		self.EXO_TEMPS = 0					# compteur de temps pendant exercice ou seance
@@ -849,14 +956,19 @@ class PoppyGRR:
 		#Face and eyes
 		self.FACE_MANAGING_ENABLE = False 		# thread face managing
 		self.DIRECTION_MANAGING_ON = False		# thread looking-direction active
-		self.EyesDirection = 'center'			# eyes looking direction
+		self.FaceState = 'happy'				# default state of Poppy eyes
+		self.RestEyesDirection = 'center'		# eyes looking direction while not moving
+		self.EyesDirection = self.RestEyesDirection		# eyes looking direction
 		self.directionPoppypart = {}			# active poppyparts to determine direction
 		# variables temporelles pour les logs
 		self.year = int(time.strftime('%Y', time.localtime()))	#annee en cours
 		self.month = int(time.strftime('%m', time.localtime()))	#mois en cours
 		# communication avec la kinect
-		self.kinectName = kinectName
-		self.waitKinect = False
+		self.kinectName = kinectName			# nom du serveur kinect
+		self.waitKinect = False					# attente que la kinect soit prete
+		self.waitFeedback = False				# attente que les feedbacks soient donnes
+		self.REPET = False						# en cours de repetition d un exo par le robot
+		self.WAIT_REPET = False					# attente fin repet
 
 		self.t0 = time.time()
 		if self.face!='none':
@@ -1254,42 +1366,69 @@ class PoppyGRR:
 		for nb_temps in range(moveData["nb_temps"]):
 			if str(nb_temps+1) in moveData :
 				symData[str(nb_temps+1)] = {}
-				if '41' in moveData[str(nb_temps+1)] : 	#bras gauche en bras droit
+				#bras gauche en bras droit
+				if '41' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["51"] = moveData[str(nb_temps+1)]["41"]
+				if '42' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["52"] = - moveData[str(nb_temps+1)]["42"]
+				if '43' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["53"] = - moveData[str(nb_temps+1)]["43"]
+				if '44' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["54"] = moveData[str(nb_temps+1)]["44"]
-					if "45" in moveData[str(nb_temps+1)] and self.wrists:
-						symData[str(nb_temps+1)]["55"] = moveData[str(nb_temps+1)]["45"]
-						symData[str(nb_temps+1)]["56"] = moveData[str(nb_temps+1)]["46"]
-				if '51' in moveData[str(nb_temps+1)] : 	#bras droit en bras gauche
+				if "45" in moveData[str(nb_temps+1)]:
+					symData[str(nb_temps+1)]["55"] = moveData[str(nb_temps+1)]["45"]
+				if '46' in moveData[str(nb_temps+1)] :
+					symData[str(nb_temps+1)]["56"] = moveData[str(nb_temps+1)]["46"]
+				#bras droit en bras gauche
+				if '51' in moveData[str(nb_temps+1)] : 	
 					symData[str(nb_temps+1)]["41"] = moveData[str(nb_temps+1)]["51"]
+				if '52' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["42"] = - moveData[str(nb_temps+1)]["52"]
+				if '53' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["43"] = - moveData[str(nb_temps+1)]["53"]
+				if '54' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["44"] = moveData[str(nb_temps+1)]["54"]
-					if "55" in moveData[str(nb_temps+1)] and self.wrists:
-						symData[str(nb_temps+1)]["45"] = moveData[str(nb_temps+1)]["55"]
-						symData[str(nb_temps+1)]["46"] = moveData[str(nb_temps+1)]["56"]
-				if '11' in moveData[str(nb_temps+1)] : 	#jambe gauche en jambe droite
+				if "55" in moveData[str(nb_temps+1)]:
+					symData[str(nb_temps+1)]["45"] = moveData[str(nb_temps+1)]["55"]
+				if '56' in moveData[str(nb_temps+1)] :
+					symData[str(nb_temps+1)]["46"] = moveData[str(nb_temps+1)]["56"]
+				#jambe gauche en jambe droite
+				if '11' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["21"] = - moveData[str(nb_temps+1)]["11"]
+				if '12' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["22"] = - moveData[str(nb_temps+1)]["12"]
+				if '13' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["23"] = moveData[str(nb_temps+1)]["13"]
+				if '14' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["24"] = moveData[str(nb_temps+1)]["14"]
+				if '15' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["25"] = moveData[str(nb_temps+1)]["15"]
-				if '21' in moveData[str(nb_temps+1)] : 	#jambe droite en jambe gauche
+				#jambe droite en jambe gauche
+				if '21' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["11"] = - moveData[str(nb_temps+1)]["21"]
+				if '22' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["12"] = - moveData[str(nb_temps+1)]["22"]
+				if '23' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["13"] = moveData[str(nb_temps+1)]["23"]
+				if '24' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["14"] = moveData[str(nb_temps+1)]["24"]
+				if '25' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["15"] = moveData[str(nb_temps+1)]["25"]
-				if '31' in moveData[str(nb_temps+1)] : 	#colonne
+				#colonne
+				if '31' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["31"] = moveData[str(nb_temps+1)]["31"]
+				if '32' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["32"] = - moveData[str(nb_temps+1)]["32"]
+				if '33' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["33"] = - moveData[str(nb_temps+1)]["33"]
+				if '34' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["34"] = moveData[str(nb_temps+1)]["34"]
+				if '35' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["35"] = - moveData[str(nb_temps+1)]["35"]
-				if '36' in moveData[str(nb_temps+1)] : 	#tete
+				#tete
+				if '36' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["36"] = - moveData[str(nb_temps+1)]["36"]
+				if '37' in moveData[str(nb_temps+1)] :
 					symData[str(nb_temps+1)]["37"] = moveData[str(nb_temps+1)]["37"]
 		symData["speed"] = {}
 		poppyParts = list()
@@ -1342,42 +1481,69 @@ class PoppyGRR:
 		for nb_temps in range(moveData["nb_temps"]):
 			if str(nb_temps+1) in moveData :
 				revData[str(nb_tps_max-nb_temps)] = {}
-				if '41' in moveData[str(nb_temps+1)] : 	#bras gauche
+				#bras gauche
+				if '41' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["41"] = moveData[str(nb_temps+1)]["41"]
+				if '42' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["42"] = moveData[str(nb_temps+1)]["42"]
+				if '43' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["43"] = moveData[str(nb_temps+1)]["43"]
+				if '44' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["44"] = moveData[str(nb_temps+1)]["44"]
-					if "45" in moveData[str(nb_temps+1)] and self.wrists:
-						revData[str(nb_tps_max-nb_temps)]["45"] = moveData[str(nb_temps+1)]["45"]
-						revData[str(nb_tps_max-nb_temps)]["46"] = moveData[str(nb_temps+1)]["46"]
-				if '51' in moveData[str(nb_temps+1)] : 	#bras droit
+				if "45" in moveData[str(nb_temps+1)] :
+					revData[str(nb_tps_max-nb_temps)]["45"] = moveData[str(nb_temps+1)]["45"]
+				if '46' in moveData[str(nb_temps+1)] :
+					revData[str(nb_tps_max-nb_temps)]["46"] = moveData[str(nb_temps+1)]["46"]
+				#bras droit
+				if '51' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["51"] = moveData[str(nb_temps+1)]["51"]
+				if '52' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["52"] = moveData[str(nb_temps+1)]["52"]
+				if '53' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["53"] = moveData[str(nb_temps+1)]["53"]
+				if '54' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["54"] = moveData[str(nb_temps+1)]["54"]
-					if "55" in moveData[str(nb_temps+1)] and self.wrists:
-						revData[str(nb_tps_max-nb_temps)]["55"] = moveData[str(nb_temps+1)]["55"]
-						revData[str(nb_tps_max-nb_temps)]["56"] = moveData[str(nb_temps+1)]["56"]
-				if '11' in moveData[str(nb_temps+1)] : 	#jambe gauche
+				if "55" in moveData[str(nb_temps+1)]:
+					revData[str(nb_tps_max-nb_temps)]["55"] = moveData[str(nb_temps+1)]["55"]
+				if '56' in moveData[str(nb_temps+1)] :
+					revData[str(nb_tps_max-nb_temps)]["56"] = moveData[str(nb_temps+1)]["56"]
+				#jambe gauche
+				if '11' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["11"] = moveData[str(nb_temps+1)]["11"]
+				if '12' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["12"] = moveData[str(nb_temps+1)]["12"]
+				if '13' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["13"] = moveData[str(nb_temps+1)]["13"]
+				if '14' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["14"] = moveData[str(nb_temps+1)]["14"]
+				if '15' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["15"] = moveData[str(nb_temps+1)]["15"]
-				if '21' in moveData[str(nb_temps+1)] : 	#jambe droite
+				#jambe droite
+				if '21' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["21"] = moveData[str(nb_temps+1)]["21"]
+				if '22' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["22"] = moveData[str(nb_temps+1)]["22"]
+				if '23' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["23"] = moveData[str(nb_temps+1)]["23"]
+				if '24' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["24"] = moveData[str(nb_temps+1)]["24"]
+				if '25' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["25"] = moveData[str(nb_temps+1)]["25"]
-				if '31' in moveData[str(nb_temps+1)] : 	#colonne
+				#colonne
+				if '31' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["31"] = moveData[str(nb_temps+1)]["31"]
+				if '32' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["32"] = moveData[str(nb_temps+1)]["32"]
+				if '33' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["33"] = moveData[str(nb_temps+1)]["33"]
+				if '34' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["34"] = moveData[str(nb_temps+1)]["34"]
+				if '35' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["35"] = moveData[str(nb_temps+1)]["35"]
-				if '36' in moveData[str(nb_temps+1)] : 	#tete
+				#tete
+				if '36' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["36"] = moveData[str(nb_temps+1)]["36"]
+				if '37' in moveData[str(nb_temps+1)] :
 					revData[str(nb_tps_max-nb_temps)]["37"] = moveData[str(nb_temps+1)]["37"]
 		revData["speed"] = {}
 		poppyParts = list()
@@ -1414,6 +1580,14 @@ class PoppyGRR:
 				movelist = json.load(f)
 			nbInDir = 'nb_'+dir
 			movelist[nbInDir] -= 1
+			if dir == "exo":
+				with open('./move/exo/'+moveName+'.json',  'r') as f:
+					movefile = json.load(f)
+				if "description" in movefile:
+					for key, value in movefile["description"].iteritems():
+						print key, value
+						#self.voice.play('./sound/sounds/descriptions/'+value)
+						os.remove('./sound/sounds/descriptions/'+value)
 			os.remove('./move/'+dir+'/'+moveName+'.json')
 			realDir = 'list_'+dir
 			del movelist[realDir][moveName]
@@ -1605,7 +1779,7 @@ class PoppyGRR:
 			print "waiting "+str(temps_attente)+"s"
 			time.sleep(temps_attente)
 
-	def GoMove(self, moveName, speed=5, rev=False, save=False, poppyParts=''):
+	def GoMove(self, moveName, speed=5, rev=False, save=False, poppyParts='', description=''):
 		print "GoMove - movename : "+moveName
 		if self.SecurityStop == True:
 			self.voice.play('./sounds/securityModeError.mp3')
@@ -1686,14 +1860,19 @@ class PoppyGRR:
 				done = goMovePrimitive(self, rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime).start()
 				time.sleep(0.05)
 			else:
-				done = self.goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime)
+				done = self.goMoveFunction(rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime, description)
 				time.sleep(0.05)
 		if done == "stop":
 			return done
 		return 'Move has started'
 
-	def goMoveFunction(self, rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime):
+	def goMoveFunction(self, rev, moveType, moveName, speedDict, tempsboucle, startTime, endTime, description):
 		print "verif si playing move"
+		print description
+		startTime=int(startTime)
+		endTime=int(endTime)
+		if description == '':
+			description={}
 		while self.PLAYING_MOVE:
 			time.sleep(0.1)
 		self.PLAYING_MOVE=True
@@ -1711,8 +1890,16 @@ class PoppyGRR:
 					time.sleep(0.1)
 				if self.MOVING_ENABLE == False:
 					self.PLAYING_MOVE = False
-					print "---stop move 1---"
+					print "---stop move 1 "+moveName+" ---"
+					self.logger.warning("stop move 1 "+moveName)
 					return "stop"
+				#VOIX
+				if "offset" in description.keys():
+					if str(self.EXO_TEMPS-description["offset"]) in description.keys():
+						self.NUM_PHASE+=1
+						print description[str(self.EXO_TEMPS-description["offset"])]
+						sayDescriptionTh = Thread(target=self.sayDescription, args=(self.NUM_PHASE, description[str(self.EXO_TEMPS-description["offset"])]))
+						sayDescriptionTh.start()
 				if temps+1 == 1:
 					self.goFirstPos(moveFile[str(temps+1)], moveFile["speed"])
 				else:
@@ -1721,11 +1908,13 @@ class PoppyGRR:
 					if self.MOVING_ENABLE == False:
 						self.PLAYING_MOVE = False
 						print "---stop move 2---"
+						self.logger.warning("stop move 2")
 						return "stop"
 					time.sleep(tempsboucle)
 					if self.MOVING_ENABLE == False:
 						self.PLAYING_MOVE = False
 						print "---stop move 3---"
+						self.logger.warning("stop move 3")
 						return "stop"
 				self.EXO_TEMPS += 1
 		else:
@@ -1752,7 +1941,19 @@ class PoppyGRR:
 				self.EXO_TEMPS += 1
 		self.PLAYING_MOVE = False
 		if endTime == moveFile["nb_temps"]:
+			print "MOVING_ENABLE = False "+moveName
+			self.logger.warning("MOVING_ENABLE = False "+moveName)
 			self.MOVING_ENABLE = False
+
+	def sayDescription(self, num_phase, descriptionFile):
+		if self.kinectName!='none':
+			self.voice.play("./sound/sounds/feedbacks/segment"+str(num_phase)+".mp3")
+			self.waitVoice()
+		self.voice.play("./sound/sounds/descriptions/"+descriptionFile)
+
+	def sayEndKinectObserv(self):
+		self.voice.play("./sound/sounds/sayEndKinectObserv1.mp3")
+		return "ended"
 
 	def GoExo(self, exoName):
 		if self.SecurityStop == True:
@@ -1764,6 +1965,7 @@ class PoppyGRR:
 		self.EXO_TEMPS = 0
 		self.NUM_EXO = 0
 		self.NUM_MOV = 0
+		self.NUM_PHASE = 0
 		exoType = self.directory(exoName)
 		if exoType == '':
 			if internet:
@@ -1777,7 +1979,7 @@ class PoppyGRR:
 		with open('./move/'+exoType+'/'+exoName+'.json', 'r') as f:
 			moveFile = json.load(f)
 		#tous les fichiers existent ?
-		for i in range(moveFile['nb_fichiers']):
+		for i in range(int(moveFile['nb_fichiers'])):
 			if self.directory(moveFile['fichier'+str(i+1)]['namefile']) == '':
 				if internet:
 					self.voice.say("Le fichier "+moveFile['fichier'+str(i+1)]['namefile']+" n'existe pas")
@@ -1795,47 +1997,68 @@ class PoppyGRR:
 							self.voice.play("./sound/sounds/nexistepas.mp3")
 						return exoFile['fichier'+str(j+1)]['namefile'] + " in "+moveFile['fichier'+str(i+1)]['namefile'] +" is missing !"
 		self.EXO_TEMPS_LIMITE = moveFile['nb_temps']
+		goexosuite = Thread(target=self.GoExoSuite, args=(exoType, exoName))
+		goexosuite.start()
+		return 'Exercice has started'
+
+	def GoExoSuite(self, exoType, exoName):		
+		#communication kinect si exo
+		if self.kinectName != "none" and exoType == 'exo':
+			self.waitKinect = True
+			print "give exoname : "+exoName+" to "+self.kinectName
+			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=give+exoname&exoname="+exoName)
+			if kinect.status_code==200:
+				print "attention, la kinect ne connait pas l'exercice !"
+				self.logger.warning("kinect does not know the exercise !")
+			elif kinect.status_code==201:
+				print "kinect ok pour nom exo"
+			while self.waitKinect:
+				time.sleep(0.5)
 		goExoPrimitive(self,exoName, exoType).start()
 		time.sleep(1)
-		return 'Exercice has started'
 
 	def StopExo(self):
 		while self.PAUSE == True:		#si on est en pause inter-exo ou inter-mouvements
 			time.sleep(0.2)
-		if self.kinectName != "none":
-			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=stop+kinect")
+	#	if self.kinectName != "none":
+	#		print "kinectName : "+self.kinectName
+	#		kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=start+kinect")
 		if self.PLAYING_EXO == True:
 			self.EXO_ENABLE = False
 			self.MOVING_ENABLE = False
 			self.PLAYING_EXO = False
 			self.PLAYING_MOVE = False
+			self.PLAYING_SEANCE = False
 			return 'exercice stopped'
 		elif self.PLAYING_MOVE == True:
 			self.EXO_ENABLE = False
 			self.MOVING_ENABLE = False
 			self.PLAYING_EXO = False
 			self.PLAYING_MOVE = False
+			self.PLAYING_SEANCE = False
 			return 'movement stopped'
 		else:
 			self.EXO_ENABLE = False
 			self.MOVING_ENABLE = False
 			self.PLAYING_EXO = False
 			self.PLAYING_MOVE = False
+			self.PLAYING_SEANCE = False
 			return 'no exercice or movement is running'
 
 	def PauseExo(self):
 		if self.EXO_SLEEP == False:
-			if self.kinectName != "none":
-				kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=pause+kinect")
+		#	if self.kinectName != "none":
+		#		kinect = requests.post("http://"+self.kinectName+".local:8080/?Submit=pause+kinect")
 			self.EXO_SLEEP = True
 			return 'move paused'
 		else:
 			return 'no exercice is running'
 
 	def ResumeExo(self):
+		print "resume exo"
 		if self.EXO_SLEEP == True and self.EXO_ENABLE == True:
-			if self.kinectName != "none":
-				kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=resume+kinect")
+		#	if self.kinectName != "none":
+		#		kinect = requests.post("http://"+self.kinectName+".local:8080/?Submit=resume+kinect")
 			self.EXO_SLEEP = False
 			return 'exercice resumed'
 		elif self.EXO_SLEEP == True and self.MOVING_ENABLE == True:
@@ -2123,6 +2346,18 @@ class PoppyGRR:
 				nb_temps_max += movepart["nb_temps"]
 				nb_temps_max += moveConfig["fichier"+str(i+1)]["pause"]
 				
+		#voix si exo
+		if moveDir == "exo":
+			volumeTmp = self.voice.volume
+			self.voice.setVolume(0)
+			tmpDesc={}
+			for key, value in moveConfig["description"].iteritems():
+				if value!="":
+					self.voice.say(value, "./sound/sounds/descriptions/"+movename+"_"+str(key)+".mp3", False)
+					tmpDesc[key]=movename+"_"+str(key)+".mp3"
+			moveConfig["description"]=tmpDesc
+			self.voice.setVolume(volumeTmp)
+	
 		if moveDir == "exo" or moveDir == "seance":	# si on cree un exo ou une seance
 			moveConfig["nb_temps"] = nb_temps_max
 			with open(moveName, 'w') as f:
@@ -2131,7 +2366,7 @@ class PoppyGRR:
 			moveFile["parties"]["offsetPart1"]["min"]=0			# premier offset = 0
 			with open(moveName, 'w') as f:
 				json.dump(moveFile, f, indent=4)
-		
+	
 		self.majMoveList(moveDir, movename, poppyParts)
 		self.voice.play("./sound/sounds/fait.mp3")
 		if moveDir == 'exo':
@@ -2147,6 +2382,23 @@ class PoppyGRR:
 		moveDir = self.directory(moveName)
 		if moveDir != '':
 			return moveName+" already exists"
+		moveFile["nb_temps"]=int(moveFile["nb_temps"])
+		if moveType == "mov":
+			self.logger.info("suppr les guillemets")
+			for key, value in moveFile["speed"].iteritems():
+				self.logger.info("speed "+str(key)+" - "+str(value))
+				moveFile["speed"][key]=float(value)
+			for key, value in moveFile.iteritems():
+				if key!="speed" and key!="nb_temps" and key!="poppyParts":
+					self.logger.info(key)
+					for key2, value2 in moveFile[key].iteritems():
+						moveFile[key][key2]=float(value2)
+		else:
+			moveFile["nb_fichiers"]=int(moveFile["nb_fichiers"])
+			for iter in range(moveFile["nb_fichiers"]):
+				moveFile["fichier"+str(iter+1)]["pause"]=int(moveFile["fichier"+str(iter+1)]["pause"])
+				if moveType == "exo":
+					moveFile["fichier"+str(iter+1)]["vitesse"]=int(moveFile["fichier"+str(iter+1)]["vitesse"])
 		poppyParts = list()
 		print moveFile
 		if "tete" in moveFile["poppyParts"]:
@@ -2186,7 +2438,7 @@ class PoppyGRR:
 		with open('./move/'+exoDir+'/'+exoName+'.json', 'r') as f:
 			exoConfig=json.load(f)
 		exoCompo['nb_fichiers'] = exoConfig['nb_fichiers']
-		for i in range(exoConfig["nb_fichiers"]):		#on deroule tous les fichiers de la liste
+		for i in range(int(exoConfig["nb_fichiers"])):		#on deroule tous les fichiers de la liste
 			if self.directory(exoConfig['fichier'+str(i+1)]['namefile']) == 'exo' : # si c'est un exo
 				exoCompo[str(i+1)] = {}
 				exoCompo[str(i+1)] = self.readExoCompo(exoConfig['fichier'+str(i+1)]['namefile'])
@@ -2275,10 +2527,86 @@ class PoppyGRR:
 			print "self.waitKinect : "+str(self.waitKinect)
 			return "failed"
 
-	def kinectFeedback(self, feedback):
-		self.voice.play("./sound/sounds/feedbacks/"+feedback)
-		print "feedback said"
+	def kinectFeedback(self, kiFeedback):
+		nbSegs = kiFeedback["globalSequence"]["nbSegs"]
+		print "nombres de parties " +str(nbSegs)
+		feedback = {}
+		feedback["globalSequence"]=kiFeedback["globalSequence"]
+
+		if kiFeedback["globalSequence"]["global"]>=self.SEUIL_BIEN:
+			feedback["globalSequence"]["global"]="bien"
+		elif kiFeedback["globalSequence"]["global"]>=self.SEUIL_NUL:
+			feedback["globalSequence"]["global"]="moyen"
+		elif kiFeedback["globalSequence"]["global"]>=self.SEUIL_MINABLE:
+			feedback["globalSequence"]["global"]="nul"
+		else:
+			feedback["globalSequence"]["global"]="minable"
+
+		for i in range(nbSegs):
+			if kiFeedback["segment"+str(i+1)]["global"]<self.SEUIL_NUL:
+				feedback["segment"+str(i+1)]={}
+				feedback["segment"+str(i+1)]["global"]="nul"
+			elif kiFeedback["segment"+str(i+1)]["global"]<self.SEUIL_BIEN:
+				feedback["segment"+str(i+1)]={}
+				minPart={}
+				minPart["part"]="leftArm"
+				minPart["value"]=kiFeedback["segment"+str(i+1)]["leftArm"]
+				for part in ["leftArm", "rightArm", "leftLeg", "rightLeg", "spine"]:
+					if kiFeedback["segment"+str(i+1)][part]<self.SEUIL_NUL:
+						feedback["segment"+str(i+1)][part]="nul"	
+					if kiFeedback["segment"+str(i+1)][part]<minPart["value"]:
+						minPart["part"]=part
+						minPart["value"]=kiFeedback["segment"+str(i+1)][part]
+
+				if minPart["value"]>=self.SEUIL_NUL:
+					feedback["segment"+str(i+1)][minPart["part"]]="moyen"
+
+		print feedback
+		while self.REPET:
+			time.sleep(0.3)
+		self.sayFeedback(feedback)
 		return "ok"
+
+	def sayFeedback(self, feedback):
+		self.voice.play("./sound/sounds/feedbacks/"+feedback["globalSequence"]["global"]+".mp3")
+		self.waitVoice()
+		if feedback["globalSequence"]["global"]!="minable":
+			for i in range(feedback["globalSequence"]["nbSegs"]):
+			#for key, value in feedback.iteritems():
+				key = "segment"+str(i+1)
+				#if key != "globalSequence":
+				if key in feedback.keys():
+					print key
+					self.voice.play("./sound/sounds/feedbacks/phase.mp3")
+					self.waitVoice()
+					self.voice.play("./sound/sounds/feedbacks/"+key+".mp3")
+					self.waitVoice()
+					time.sleep(0.2)
+					if "global" in feedback[key]:
+						self.voice.play("./sound/sounds/feedbacks/moveNul.mp3")
+						self.waitVoice()
+					elif "moyen" in feedback[key].values():
+						self.voice.play("./sound/sounds/feedbacks/partDebut.mp3")
+						self.waitVoice()
+						self.voice.play("./sound/sounds/feedbacks/"+feedback[key].keys()[0]+".mp3")
+						self.waitVoice()
+						self.voice.play("./sound/sounds/feedbacks/partMoyen.mp3")
+						self.waitVoice()
+					else:
+						self.voice.play("./sound/sounds/feedbacks/partDebut.mp3")
+						self.waitVoice()
+						for part, value in feedback[key].iteritems():
+							print part, value
+							self.voice.play("./sound/sounds/feedbacks/"+part+".mp3")
+							self.waitVoice()
+						self.voice.play("./sound/sounds/feedbacks/partNul.mp3")
+						self.waitVoice()
+				time.sleep(0.5)
+		self.waitFeedback=False
+
+	def waitVoice(self):
+		while pygame.mixer.music.get_busy():
+			time.sleep(0.1)
 
 	def kinectEnd(self):
 		resumed = self.ResumeExo()
@@ -2287,6 +2615,13 @@ class PoppyGRR:
 			return "ended"
 		else:
 			return resumed
+
+	def say(self, sentence):
+		sentence = json.loads(sentence)
+		print sentence["data"]
+		self.voice.say(sentence["data"])
+		print "sentence said"
+		return "ok"
 
 	def giveIP(self):
 		IPaddress = ([(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
@@ -2341,7 +2676,9 @@ class PoppyGRR:
 	def setDirectionEyes(self):
 		#gives the global direction of the poppyParts for the eyes
 		while self.PLAYING_MOVE and self.FACE_MANAGING_ENABLE:
-			if "bras_gauche" in self.directionPoppypart and "bras_droit" not in self.directionPoppypart:
+			if self.EXO_SLEEP:
+				self.EyesDirection = "center"
+			elif "bras_gauche" in self.directionPoppypart and "bras_droit" not in self.directionPoppypart:
 				if self.Poppyboid.l_shoulder_y.present_position<-120 or self.Poppyboid.l_shoulder_x.present_position>120:
 					self.EyesDirection = "topright"
 				else:
@@ -2386,18 +2723,31 @@ class PoppyGRR:
 			else:
 				self.face.startAnimation()
 			#eyes looking direction initialized if no playing move
-				self.EyesDirection = "center"
+			if not self.PLAYING_MOVE:
+				self.EyesDirection = self.RestEyesDirection
 			#eyes state
 			if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
 				self.face.update("forcing", self.EyesDirection)
 			elif "stop" in self.poppyPart_alert.values():
 				self.face.update("dead", self.EyesDirection)
 			else:
-				if self.poppyCompliant():
+				if self.poppyCompliant() and self.FaceState=='happy':
 					self.face.update("bored", self.EyesDirection)
 				else:
-					self.face.update("happy", self.EyesDirection)
+					self.face.update(self.FaceState, self.EyesDirection)
 			time.sleep(0.5)
+
+	def setFaceState(self, newFaceState):
+		newFaceState = json.loads(newFaceState)
+		if newFaceState["data"] in self.face.availableStates:
+			self.FaceState = newFaceState["data"]
+		return 'ok'
+
+	def setRestEyeDirection(self, newEyeDirection):
+		newEyeDirection = json.loads(newEyeDirection)
+		if newEyeDirection["data"] in self.face.availableDirections:
+			self.RestEyesDirection = newEyeDirection["data"]
+		return 'ok'
 
 	def startFaceManager(self):
 		if not self.FACE_MANAGING_ENABLE:
@@ -2408,6 +2758,42 @@ class PoppyGRR:
 	def stopFaceManager(self):
 		if self.FACE_MANAGING_ENABLE:
 			self.FACE_MANAGING_ENABLE=False
+
+	def setMotorPosition(self, motorPosition):
+		motorPosition = json.loads(motorPosition)
+		for key, value in motorPosition.iteritems():
+			print key, value
+			value = int(value)
+			#print type(value), value
+			if key == "52":
+				if abs(value-self.Poppyboid.r_shoulder_y.present_position)>5:
+					if value-self.Poppyboid.r_shoulder_y.present_position>20:
+						value = self.Poppyboid.r_shoulder_y.present_position+20
+					elif value-self.Poppyboid.r_shoulder_y.present_position<-20:
+						value = self.Poppyboid.r_shoulder_y.present_position-20
+					self.Poppyboid.r_shoulder_y.goto_position(value, 0.5, wait=False)
+			if key == "42":
+				if abs(value-self.Poppyboid.l_shoulder_y.present_position)>5:
+					if value-self.Poppyboid.l_shoulder_y.present_position>20:
+						value = self.Poppyboid.l_shoulder_y.present_position+20
+					elif value-self.Poppyboid.l_shoulder_y.present_position<-20:
+						value = self.Poppyboid.l_shoulder_y.present_position-20
+					self.Poppyboid.l_shoulder_y.goto_position(value, 0.5, wait=False)
+			if key == "54":
+				if abs(value-self.Poppyboid.r_elbow_y.present_position)>5:
+					if value-self.Poppyboid.r_elbow_y.present_position>20:
+						value = self.Poppyboid.r_elbow_y.present_position+20
+					elif value-self.Poppyboid.r_elbow_y.present_position<-20:
+						value = self.Poppyboid.r_elbow_y.present_position-20
+					print "OK!!! "+str(value)
+					self.Poppyboid.r_elbow_y.goto_position(value, 0.5, wait=False)
+			if key == "44":
+				if abs(value-self.Poppyboid.l_elbow_y.present_position)>5:
+					if value-self.Poppyboid.l_elbow_y.present_position>20:
+						value = self.Poppyboid.l_elbow_y.present_position+20
+					elif value-self.Poppyboid.l_elbow_y.present_position<-20:
+						value = self.Poppyboid.l_elbow_y.present_position-20
+					self.Poppyboid.l_elbow_y.goto_position(value, 0.5, wait=False)
 
 	def stopAll(self):
 		if self.face!='none':

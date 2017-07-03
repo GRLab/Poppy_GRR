@@ -1,18 +1,33 @@
 {
 	"poppyName" : {
-		"value" : "poppy",
+		"value" : "poppypi",
 		"description" : "name of the poppy robot"
 	},
 	"kinectName" : { 
 		"value" : "none",
+		"value2" : "PC-EQI06687",
+		"valuefa" : "EQI06343",
+		"valueFake" : "192.168.1.101",
 		"descritpion" : "name of the kinect server, 'none' if no kinect"
 	},
+	"seuil_bien" : { 
+		"value" : 80,
+		"descritpion" : "high threshold for the kinect feedback (useful if kinect exists)"
+	},
+	"seuil_nul" : { 
+		"value" : 50,
+		"descritpion" : "low threshold for the kinect feedback (useful if kinect exists)"
+	},
+	"seuil_minable" : { 
+		"value" : 35,
+		"descritpion" : "very low threshold for the kinect feedback (useful if kinect exists)"
+	},
 	"wrists" : {
-		"value" : "False",
+		"value" : "True",
 		"description" : "articulated wrists : True/False"
 	},
 	"screenOn" : {
-		"value" : "False",
+		"value" : "True",
 		"description" : "activate the screen/eyes : True/False"
 	},
 	"fullScreen" : {
@@ -20,15 +35,19 @@
 		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
 	},
 	"Volume" : {
-		"value" :  0,
+		"value" : 0.5,
 		"description" : "volume of the Poppy voice [0-1]"
 	},
 	"internet" : {
-		"value" : "False",
+		"value" : "True",
 		"description" : "True if internet connection exists, False if no"
 	},
 	"creature" : {
 		"value" : "humanoid",
 		"description" : "'humanoid' or 'torso'"
+	},
+	"repetitions" : {
+		"value" : "False",
+		"description" : "robot shows exercise while the user is moving or not (useful if kinect exists)"
 	}
 }

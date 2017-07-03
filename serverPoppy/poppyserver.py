@@ -25,6 +25,10 @@ with open('./CONFIG.json', 'r') as f:
 	internet = True if config["internet"]["value"] == "True" else False
 	wrists = True if config["wrists"]["value"] == "True" else False
 	creature = config["creature"]["value"]
+	seuil_bien = config["seuil_bien"]["value"]
+	seuil_nul = config["seuil_nul"]["value"]
+	seuil_minable = config["seuil_minable"]["value"]
+	repetitions = True if config["repetitions"]["value"] == "True" else False
 
 #arret http server
 class stopServer(Thread):
@@ -531,6 +535,7 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	if 'Submit' in params.keys() and "kinect+feedback" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - kinect feedback !")
 	    feedback = self.rfile.read(int(self.headers['Content-Length']))
+	    feedback=json.loads(feedback)
 	    print feedback
 	    try:
 			text = poppy.kinectFeedback(feedback)
@@ -552,6 +557,71 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    self.send_headers(201)
 	    else:
 		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "end+kinect+observation" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - kinect end observation !")
+	    try:
+			text = poppy.sayEndKinectObserv()
+	    except:
+			logger.exception("***** sayEndDinectObserv error *****")
+	    if 'ended' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "say" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - say")
+	    sentence = self.rfile.read(int(self.headers['Content-Length']))
+	    print sentence
+	    try:
+			text = poppy.say(sentence)
+	    except:
+			logger.exception("***** say error *****")
+	    if 'ok' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "setFaceState" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - setFaceState")
+	    faceState = self.rfile.read(int(self.headers['Content-Length']))
+	    print faceState
+	    try:
+			text = poppy.setFaceState(faceState)
+	    except:
+			logger.exception("***** setFaceState error *****")
+	    if 'ok' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "setEyeDirection" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - setEyeDirection")
+	    eyeDirection = self.rfile.read(int(self.headers['Content-Length']))
+	    print eyeDirection
+	    try:
+			text = poppy.setRestEyeDirection(eyeDirection)
+	    except:
+			logger.exception("***** setEyeDirection error *****")
+	    if 'ok' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "setMotorPosition" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - setMotorPosition")
+	    motorPosition = self.rfile.read(int(self.headers['Content-Length']))
+	    print motorPosition
+	    try:
+			poppy.setMotorPosition(motorPosition)
+	    except:
+			logger.exception("***** setMotorPosition error *****")
+	    self.send_headers(201)
 	    logger.info(IPclient+" RESPONSE - "+text)
 
     def do_GET(self):
@@ -702,7 +772,7 @@ logger.info('initializing poppy server')
 #initialisation de l ecran
 time.sleep(2)
 if screenOn:
-	face = Face(datapath="/home/poppy/poppy_dev/serverPoppy/eyes/", bgcolor=[220,230,255], fullscreen=fullScreen)
+	face = Face(datapath="/home/poppy/poppy_dev/serverPoppy/eyes/", bgcolor=[180,180,225], fullscreen=fullScreen)
 	print "ecran initialise"
 else:
 	face = 'none'
@@ -718,7 +788,7 @@ while not moteursInitialise:
 	logger.info("essai initialisation moteur "+str(moteursInitEssai))
 	try:
 		time.sleep(2)
-		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists)
+		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions)
 		moteursInitialise = True
 		logger.info("----- moteurs initialises -----")
 	except:
@@ -747,6 +817,8 @@ if moteursInitialise:
 	time.sleep(0.8)
 	if internet:
 		voice.say("Au faite, mon nom est "+poppyName)
+	#poppy.setFaceState('angry')
+	#poppy.setRestEyeDirection('bottomleft')
 	httpd.serve_forever()
 elif face!='none':
 	face.stop()

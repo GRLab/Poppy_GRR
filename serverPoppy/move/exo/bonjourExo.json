@@ -1,0 +1,13 @@
+{
+    "nb_fichiers": 1, 
+    "fichier1": {
+        "pause": 0, 
+        "vitesse": 7, 
+        "namefile": "bonjour"
+    }, 
+    "type": "exo", 
+    "description": {
+        "10": "bonjourExo_0.mp3"
+    }, 
+    "nb_temps": 41
+}

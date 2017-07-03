@@ -1,11 +1,12 @@
 ﻿var dataListe = [];
-var movelistTags = [];			//liste des mouvements pour l'autocompletion
+var moveTags = [];				// mov list for autocompletion
+var exoTags = [];				// exo list for autocompletion
 var jsondataBDD = "";
 var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
 var init = false;
-var poppyName = "poppy.local";//"poppy.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppypi.local";//"poppygr.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
@@ -518,10 +519,38 @@ function PrevisualisationMove(){
 	CreateMove(previsu = "True");
 }
 
-function CreateExo() {
+function CreateExo(type) {
 	var exoConfig ;
 	var listeFiles = [];
-	var exoName = $('#nom_exo').val();
+	exoConfig = '{"type":"'+type+'"';
+	if(type=="exo"){
+		var exoName = $('#nom_exo').val();
+		var filestype = "mov";
+		var nb_compt = nb_mov;
+		var vide = 0;
+		var pauseValue = 0;
+		exoConfig = exoConfig+',"description":{';
+		for (var iter = 1; iter <nb_voice+1; iter++){
+			voicetime = $('#voice_time_'+iter).val();
+			voicetexte = $('#voice_texte_'+iter).val();
+			if(voicetime!="" && voicetime>=0){
+				if(iter-vide!=1){
+					exoConfig = exoConfig+',';
+				}
+				exoConfig = exoConfig+'"'+voicetime+'":"'+voicetexte+'"';
+			}
+			else{
+				vide = vide+1;
+			}
+		}
+		exoConfig = exoConfig+'}';
+	}
+	else if(type=="seance"){
+		var exoName = $('#nom_seance').val();
+		var filestype = "exo";
+		var nb_compt = nb_exo;
+		var pauseValue = 5;
+	}
 	if (exoName== "") {
 		alert('Erreur. Pas de nom d\351fini.');
 		return;
@@ -532,27 +561,21 @@ function CreateExo() {
 	exoName = exoName.replace(/\371|\372|\373|\374/g,"u");
 	exoName = exoName.replace(/\360|\362|\363|\364|\365|\366/g,"o");
 	exoName = exoName.replace(/\347/g,"c");	// ç
-	var type = $('#type_exo').val();
-	if (!(type == 'exo' || type == 'seance')){
-		alert('Erreur. Aucun type d\351tect\351. Choisissez entre "exo" et "seance".');
-		return;
-	}
-	exoConfig = '{"type":"'+type+'"';
 	var nb_fichiers=0;
 	var vide = 0;
-	for (var iter = 1; iter < nb_mov+1; iter++){
-		var namefile = $('#mov_'+iter).val();
+	for (var iter = 1; iter < nb_compt+1; iter++){
+		var namefile = $('#'+filestype+'_'+iter).val();
 		if (namefile != "") {
 			exoConfig = exoConfig+',"fichier'+(iter-vide)+'":{"namefile":"'+namefile+'"';
-			var vitesse = $('#speedexo_'+iter).val();
+			var vitesse = $('#speed'+filestype+'_'+iter).val();
 			if (!(vitesse>=1 && vitesse<=10) || vitesse == "") {
 				vitesse= 5;
 				//alert('warning, vitesse set to 5 (must be [1-10])');
 			}
 			exoConfig = exoConfig+',"vitesse":'+vitesse;
-			var pause= $('#pause_'+iter).val();
+			var pause= $('#pause'+filestype+'_'+iter).val();
 			if (!(pause>=0 && pause<50) || pause == "") {
-				pause = 5;
+				pause = pauseValue;
 				//alert('warning, pause set to 5 (must be [0-49])');
 			}
 			exoConfig = exoConfig+',"pause":'+pause+'}';
@@ -576,17 +599,30 @@ function CreateExo() {
 	  statusCode: {
 			201: function(data) {
 				console.log(data);
-				$('#nom_exo').val('');
-				$('#type_exo').val('');
-				$('#modal_create_exo').modal('hide');
-				nb_mov = 1;
-				$('#add_mov').html('<tr><td><fieldset class="form-group"><input type="text" class="form-control" id="mov_'+nb_mov+'" placeholder="mov_name" /></fieldset></td><td><fieldset class="form-group"><input type="text" class="form-control" id="speedexo_'+nb_mov+'" placeholder="vitesse [1-10] (normal=5)" /></fieldset></td><td><fieldset class="form-group"><input type="text" class="form-control" id="pause_'+nb_mov+'" placeholder="pause" /></fieldset></td></tr>');
-			
+				if(type=="exo"){
+					nb_mov = 1;
+					$('#nom_exo').val('');
+					$('#modal_create_exo').modal('hide');
+					tabTime = [];
+					$('div.center img.barre').remove();
+					$('div.center span.spanTime').remove();
+					$('#add_mov').html('<tr><tr><td colspan="3"><div><label for="type_exo">mouvement 1</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom du mouvement composant l\'exercice à créer." class="input_shadow form-control mvt_timeline" id="mov_1" placeholder="nom du mouvement" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedmov_1" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après le mouvement concerné. La pause est en secondes." class="input_shadow form-control pause_timeline" id="pausemov_1" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--></tr><tr><td id="add_voice_1" colspan="3"></td></tr><tr><td colspan="3"><div class="tab_voix_vide"> </div><div class="tab_voix_button"><button id="btn_mov_1" type="button" class="btn btn-info" onclick="add_one_voice(\'1\')">Voix</button></div></td></tr></tr>');
+				}
+				else if(type=="seance"){
+					nb_exo = 1;
+					$('#nom_seance').val('');
+					$('#modal_create_seance').modal('hide');
+					$('#add_exo').html('<tr><td colspan="3"><div><label for="type_exo">exercice 1</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom de l exercice composant le fichier à créer." class="input_shadow form-control" id="exo_1" placeholder="nom de l exercice" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture de l exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedexo_1" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après l exercice concerné. La pause est en secondes." class="input_shadow form-control" id="pauseexo_1" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--><tr>')
+				}
 				$.post("./core/functions/moves.php?action=insertMov" , {"listeFiles" : listeFiles, "moveType" : type, "moveName" : exoName}).done(function(data){
 					console.log(data);
 				});
 				insertJsonBDD(exoName);
 				ReceiveMovelist();
+
+				nb_voice = 0;
+				tabTime = [];
+				majTimeline();
 			},
 			200:function(data){
 				console.log(data);
@@ -662,59 +698,62 @@ function verifFinExo(){
 		return;
 	}
 	var exo= document.getElementById('Go'+activeMove).className;
-	if(exo!="resume"){
-		$.ajax({
-			url: 'http://'+poppyName+':4567/?Submit=verif+fin+exo',
-			type:'POST',
-			dataType : 'json',
-			statusCode: {
-				201: function(data) {
-					
-					console.log(jsondata);
-					$('#Go').val('start');
-					
-					fin_exo = 1
-				},
-				200: function(data){
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=verif+fin+exo',
+		type:'POST',
+		dataType : 'json',
+		statusCode: {
+			201: function(data) {
+				
+				console.log(jsondata);
+				$('#Go').val('start');
+				
+				fin_exo = 1
+			},
+			200: function(data){
 
-					jsondata=data.responseText.replace("u'","\"");
-					while(jsondata.search("u'")!=-1){
-						jsondata=jsondata.replace("u'","\"");
-					}
-					while(jsondata.search("'")!=-1){
-						jsondata=jsondata.replace("'","\"");
-					}
-					
-					jsondata = JSON.parse(jsondata);
-					
-					console.log(jsondata);
-					
-					//On met tout en noir
-					$('.exo').css('background-color','white');
-					
-					//On met dans une certaine couleur l'exo et le mouvement en cours
-					if(jsondata["num_exo"] == 0){
-						$('#mvt_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
-					} else{
-						$('#exo_'+jsondata["num_exo"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
-						$('#exo_'+jsondata["num_exo"]+'_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
-					}
-					
-					//On modifie la barre de progression
-					var info = jsondata["info"].split(" ");
-					var total = (info[1].split("/"))[1];
-					var en_cours = (info[1].split("/"))[0];
-					
-					$('#progressbar').progressbar('value', en_cours/total * 100);
-					$("#progressbarlabel").html(Math.round(en_cours/total*100)+" %");
-				},
-				0:function(data){		//error, not connected
-					console.log('error : Poppy is not connected');
-					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+				jsondata=data.responseText.replace("u'","\"");
+				while(jsondata.search("u'")!=-1){
+					jsondata=jsondata.replace("u'","\"");
 				}
+				while(jsondata.search("'")!=-1){
+					jsondata=jsondata.replace("'","\"");
+				}
+				
+				jsondata = JSON.parse(jsondata);
+				
+				console.log(jsondata);
+				
+				//On met tout en noir
+				$('.exo').css('background-color','white');
+				
+				//On met dans une certaine couleur l'exo et le mouvement en cours
+				if(jsondata["num_exo"] == 0){
+					$('#mvt_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+				} else{
+					$('#exo_'+jsondata["num_exo"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+					$('#exo_'+jsondata["num_exo"]+'_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+				}
+				//maj etat en pause ou non de l'exercice/seance
+				if(jsondata["state"] == "pause"){
+					document.getElementById('Go'+activeMove).className = "resume";
+				} else if(jsondata["state"] == "playing"){
+					document.getElementById('Go'+activeMove).className = "pause";
+				}
+				//On modifie la barre de progression
+				var info = jsondata["info"].split(" ");
+				var total = (info[1].split("/"))[1];
+				var en_cours = (info[1].split("/"))[0];
+				
+				$('#progressbar').progressbar('value', en_cours/total * 100);
+				$("#progressbarlabel").html(Math.round(en_cours/total*100)+" %");
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 			}
-		});
-	}
+		}
+	});
 	setTimeout("verifFinExo()", 3000);
 }
 
@@ -829,7 +868,7 @@ function Go(exoName) {
 					$("#progressbarlabel").html("0 %");
 					$("#progressbarlabel").nextAll().remove();
 					
-					$('#exoConfig').append('<div id="nom_seance">' + exoName + '</div>' );
+					$('#exoConfig').append('<div id="nom_seance_suivi">' + exoName + '</div>' );
 					for (i=1; i<=jsondata['nb_fichiers']; i++){
 						if (jsondata[i]['nb_fichiers'] >0){
 							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+'</div>');
@@ -1511,7 +1550,8 @@ function ReceiveMovelist() {
 
 function AfficheMovelist(playerOnly = "false"){
 	var data;
-	movelistTags = [];
+	moveTags = [];
+	exoTags = [];
 	$.post('./core/functions/moves.php?action=getMovelist').done(function(database){
 		data = JSON.parse(database);
 		console.log(data);
@@ -1539,11 +1579,12 @@ function AfficheMovelist(playerOnly = "false"){
 			texte += "<tr>";
 			texte += "<td>"+data[key]["moveName"]+"</td>";
 			moveName = data[key]["moveName"];
-			movelistTags.push(moveName);
 			if (data[key]["id_moveType"]=="1"){
 				var type = "mouvement";
+				moveTags.push(moveName);
 			}else if (data[key]["id_moveType"]=="2"){
 				var type = "exercice";
+				exoTags.push(moveName);
 			}else if (data[key]["id_moveType"]=="3"){
 				var type = "seance";
 			}
@@ -1576,13 +1617,16 @@ function AfficheMovelist(playerOnly = "false"){
 		}
 		
 		$('#ss_mov_1').autocomplete({
-			source: movelistTags
+			source: moveTags
 		});
 		$('#mov_1').autocomplete({
-			source: movelistTags
+			source: moveTags
+		});
+		$('#exo_1').autocomplete({
+			source: exoTags
 		});
 		$('#nom_playedMove').autocomplete({
-			source: movelistTags
+			source: moveTags
 		});
 
 		$('#tableMoves tbody').append(texte);	
@@ -1658,6 +1702,68 @@ function setRobotVolume(){
 	});
 }
 
+function setFaceState(){
+	var faceState = $('#faceState').val();
+
+	console.log(faceState);
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=setFaceState',
+		type:'POST',
+		data:'{"data":"'+faceState+'"}',
+		statusCode: {
+			200: function(data) {
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
+
+function setEyesDirection(){
+	var eyesDirection = $('#eyesDirection').val();
+	console.log(eyesDirection);
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=setEyeDirection',
+		type:'POST',
+		data:'{"data":"'+eyesDirection+'"}',
+		statusCode: {
+			200: function(data) {
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
+
+function testTTS(sentence){
+	sentence = sentence.replace(/\350|\351|\352|\353/g,"e");	//è, é, ê, ë
+	sentence = sentence.replace(/\340|\341|\342|\343|\344|\345|\346/g,"a");
+	sentence = sentence.replace(/\354|\355|\356|\357/g,"i");
+	sentence = sentence.replace(/\371|\372|\373|\374/g,"u");
+	sentence = sentence.replace(/\360|\362|\363|\364|\365|\366/g,"o");
+	sentence = sentence.replace(/\347/g,"c");	// ç
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=say',
+		type:'POST',
+		dataType:'json',
+		data:'{"data":"'+sentence+'"}',
+		statusCode: {
+			200: function(data) {
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
 
 function WaitBeforeScan(){
 	setTimeout("ScanResults()", 5000);

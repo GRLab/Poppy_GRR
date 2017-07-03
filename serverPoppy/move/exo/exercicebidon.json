@@ -1,0 +1,11 @@
+{
+    "nb_fichiers": 1, 
+    "fichier1": {
+        "pause": 0, 
+        "vitesse": 5, 
+        "namefile": "atestbidon"
+    }, 
+    "type": "exo", 
+    "description": {}, 
+    "nb_temps": 12
+}

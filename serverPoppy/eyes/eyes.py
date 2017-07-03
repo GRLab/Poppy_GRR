@@ -278,13 +278,13 @@ class Face:
 				step = 'bottom'
 			elif step=='topcenter':
 				step = 'top'
-			self.update(newDirection=step)
+			self.update(newDirection=step, forceDisplay=True)
 			if step=='center' or step=='bottom' or step=='top':
 				time.sleep(0.3)
 			else:
 				time.sleep(1)
 		if self.isPlayingAnimation:
-			self.update(newDirection=previousDirection)
+			self.update(newDirection=previousDirection, forceDisplay=True)
 			self.isPlayingAnimation = False
 
 	def squint(self):

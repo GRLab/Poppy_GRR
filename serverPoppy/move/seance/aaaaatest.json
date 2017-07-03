@@ -1,0 +1,20 @@
+{
+    "nb_fichiers": 3, 
+    "fichier2": {
+        "pause": 3, 
+        "vitesse": 5, 
+        "namefile": "aaatest"
+    }, 
+    "fichier3": {
+        "pause": 3, 
+        "vitesse": 5, 
+        "namefile": "aaatest"
+    }, 
+    "fichier1": {
+        "pause": 3, 
+        "vitesse": 5, 
+        "namefile": "aaatest"
+    }, 
+    "type": "seance", 
+    "nb_temps": 156
+}

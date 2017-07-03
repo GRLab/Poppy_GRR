@@ -1,0 +1,19 @@
+{
+    "nb_fichiers": 2, 
+    "description": {
+        "25": "aaatest_25.mp3", 
+        "5": "aaatest_5.mp3"
+    }, 
+    "fichier2": {
+        "pause": 5, 
+        "vitesse": 5, 
+        "namefile": "baissebd"
+    }, 
+    "nb_temps": 49, 
+    "fichier1": {
+        "pause": 5, 
+        "vitesse": 5, 
+        "namefile": "leveBD"
+    }, 
+    "type": "exo"
+}

@@ -1,0 +1,33 @@
+{
+    "nb_fichiers": 4, 
+    "fichier2": {
+        "pause": 1, 
+        "vitesse": 7, 
+        "namefile": "etirementLateralGRev"
+    }, 
+    "fichier3": {
+        "pause": 3, 
+        "vitesse": 7, 
+        "namefile": "etirementLateralGSym"
+    }, 
+    "fichier1": {
+        "pause": 5,
+        "vitesse": 7, 
+        "namefile": "etirementLateralG"
+    }, 
+    "fichier4": {
+        "pause": 2, 
+        "vitesse": 7, 
+        "namefile": "etirementLateralGRevSym"
+    }, 
+    "type": "exo", 
+    "nb_temps": 155,
+	"description":{
+		"5": "leveBrasDroit.mp3",
+		"25": "etirementLateralD.mp3",
+		"55": "redresseEtBaisseBras.mp3",
+		"81": "leveBrasGauche.mp3",
+		"101": "etirementLateralG.mp3",
+		"136": "redresseEtBaisseBras.mp3"
+	}
+}
