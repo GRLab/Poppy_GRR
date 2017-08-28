@@ -1,0 +1,11 @@
+{
+    "nb_fichiers": 1, 
+    "fichier1": {
+        "pause": 5, 
+        "repetition": 2, 
+        "vitesse": 5, 
+        "namefile": "aaaatestInstruc"
+    }, 
+    "type": "seance", 
+    "nb_temps": 75
+}

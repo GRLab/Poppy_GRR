@@ -39,5 +39,6 @@
 		"77": "inspire.mp3",
 		"108": "expire.mp3",
 		"130": "repos.mp3"
-	}
+	},
+	"instructions":["dos_droit","respiration"]
 }

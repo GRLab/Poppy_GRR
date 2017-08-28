@@ -601,7 +601,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 			while self.PoppyGRR.EXO_SLEEP == True and self.PoppyGRR.EXO_ENABLE == True:				#tant que l'exercice est en pause
 				time.sleep(0.05)
 			if self.PoppyGRR.EXO_ENABLE == False:					#si ordre d'arreter la primitive
-				break
+				return
 			namefile = moveConfig["fichier"+str(i+1)]["namefile"]
 			#Si c'est un exercice
 			if self.PoppyGRR.directory(namefile) == "exo":
@@ -609,11 +609,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 				time.sleep(1.5)
 				while (self.PoppyGRR.PLAYING_EXO == True or self.PoppyGRR.EXO_SLEEP):	#on attend que pas d'exo en cours
 					time.sleep(0.2)
-				while self.PoppyGRR.WAIT_REPET:
-					time.sleep(0.5)
-				if self.PoppyGRR.kinectName != 'none' and self.PoppyGRR.repetitions:
-					time.sleep(0.5)
-					self.PoppyGRR.waitVoice()
+				self.PoppyGRR.waitVoice()
 				if self.PoppyGRR.EXO_ENABLE == False:			#si ordre d'arreter la primitive
 					print "---stop seance 1---"
 					return
@@ -625,18 +621,6 @@ class goExoPrimitive(pypot.primitive.Primitive):
 				if self.PoppyGRR.EXO_ENABLE == False:			#si ordre d'arreter la primitive
 					print "---stop seance 2---"
 					return
-				#communication kinect
-				if self.PoppyGRR.kinectName != "none":
-					self.PoppyGRR.waitKinect = True
-					print "give exoname : "+namefile+" to "+self.PoppyGRR.kinectName
-					kinect = requests.post("http://"+self.PoppyGRR.kinectName+".local:4567/?Submit=give+exoname&exoname="+namefile)
-					if kinect.status_code==200:
-						print "attention, la kinect ne connait pas l'exercice !"
-						self.PoppyGRR.logger.warning("kinect does not know the exercise !")
-					elif kinect.status_code==201:
-						print "kinect ok pour nom exo"
-					while self.PoppyGRR.waitKinect:
-						time.sleep(0.5)
 				self.PoppyGRR.NUM_PHASE = 0
 				print "goExoPrimitive : "+namefile
 				self.PoppyGRR.logger.warning("goExoPrimitive : "+namefile)
@@ -674,71 +658,32 @@ class goExoPrimitive(pypot.primitive.Primitive):
 					self.PoppyGRR.PLAYING_EXO = False
 					self.PoppyGRR.PLAYING_SEANCE = False
 					return
-
+		print "namefile : "+namefile
 		if self.PoppyGRR.directory(namefile) == "mov": 		#dernier mov
-			if not self.PoppyGRR.REPET:						#si pas une repetition de l exercice
-				if self.PoppyGRR.kinectName != "none":
-					self.PoppyGRR.waitFeedback = True
-					print "pause apres exo"
-					self.PoppyGRR.PauseExo()							#pause entre chaque exercice d'une seance
-					startKinectTh = Thread(target=self.startKinect)
-					startKinectTh.start()
-					time.sleep(1.5)
-					while self.PoppyGRR.EXO_SLEEP and self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE or self.PoppyGRR.REPET:
-						time.sleep(0.5)
-				if self.tempsPause == 0:
-					time.sleep(1)
-				else:
-					self.PoppyGRR.PAUSE = True
-					self.PoppyGRR.EXO_TEMPS += int(self.tempsPause)
-					if self.tempsPause>2:
-						self.tempsPause-=2
-					time.sleep(self.tempsPause)
-					self.PoppyGRR.PAUSE = False
-				if self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
-					while self.PoppyGRR.waitFeedback:
-						time.sleep(0.5)
+			if self.tempsPause == 0:
+				time.sleep(1)
+			else:
+				self.PoppyGRR.PAUSE = True
+				self.PoppyGRR.EXO_TEMPS += int(self.tempsPause)
+				if self.tempsPause>2:
+					self.tempsPause-=2
+				time.sleep(self.tempsPause)
+				self.PoppyGRR.PAUSE = False
+			if self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
+				if self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO<self.PoppyGRR.NUM_EXO_MAX:
 					rand = randint(1,3)
-					if self.PoppyGRR.PLAYING_SEANCE:
-						self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
-				elif self.PoppyGRR.NUM_EXO!=0:
-					while self.PoppyGRR.waitFeedback:
-						time.sleep(0.5)
-					#if self.PoppyGRR.PLAYING_SEANCE:
-					self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
-			else:										# si en cours de repetition
-				self.PoppyGRR.PauseExo()
-				self.PoppyGRR.REPET = False
+					self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
+				elif self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO>=self.PoppyGRR.NUM_EXO_MAX:
+					self.PoppyGRR.PLAYING_SEANCE = False
+			elif self.PoppyGRR.NUM_EXO!=0:
+				self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
 			time.sleep(2)
 			self.PoppyGRR.PLAYING_EXO = False
-			self.PoppyGRR.PLAYING_SEANCE = False
-			if not self.PoppyGRR.REPET and self.PoppyGRR.WAIT_REPET:
-				self.PoppyGRR.WAIT_REPET = False
 
-		if self.PoppyGRR.EXO_TEMPS>=self.PoppyGRR.EXO_TEMPS_LIMITE and not self.PoppyGRR.REPET:
+		if self.PoppyGRR.EXO_TEMPS>=self.PoppyGRR.EXO_TEMPS_LIMITE:
 			print "fini : "+str(self.PoppyGRR.EXO_TEMPS)+"/"+str(self.PoppyGRR.EXO_TEMPS_LIMITE)
 			self.PoppyGRR.EXO_ENABLE = False
-		#return "played"
-
-	def startKinect(self):
-		kinect = requests.post("http://"+self.PoppyGRR.kinectName+".local:4567/?Submit=start+kinect&nb_repetition=1")
-		if kinect.status_code==201:
-			print "kinect commence"
-		print "a toi !"
-		self.PoppyGRR.voice.play('./sound/sounds/atoi.mp3')
-		if self.PoppyGRR.repetitions:
-			self.PoppyGRR.REPET = True
-			self.PoppyGRR.WAIT_REPET = True
-			time.sleep(0.25)
-			self.PoppyGRR.NUM_PHASE = 0
-			#self.PoppyGRR.NUM_MOV = 0
-			#self.PoppyGRR.NUM_EXO -= 1
-			self.PoppyGRR.EXO_TEMPS -= self.nbTemps
-			self.PoppyGRR.EXO_SLEEP = False
-			goExoPrimitive(self.PoppyGRR,self.exoName, "exo").start()
-			time.sleep(1)
-			while self.PoppyGRR.PLAYING_EXO:
-				time.sleep(0.5)
+		self.PoppyGRR.logger.info("-_-_-_-_-_-_- Finnished goExoPrimitive de : "+self.exoName)
 
 #primitive mode semi-mou
 class semiCompliantPrimitive(pypot.primitive.Primitive):
@@ -906,7 +851,7 @@ class PoppyGRR:
 		contains all the functions managing the robot and the motors
 	"""
 
-	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions):
+	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, nb_demo):
 		#Creation de l'objet robot
 		self.creature = creature
 		if creature == "humanoid":
@@ -917,12 +862,13 @@ class PoppyGRR:
 		self.voice = voice
 		self.internet = internet
 		self.wrists = wrists
-		self.repetitions = repetitions
+		self.nb_demo = nb_demo
 		#feedbacks
 		self.SEUIL_BIEN = seuil_bien
-		self.SEUIL_NUL = seuil_nul
-		self.SEUIL_MINABLE = seuil_minable
 		self.NUM_PHASE = 0
+		self.givingFeedback=False
+		self.previousFeedback=['','']
+		self.REPLAY=False
 		#variables moteurs
 		self.idmoteur=[m.id for m in self.Poppyboid.motors]	#variable ID
 		self.nbmoteurs=len(self.idmoteur)				#nombre de moteurs
@@ -947,10 +893,12 @@ class PoppyGRR:
 		self.EXO_ENABLE = False					# autorise exercice (False = stop exercice)
 		self.PLAYING_SEANCE = False				# seance en cours ou non
 		self.EXO_SLEEP = False					# pause exercice
+		self.EXO_STOPPED = False				# manually stop exercice
 		self.PAUSE = False						# pause inter mouvement ou inter exercice
 		self.EXO_TEMPS = 0					# compteur de temps pendant exercice ou seance
 		self.EXO_TEMPS_LIMITE = 0				# valeur max de temps d'un exercice ou seance
 		self.NUM_EXO = 0						# numero de l'exercice en cours
+		self.NUM_EXO_MAX = 0					# nombre d'exercices max dans la seance en cours
 		self.NUM_MOV = 0						# numero du mouvement en cours
 		self.SCANNING = 0					# en train de scanner les positions moteurs ou non
 		#Face and eyes
@@ -965,10 +913,7 @@ class PoppyGRR:
 		self.month = int(time.strftime('%m', time.localtime()))	#mois en cours
 		# communication avec la kinect
 		self.kinectName = kinectName			# nom du serveur kinect
-		self.waitKinect = False					# attente que la kinect soit prete
 		self.waitFeedback = False				# attente que les feedbacks soient donnes
-		self.REPET = False						# en cours de repetition d un exo par le robot
-		self.WAIT_REPET = False					# attente fin repet
 
 		self.t0 = time.time()
 		if self.face!='none':
@@ -1298,7 +1243,6 @@ class PoppyGRR:
 		self.majMoveList('mov', moveName, poppyParts)
 		time.sleep(0.2)
 		self.Compliant(poppyParts)
-		#TODO : Rajouter un bruit sonore
 		return 'move part saved'
 		
 		#mise a jour de la liste des fichiers mouvements
@@ -1958,12 +1902,14 @@ class PoppyGRR:
 	def GoExo(self, exoName):
 		if self.SecurityStop == True:
 			return "Security mode"
-		#time.sleep(0.5)	#le temps que la seance precedente se finnisse si existante
 		self.PLAYING_EXO = False
 		self.EXO_ENABLE = True
 		self.EXO_SLEEP = False
+		self.EXO_STOPPED = False
+		self.REPLAY = False
 		self.EXO_TEMPS = 0
 		self.NUM_EXO = 0
+		self.NUM_EXO_MAX = 0
 		self.NUM_MOV = 0
 		self.NUM_PHASE = 0
 		exoType = self.directory(exoName)
@@ -1978,6 +1924,7 @@ class PoppyGRR:
 		print ('preparing the file')
 		with open('./move/'+exoType+'/'+exoName+'.json', 'r') as f:
 			moveFile = json.load(f)
+		self.EXO_TEMPS_LIMITE = moveFile['nb_temps']
 		#tous les fichiers existent ?
 		for i in range(int(moveFile['nb_fichiers'])):
 			if self.directory(moveFile['fichier'+str(i+1)]['namefile']) == '':
@@ -1987,6 +1934,7 @@ class PoppyGRR:
 					self.voice.play("./sound/sounds/nexistepas.mp3")
 				return moveFile['fichier'+str(i+1)]['namefile'] + " is missing !"
 			elif self.directory(moveFile['fichier'+str(i+1)]['namefile']) == 'exo':
+				self.NUM_EXO_MAX+=1
 				with open('./move/exo/'+moveFile['fichier'+str(i+1)]['namefile']+'.json', 'r') as f:
 					exoFile = json.load(f)
 				for j in range(exoFile['nb_fichiers']):
@@ -1996,15 +1944,185 @@ class PoppyGRR:
 						else:
 							self.voice.play("./sound/sounds/nexistepas.mp3")
 						return exoFile['fichier'+str(j+1)]['namefile'] + " in "+moveFile['fichier'+str(i+1)]['namefile'] +" is missing !"
-		self.EXO_TEMPS_LIMITE = moveFile['nb_temps']
-		goexosuite = Thread(target=self.GoExoSuite, args=(exoType, exoName))
+				#verification OK --> calcul exo_temps_limite en cas kinect et seance avec les repetitions
+				if self.kinectName!='none':
+					if "repetition" not in moveFile['fichier'+str(i+1)].keys():
+						moveFile['fichier'+str(i+1)]['repetition']=1
+					temps_exo = moveFile['fichier'+str(i+1)]["pause"] + exoFile["nb_temps"]
+					self.EXO_TEMPS_LIMITE += temps_exo*self.nb_demo
+					self.EXO_TEMPS_LIMITE += temps_exo*moveFile['fichier'+str(i+1)]['repetition']
+					moveFile['fichier'+str(i+1)]['temps_exo']=temps_exo
+					self.logger.info("exo temps limite : "+str(self.EXO_TEMPS_LIMITE))
+		goexosuite = Thread(target=self.GoExoSuite, args=(exoType, exoName, moveFile))
 		goexosuite.start()
 		return 'Exercice has started'
 
-	def GoExoSuite(self, exoType, exoName):		
+	def GoExoSuite(self, moveType, moveName, moveFile):
+		#playing normal
+		if self.kinectName!='none':
+			kinect_ok="nthg"
+			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect if patient moving while poppy is moving
+			if kinect_ok==200:
+				self.voice.play('./sound/sounds/kinect_error.mp3')
+				self.waitVoice()
+				return
+			if moveType=='seance':
+				self.voice.play("./sound/sounds/bonjour.mp3")
+				self.waitVoice()
+				self.voice.play("./sound/sounds/intro"+str(randint(1,2))+".mp3")
+				self.waitVoice()
+				time.sleep(1.5)
+				self.voice.play("./sound/sounds/demoSeance"+str(randint(1,3))+".mp3")
+				self.waitVoice()
+			elif 'instructions' in moveFile.keys():
+				self.voice.play("./sound/sounds/instructions/intro.mp3")
+				self.waitVoice()
+				for instr in moveFile['instructions']:
+					if instr == moveFile['instructions'][-1]:
+						self.voice.play("./sound/sounds/instructions/et.mp3")
+						self.waitVoice()
+					print "instruction : "+instr
+					self.voice.play("./sound/sounds/instructions/"+instr+".mp3")
+					self.waitVoice()
+					time.sleep(0.1)
+					if self.EXO_STOPPED:
+						return
+		while self.PLAYING_SEANCE or self.PLAYING_EXO or self.PLAYING_MOVE or self.EXO_SLEEP:
+			time.sleep(0.5)	
+		goExoPrimitive(self,moveName, moveType).start()
+		time.sleep(1)
+		self.logger.info("playing the exo/seance")
+		while self.PLAYING_SEANCE or self.PLAYING_EXO or self.PLAYING_MOVE or self.EXO_SLEEP:
+			time.sleep(0.5)
+		self.logger.info("first demonstration of the seance done")
+		if self.EXO_STOPPED:
+			return
+		#loop for each exo if seance
+		if moveType=="seance" and self.kinectName!='none':
+			self.NUM_EXO=0
+			self.NUM_MOV=0
+			for i in range(int(moveFile['nb_fichiers'])):
+				self.previousFeedback[0]=''
+				self.previousFeedback[1]=''
+				if self.EXO_STOPPED:
+					return
+				self.NUM_EXO+=1
+				self.NUM_MOV=0
+				self.NUM_PHASE=0
+				exoName=moveFile['fichier'+str(i+1)]['namefile']
+				with open('./move/exo/'+exoName+'.json', 'r') as f:
+					exoFile = json.load(f)
+				if i==0:
+					self.voice.play("./sound/sounds/repet/exo1_"+str(randint(1,3))+".mp3")
+				elif i>0:
+					self.voice.play("./sound/sounds/repet/exoNext"+str(randint(1,4))+".mp3")
+				self.waitVoice()
+				if 'instructions' in exoFile.keys():
+					self.voice.play("./sound/sounds/instructions/intro.mp3")
+					self.waitVoice()
+					for instr in exoFile['instructions']:
+						if instr == exoFile['instructions'][-1]:
+							self.voice.play("./sound/sounds/instructions/et.mp3")
+							self.waitVoice()
+						print "instruction : "+instr
+						self.voice.play("./sound/sounds/instructions/"+instr+".mp3")
+						self.waitVoice()
+						time.sleep(0.1)
+				time.sleep(0.3)
+				#exo beginning
+				if self.nb_demo==1:
+					self.voice.play("./sound/sounds/repet/demoInit.mp3")
+				elif self.nb_demo>1:
+					self.voice.play("./sound/sounds/repet/demoInitSeveral.mp3")
+				self.waitVoice()
+				self.logger.info("----- going to play move "+str(i+1))
+				for nb_repet in range(self.nb_demo):
+					while self.EXO_SLEEP and not self.EXO_STOPPED:
+						time.sleep(0.5)
+					if self.EXO_STOPPED:
+						return
+					self.logger.info("allez, c'est parti pour la demo "+str(nb_repet+1))
+					self.NUM_PHASE=0
+					self.EXO_ENABLE = True
+					goExoPrimitive(self,exoName, 'exo', moveFile['fichier'+str(i+1)]['pause']).start()
+					time.sleep(3)
+					if self.PLAYING_EXO or self.PLAYING_MOVE:
+						self.logger.info("PLAYING_EXO = TRUE")
+					while self.PLAYING_EXO or self.PLAYING_MOVE:
+						time.sleep(0.5)
+					if self.EXO_STOPPED:
+						return
+				self.voice.play("./sound/sounds/repet/repetBegin.mp3")
+				self.waitVoice()
+				self.voice.play("./sound/sounds/repet/"+str(moveFile['fichier'+str(i+1)]['repetition'])+".mp3")
+				self.waitVoice()
+				self.NUM_MOV=0
+				self.logger.info("A toi de bouger !!!")
+				typeRepet = 'first'
+				for nb_repet in range(moveFile['fichier'+str(i+1)]['repetition']):
+					if nb_repet==int(moveFile['fichier'+str(i+1)]['repetition']-1) and nb_repet>=2:
+						typeRepet='end'
+					elif int(moveFile['fichier'+str(i+1)]['repetition']-1)-nb_repet<=5 and nb_repet>=4:
+						typeRepet='preEnd'
+					elif nb_repet!=0:
+						typeRepet='repet'
+					while self.EXO_SLEEP and not self.EXO_STOPPED:
+						time.sleep(0.5)
+					if self.EXO_STOPPED:
+						return
+					self.waitFeedback = True
+					kinect_ok=self.initKinect(exoName, 'exo', typeRepet)
+					if kinect_ok==200:
+						self.voice.play('./sound/sounds/kinect_error.mp3')
+						self.waitVoice()
+						self.EXO_TEMPS += moveFile['fichier'+str(i+1)]['temps_exo']*moveFile['fichier'+str(i+1)]['repetition']
+						break
+					sayInstr=2
+					while self.waitFeedback and not self.EXO_STOPPED:
+						time.sleep(1)
+						#possible reminder of instruction during repetition
+						if sayInstr!=0:
+							sayInstr=randint(1,30)
+						if 'instructions' in exoFile.keys() and not self.givingFeedback and sayInstr==1:
+							self.sayRandInstr(exoFile['instructions'])
+							sayInstr=0
+					if self.REPLAY:
+						#bad reproduction, do it again!
+						self.voice.play("./sound/sounds/feedbacks/replay.mp3")
+						self.waitVoice()
+						self.NUM_PHASE=0
+						self.EXO_ENABLE = True
+						goExoPrimitive(self,exoName, 'exo', moveFile['fichier'+str(i+1)]['pause']).start()
+						time.sleep(3)
+						if self.PLAYING_EXO or self.PLAYING_MOVE:
+							self.logger.info("PLAYING_EXO = TRUE")
+						while self.PLAYING_EXO or self.PLAYING_MOVE:
+							time.sleep(0.5)
+						if self.EXO_STOPPED:
+							return
+						self.NUM_MOV=0
+						self.EXO_TEMPS -= moveFile['fichier'+str(i+1)]['temps_exo']
+					#possible reminder of instruction between repetitions
+					if sayInstr!=0:
+						sayInstr=randint(1,5)
+					if not self.EXO_STOPPED and sayInstr==1 and 'instructions' in exoFile.keys() and not self.REPLAY:
+						self.sayRandInstr(exoFile['instructions'])
+					self.EXO_TEMPS += moveFile['fichier'+str(i+1)]['temps_exo']
+					self.REPLAY=False
+			self.voice.play("./sound/sounds/finSeance.mp3")
+			self.EXO_ENABLE=False
+
+	def sayRandInstr(self, instructions):
+		randInstr = instructions[randint(0,len(instructions)-1)]
+		self.voice.play("./sound/sounds/instructions/rappel"+str(randint(1,2))+".mp3")
+		self.waitVoice()
+		self.voice.play("./sound/sounds/instructions/"+randInstr+".mp3")
+		self.waitVoice()
+
+	def initKinect(self, exoName, exoType, typeRepet='first'):
 		#communication kinect si exo
 		if self.kinectName != "none" and exoType == 'exo':
-			self.waitKinect = True
+			self.logger.info("give exoname : "+exoName+" to "+self.kinectName)
 			print "give exoname : "+exoName+" to "+self.kinectName
 			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=give+exoname&exoname="+exoName)
 			if kinect.status_code==200:
@@ -2012,10 +2130,18 @@ class PoppyGRR:
 				self.logger.warning("kinect does not know the exercise !")
 			elif kinect.status_code==201:
 				print "kinect ok pour nom exo"
-			while self.waitKinect:
-				time.sleep(0.5)
-		goExoPrimitive(self,exoName, exoType).start()
-		time.sleep(1)
+				self.logger.info("kinect ok pour nom exo")
+				if typeRepet=='first':
+					self.voice.play('./sound/sounds/atoi.mp3')
+				elif typeRepet=='end':
+					self.voice.play('./sound/sounds/repet/repetEnd.mp3')
+				elif typeRepet=='preEnd':
+					self.voice.play('./sound/sounds/repet/repet'+str(randint(1,7))+'.mp3')
+				else:
+					self.voice.play('./sound/sounds/repet/repet'+str(randint(1,4))+'.mp3')
+				self.waitVoice()
+			return kinect.status_code
+		return "not used"
 
 	def StopExo(self):
 		while self.PAUSE == True:		#si on est en pause inter-exo ou inter-mouvements
@@ -2023,6 +2149,7 @@ class PoppyGRR:
 	#	if self.kinectName != "none":
 	#		print "kinectName : "+self.kinectName
 	#		kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=start+kinect")
+		self.EXO_STOPPED = True
 		if self.PLAYING_EXO == True:
 			self.EXO_ENABLE = False
 			self.MOVING_ENABLE = False
@@ -2165,7 +2292,6 @@ class PoppyGRR:
 
 					else:
 						poppyParts.append(key)			# met a jour la liste
-	#TODO
 
 					if moveDir == "mov" and newPart:
 						moveFile["parties"]["nb_parts"]+=1	#incremente nb parties tempo
@@ -2210,7 +2336,7 @@ class PoppyGRR:
 									previousOffsetPart = offsetPart
 							if removeLast:
 								del moveFile["parties"]["offsetPart"+str(moveFile["parties"]["nb_parts"]+1)]	#suppr le offsetPart cree
-							if t0min == -1:							# TODO : si on ajoute le nouveau a la fin. Faire les differents cas
+							if t0min == -1:							# si on ajoute le nouveau a la fin. Faire les differents cas
 								realOffsetPart = "offsetPart"+str(moveFile["parties"]["nb_parts"])
 							elif t0min != 0:
 								realOffsetPart = previousOffsetPart
@@ -2376,6 +2502,15 @@ class PoppyGRR:
 		else:
 			return "move created"
 
+	def createVoice(self, path, filename, text):
+		volumeTmp = self.voice.volume
+		self.voice.setVolume(0)
+		self.voice.say(text, "./sound/sounds/"+path+"/"+filename+".mp3", False)
+		self.waitVoice()
+		self.voice.setVolume(volumeTmp)
+		self.voice.play("./sound/sounds/fait.mp3")
+		return "ok"
+	
 	def addMove(self, moveName, moveType, moveFile):
 		moveFile = json.loads(moveFile)
 		print type(moveFile)
@@ -2442,6 +2577,10 @@ class PoppyGRR:
 			if self.directory(exoConfig['fichier'+str(i+1)]['namefile']) == 'exo' : # si c'est un exo
 				exoCompo[str(i+1)] = {}
 				exoCompo[str(i+1)] = self.readExoCompo(exoConfig['fichier'+str(i+1)]['namefile'])
+				if "repetition" in exoConfig['fichier'+str(i+1)]:
+					exoCompo[str(i+1)]["repetition"]=exoConfig['fichier'+str(i+1)]["repetition"]
+				else:
+					exoCompo[str(i+1)]["repetition"]=1
 			else:								#si c'est un mouvement
 				exoCompo[str(i+1)] = exoConfig['fichier'+str(i+1)]['namefile']
 		return exoCompo
@@ -2517,104 +2656,47 @@ class PoppyGRR:
 		if self.Poppyboid.abs_z.compliant == False:
 			return False
 		return True
-
-	def kinectReady(self):
-		if self.waitKinect:
-			self.waitKinect=False
-			print "kinect exercise resumed"
-			return "resumed"
-		else:
-			print "self.waitKinect : "+str(self.waitKinect)
-			return "failed"
-
+#TODO: tester les feedbacks
 	def kinectFeedback(self, kiFeedback):
-		nbSegs = kiFeedback["globalSequence"]["nbSegs"]
-		print "nombres de parties " +str(nbSegs)
-		feedback = {}
-		feedback["globalSequence"]=kiFeedback["globalSequence"]
-
-		if kiFeedback["globalSequence"]["global"]>=self.SEUIL_BIEN:
-			feedback["globalSequence"]["global"]="bien"
-		elif kiFeedback["globalSequence"]["global"]>=self.SEUIL_NUL:
-			feedback["globalSequence"]["global"]="moyen"
-		elif kiFeedback["globalSequence"]["global"]>=self.SEUIL_MINABLE:
-			feedback["globalSequence"]["global"]="nul"
+		self.waitVoice()
+		self.givingFeedback=True
+		time.sleep(1)
+		if kiFeedback['score']>self.SEUIL_BIEN:
+			self.voice.play('./sound/sounds/feedbacks/bien.mp3')
 		else:
-			feedback["globalSequence"]["global"]="minable"
-
-		for i in range(nbSegs):
-			if kiFeedback["segment"+str(i+1)]["global"]<self.SEUIL_NUL:
-				feedback["segment"+str(i+1)]={}
-				feedback["segment"+str(i+1)]["global"]="nul"
-			elif kiFeedback["segment"+str(i+1)]["global"]<self.SEUIL_BIEN:
-				feedback["segment"+str(i+1)]={}
-				minPart={}
-				minPart["part"]="leftArm"
-				minPart["value"]=kiFeedback["segment"+str(i+1)]["leftArm"]
-				for part in ["leftArm", "rightArm", "leftLeg", "rightLeg", "spine"]:
-					if kiFeedback["segment"+str(i+1)][part]<self.SEUIL_NUL:
-						feedback["segment"+str(i+1)][part]="nul"	
-					if kiFeedback["segment"+str(i+1)][part]<minPart["value"]:
-						minPart["part"]=part
-						minPart["value"]=kiFeedback["segment"+str(i+1)][part]
-
-				if minPart["value"]>=self.SEUIL_NUL:
-					feedback["segment"+str(i+1)][minPart["part"]]="moyen"
-
-		print feedback
-		while self.REPET:
-			time.sleep(0.3)
-		self.sayFeedback(feedback)
+			if kiFeedback['error']==self.previousFeedback[0] and kiFeedback['error']==self.previousFeedback[1]:
+				self.REPLAY=True
+				self.previousFeedback[0]=''
+				self.previousFeedback[1]=''
+				self.logger.info("3 fois la meme erreur !! ouhlala!")
+			self.previousFeedback[0]=self.previousFeedback[1]
+			self.previousFeedback[1]=kiFeedback['error']
+			self.sayFeedback(kiFeedback)
 		return "ok"
 
 	def sayFeedback(self, feedback):
-		self.voice.play("./sound/sounds/feedbacks/"+feedback["globalSequence"]["global"]+".mp3")
+		self.voice.play("./sound/sounds/feedbacks/intro"+str(randint(1,3))+".mp3")
 		self.waitVoice()
-		if feedback["globalSequence"]["global"]!="minable":
-			for i in range(feedback["globalSequence"]["nbSegs"]):
-			#for key, value in feedback.iteritems():
-				key = "segment"+str(i+1)
-				#if key != "globalSequence":
-				if key in feedback.keys():
-					print key
-					self.voice.play("./sound/sounds/feedbacks/phase.mp3")
-					self.waitVoice()
-					self.voice.play("./sound/sounds/feedbacks/"+key+".mp3")
-					self.waitVoice()
-					time.sleep(0.2)
-					if "global" in feedback[key]:
-						self.voice.play("./sound/sounds/feedbacks/moveNul.mp3")
-						self.waitVoice()
-					elif "moyen" in feedback[key].values():
-						self.voice.play("./sound/sounds/feedbacks/partDebut.mp3")
-						self.waitVoice()
-						self.voice.play("./sound/sounds/feedbacks/"+feedback[key].keys()[0]+".mp3")
-						self.waitVoice()
-						self.voice.play("./sound/sounds/feedbacks/partMoyen.mp3")
-						self.waitVoice()
-					else:
-						self.voice.play("./sound/sounds/feedbacks/partDebut.mp3")
-						self.waitVoice()
-						for part, value in feedback[key].iteritems():
-							print part, value
-							self.voice.play("./sound/sounds/feedbacks/"+part+".mp3")
-							self.waitVoice()
-						self.voice.play("./sound/sounds/feedbacks/partNul.mp3")
-						self.waitVoice()
-				time.sleep(0.5)
+		try:
+			self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+"a.mp3")
+			self.waitVoice()
+		except:
+			pass
+		if feedback['bodyPart']!='spine':
+			self.voice.play("./sound/sounds/feedbacks/"+feedback['bodyPart']+".mp3")
+			self.waitVoice()
+		try:
+			self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+"b.mp3")
+			self.waitVoice()
+		except:
+			pass
+		time.sleep(0.5)
+		self.givingFeedback=False
 		self.waitFeedback=False
 
 	def waitVoice(self):
 		while pygame.mixer.music.get_busy():
-			time.sleep(0.1)
-
-	def kinectEnd(self):
-		resumed = self.ResumeExo()
-		if "resumed" in resumed:
-			print "ended"
-			return "ended"
-		else:
-			return resumed
+			time.sleep(0.05)
 
 	def say(self, sentence):
 		sentence = json.loads(sentence)
@@ -2718,7 +2800,7 @@ class PoppyGRR:
 	def faceManager(self):
 		while self.FACE_MANAGING_ENABLE:
 			#animation mode
-			if self.PLAYING_MOVE or self.PLAYING_EXO:
+			if self.PLAYING_MOVE or self.PLAYING_EXO or self.kinectName!='none':
 				self.face.stopAnimation()
 			else:
 				self.face.startAnimation()
@@ -2796,8 +2878,10 @@ class PoppyGRR:
 					self.Poppyboid.l_elbow_y.goto_position(value, 0.5, wait=False)
 
 	def stopAll(self):
+		self.waitVoice()
 		if self.face!='none':
 			self.stopFaceManager()
 			self.face.stop()
 		self.StopExo()
+		pygame.exit()
 		sys.exit()

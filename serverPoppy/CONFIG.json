@@ -7,17 +7,13 @@
 		"value" : "none",
 		"descritpion" : "name of the kinect server, 'none' if no kinect"
 	},
+	"nb_demo" : { 
+		"value" : 3,
+		"descritpion" : "number of demonstrations by the robot before repetitions (useful if kinect exists)"
+	},
 	"seuil_bien" : { 
 		"value" : 80,
 		"descritpion" : "high threshold for the kinect feedback (useful if kinect exists)"
-	},
-	"seuil_nul" : { 
-		"value" : 50,
-		"descritpion" : "low threshold for the kinect feedback (useful if kinect exists)"
-	},
-	"seuil_minable" : { 
-		"value" : 35,
-		"descritpion" : "very low threshold for the kinect feedback (useful if kinect exists)"
 	},
 	"wrists" : {
 		"value" : "True",
@@ -28,11 +24,11 @@
 		"description" : "activate the screen/eyes : True/False"
 	},
 	"fullScreen" : {
-		"value" : "False",
+		"value" : "True",
 		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
 	},
 	"Volume" : {
-		"value" : 0.5,
+		"value" : 1,
 		"description" : "volume of the Poppy voice [0-1]"
 	},
 	"internet" : {
@@ -42,9 +38,5 @@
 	"creature" : {
 		"value" : "humanoid",
 		"description" : "'humanoid' or 'torso'"
-	},
-	"repetitions" : {
-		"value" : "False",
-		"description" : "robot shows exercise while the user is moving or not (useful if kinect exists)"
 	}
 }

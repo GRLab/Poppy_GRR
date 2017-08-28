@@ -40,5 +40,6 @@
 		"65": "rotationTroncD.mp3",
 		"91": "rotationTroncFin.mp3",
 		"115": "rotationTroncFin2.mp3"
-	}
+	},
+	"instructions":["hanches_fixes","dos_droit","fesses_plat","pieds_plat","respiration"]
 }

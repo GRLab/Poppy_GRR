@@ -1,0 +1,17 @@
+{
+    "nb_fichiers": 1, 
+    "description": {}, 
+    "nb_temps": 70, 
+    "fichier1": {
+        "pause": 0, 
+        "repetition": 1, 
+        "vitesse": 5, 
+        "namefile": "aapoignets"
+    }, 
+    "type": "exo", 
+    "instructions": [
+        "dos_droit", 
+        "fesses_plat", 
+        "pieds_plat"
+    ]
+}

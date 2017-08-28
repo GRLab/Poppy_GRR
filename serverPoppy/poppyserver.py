@@ -26,9 +26,7 @@ with open('./CONFIG.json', 'r') as f:
 	wrists = True if config["wrists"]["value"] == "True" else False
 	creature = config["creature"]["value"]
 	seuil_bien = config["seuil_bien"]["value"]
-	seuil_nul = config["seuil_nul"]["value"]
-	seuil_minable = config["seuil_minable"]["value"]
-	repetitions = True if config["repetitions"]["value"] == "True" else False
+	nb_demo = config["nb_demo"]["value"]
 
 #arret http server
 class stopServer(Thread):
@@ -520,18 +518,6 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		logger.info(IPclient+" RESPONSE - "+text)
 		print (text)
 
-	if 'Submit' in params.keys() and "kinect+ready" == params['Submit']:
-	    logger.info(IPclient+" REQUEST - kinect ready !")
-	    try:
-			text = poppy.kinectReady()
-	    except:
-			logger.exception("***** kinect Ready error *****")
-	    if 'resumed' in text:
-		    self.send_headers(201)
-	    else:
-		    self.send_headers()
-	    logger.info(IPclient+" RESPONSE - "+text)
-
 	if 'Submit' in params.keys() and "kinect+feedback" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - kinect feedback !")
 	    feedback = self.rfile.read(int(self.headers['Content-Length']))
@@ -542,18 +528,6 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    except:
 			logger.exception("***** kinect Feedback error *****")
 	    if 'ok' in text:
-		    self.send_headers(201)
-	    else:
-		    self.send_headers()
-	    logger.info(IPclient+" RESPONSE - "+text)
-
-	if 'Submit' in params.keys() and "kinect+end" == params['Submit']:
-	    logger.info(IPclient+" REQUEST - kinect end !")
-	    try:
-			text = poppy.kinectEnd()
-	    except:
-			logger.exception("***** kinectEnd error *****")
-	    if 'ended' in text:
 		    self.send_headers(201)
 	    else:
 		    self.send_headers()
@@ -579,6 +553,24 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 			text = poppy.say(sentence)
 	    except:
 			logger.exception("***** say error *****")
+	    if 'ok' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
+	if 'Submit' in params.keys() and "create+voice" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - create voice")
+	    filename=''
+	    voicetext=''
+	    if params['title']!="":
+	    	filename = params['title']
+	    if params['voice']!="":
+	    	voicetext = params['voice']
+	    try:
+	    	text = poppy.createVoice('instructions',filename,voicetext)
+	    except:
+	    	logger.exception("***** create voice error *****")
 	    if 'ok' in text:
 		    self.send_headers(201)
 	    else:
@@ -777,7 +769,7 @@ if screenOn:
 else:
 	face = 'none'
 #initialisation du son
-voice = Sound(volume=Volume)
+voice = Sound(frequence=29400,volume=Volume)
 voice.play("./sound/sounds/init.mp3")
 #attente avant initialisation, pour demarrage au boot RPi
 time.sleep(8)
@@ -788,7 +780,7 @@ while not moteursInitialise:
 	logger.info("essai initialisation moteur "+str(moteursInitEssai))
 	try:
 		time.sleep(2)
-		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, seuil_minable, repetitions)
+		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, nb_demo)
 		moteursInitialise = True
 		logger.info("----- moteurs initialises -----")
 	except:
