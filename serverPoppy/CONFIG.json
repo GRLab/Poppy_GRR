@@ -38,5 +38,9 @@
 	"creature" : {
 		"value" : "humanoid",
 		"description" : "'humanoid' or 'torso'"
+	},
+	"repetitions" : {
+		"value" : "False",
+		"description" : "robot shows exercise while the user is moving or not (useful if kinect exists - not functional)"
 	}
 }
