@@ -529,6 +529,7 @@ function CreateExo(type) {
 		var nb_compt = nb_mov;
 		var vide = 0;
 		var pauseValue = 0;
+		var instructions = [];
 		exoConfig = exoConfig+',"description":{';
 		for (var iter = 1; iter <nb_voice+1; iter++){
 			voicetime = $('#voice_time_'+iter).val();
@@ -544,6 +545,14 @@ function CreateExo(type) {
 			}
 		}
 		exoConfig = exoConfig+'}';
+
+		$('input:checked[name=instructions]').each(function(i,o){
+			instructions.push($(o).val());
+		});
+		console.log(instructions)
+		instructions = JSON.stringify(instructions)
+		console.log(instructions)
+		exoConfig = exoConfig+',"instructions":'+instructions;
 	}
 	else if(type=="seance"){
 		var exoName = $('#nom_seance').val();
@@ -573,6 +582,11 @@ function CreateExo(type) {
 				//alert('warning, vitesse set to 5 (must be [1-10])');
 			}
 			exoConfig = exoConfig+',"vitesse":'+vitesse;
+			var repet = $('#nb_repet_'+iter).val();
+			if (!(repet>=1 && repet<=50) || repet == "") {
+				repet= 1;
+			}
+			exoConfig = exoConfig+',"repetition":'+repet;
 			var pause= $('#pause'+filestype+'_'+iter).val();
 			if (!(pause>=0 && pause<50) || pause == "") {
 				pause = pauseValue;
@@ -600,6 +614,7 @@ function CreateExo(type) {
 			201: function(data) {
 				console.log(data);
 				if(type=="exo"){
+					$('input:checkbox[name=instructions]').removeAttr('checked');
 					nb_mov = 1;
 					$('#nom_exo').val('');
 					$('#modal_create_exo').modal('hide');
@@ -612,7 +627,7 @@ function CreateExo(type) {
 					nb_exo = 1;
 					$('#nom_seance').val('');
 					$('#modal_create_seance').modal('hide');
-					$('#add_exo').html('<tr><td colspan="3"><div><label for="type_exo">exercice 1</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom de l exercice composant le fichier à créer." class="input_shadow form-control" id="exo_1" placeholder="nom de l exercice" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture de l exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedexo_1" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après l exercice concerné. La pause est en secondes." class="input_shadow form-control" id="pauseexo_1" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--><tr>')
+					$('#add_exo').html('<tr><td colspan="3"><div><label for="type_exo">exercice 1</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom de l exercice composant le fichier à créer." class="input_shadow form-control" id="exo_1" placeholder="nom de l exercice" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture de l exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedexo_1" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après l exercice concerné et entre les répétitions. La pause est en secondes." class="input_shadow form-control" id="pauseexo_1" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--><tr>')
 				}
 				$.post("./core/functions/moves.php?action=insertMov" , {"listeFiles" : listeFiles, "moveType" : type, "moveName" : exoName}).done(function(data){
 					console.log(data);
@@ -871,7 +886,13 @@ function Go(exoName) {
 					$('#exoConfig').append('<div id="nom_seance_suivi">' + exoName + '</div>' );
 					for (i=1; i<=jsondata['nb_fichiers']; i++){
 						if (jsondata[i]['nb_fichiers'] >0){
-							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+'</div>');
+							if('repetition' in jsondata[i]){
+								nb_repet=jsondata[i]['repetition'];
+							}
+							else{
+								nb_repet="1";
+							}
+							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
 							var texte = "";
 							texte+= '<div class="containerMvts">';
 							for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
@@ -1796,4 +1817,48 @@ function initPage() {
 	ReceiveMovelist();
 	AfficheMovelist();
 	GetIP();
+}
+
+function CreateInstruction(){
+	title = $('#newInstructionTitle').val();
+	description = $('#newInstructionDescription').val();
+	voice = $('#newInstructionVoice').val();
+	if(title==""){
+		alert("mettez un titre");
+		return;
+	}
+	if(description==""){
+		alert("mettez un nom décrivant l'instruction");
+		return;
+	}
+	if(voice==""){
+		alert("mettez la description orale");
+		return;
+	}
+	$.post('./core/functions/moves.php?action=addInstruction', {voice: voice, description: description, title: title}).done(function(){
+		$.ajax({
+			url: 'http://'+poppyName+':4567/?Submit=create+voice&title='+title+'&voice='+voice,
+			type:'POST',
+			dataType:'json',
+			statusCode: {
+				201: function(data) {
+					console.log(data);
+				},
+				200:function(data){
+					console.log(data);
+				},
+				0:function(data){		//error, not connected
+					console.log('error : Poppy is not connected');
+					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+				}
+			}
+		});
+		$('#newInstructionTitle').val("");
+		$('#newInstructionDescription').val("");
+		$('#newInstructionVoice').val("");
+
+		$('#modal_create_instruction').modal("hide");
+
+		$('#list_instructions div').append('<label class="form-check-label instructions" title="Pensez à '+voice+'"><input class="form-check-input" type="checkbox" name="instructions" value="'+title+'">'+description+'</label>');
+	});
 }

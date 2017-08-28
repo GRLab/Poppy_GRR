@@ -41,6 +41,13 @@ if(isset($_GET["action"])){
 	} else if ($_GET["action"] == "getTimeMov"){
 		$iTime = getTimeMov($_POST["movename"]);
 		echo $iTime;
+	} else if ($_GET["action"] == "getInstructions"){
+		header('Content-type: application/json');
+		$aInstructions = getInstructions();
+		echo json_encode($aInstructions);
+	} else if ($_GET["action"] == "addInstruction"){
+		addInstruction($_POST);
+		echo json_encode("Added instruction");
 	}
 }
 
@@ -329,6 +336,29 @@ function getTimeMov($sMove){
 	$aDatas = $requete->fetch( PDO::FETCH_ASSOC);
 	
 	return $aDatas["nb_temps"];
+}
+
+function getInstructions(){
+	$sSQL = "SELECT * 
+	         FROM `instructions`
+	         ORDER BY `description`";
+
+	$requete = Connexion::getInstance()->prepare($sSQL);
+
+	$requete->execute();
+			
+	$aDatas = $requete->fetchAll( PDO::FETCH_ASSOC);
+
+	return $aDatas;
+}
+
+function addInstruction($aDatas){
+	$sSQL = "INSERT INTO `instructions`(`title`,`description`,`voice`)
+	         VALUES(:title, :description, :voice)";
+
+	$requete = Connexion::getInstance()->prepare($sSQL);
+	
+	$requete->execute($aDatas);
 }
 
 ?>

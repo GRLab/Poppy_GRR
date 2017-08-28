@@ -64,7 +64,6 @@ ul li input[type="text"], ul li input[type="password"] {
 	vertical-align:middle;
 }
 
-
 /* Configuration Headers */
 h1 {
     color:#006064; 
@@ -92,6 +91,17 @@ h2 {
 #poppyImage{ 
     //width:280px;
 	float: left;
+}
+#legendeImage{ 
+    width:60%;
+}
+#legendeTitle{
+    color:#ffffdf;
+    float:left;
+    margin-right: 10px;
+    margin-top:4.5px;
+    font-size:17px;
+    font-weight: bold;
 }
 /*Logo Mot*/
 .title {
@@ -377,6 +387,11 @@ aside {
 	display:none;
     z-index: 10;    /*au dessus des autres blocs (indice fort)*/
 }
+
+.instructions{
+    margin-left:40px;
+}
+
 #progressbar{
 	height : 10px;
 	margin-top:25px;
@@ -449,7 +464,7 @@ aside {
     padding:0px 3px 0px 0px;
 }
 
-.tab_vit{
+.tab_vit,.tab_repet{
     width:15%;
     float:left;
     padding:0px 3px 0px 3px;

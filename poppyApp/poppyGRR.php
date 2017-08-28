@@ -80,6 +80,9 @@ include "includes/header.php";
 			
 			<div class="poppyimage">
 				<img src="includes/images/poppyImage.png" id="poppyImage" alt ="PoppyImage"  class="map" usemap="#simple" > 
+				<span id="legendeTitle">Légende : </span>
+				<img src="includes/images/legende2.png" id="legendeImage" alt ="legendeImage">
+				<br>
 			</div>
 			<div class="save">
 			<div class="title2">Enregistrement</div>
@@ -275,15 +278,15 @@ include "includes/header.php";
 				<fieldset class="form-group">
 					<label for="newName">Nouvelle direction : </label> 
 					<select id="eyesDirection">
-						<option value="topleft">topleft</option>
+						<option value="topright">topleft</option>
 						<option value="top">top</option>
-						<option value="topright">topright</option>
-						<option value="left">left</option>
+						<option value="topleft">topright</option>
+						<option value="right">left</option>
 						<option value="center">center</option>
-						<option value="right">right</option>
-						<option value="bottomleft">bottomleft</option>
+						<option value="left">right</option>
+						<option value="bottomright">bottomleft</option>
 						<option value="bottom">bottom</option>
-						<option value="bottomright">bottomright</option>
+						<option value="bottomleft">bottomright</option>
 					</select>
 				</fieldset>
 			</div>
@@ -311,6 +314,33 @@ include "includes/header.php";
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-default" onclick="RenameClear()" data-dismiss="modal">Annuler</button>
 			  <button type="button" class="btn btn-info" onclick="RenameSuite()">Sauvegarder</button>
+			</div> 
+		  </div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal_create_instruction" role="dialog" style="z-index:2000;">
+		<div class="modal-dialog">
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Créer une nouvelle instruction</h4>
+			</div>
+			<div class="modal-body">
+				<fieldset class="form-group">
+					<label for="newInstructionTitle">Titre de l'instruction</label> <input value="" type="text" class="form-control" id="newInstructionTitle" placeholder="Titre_sans_espaces" />
+				</fieldset>
+				<fieldset class="form-group">
+					<label for="newInstructionDescription">Nom de l'instruction</label> <input value="" type="text" class="form-control" id="newInstructionDescription" placeholder="nom décrivant l'inscription" />
+				</fieldset>
+				<fieldset class="form-group">
+					<label for="newInstructionVoice">Texte de la voix (complétez la phrase : "pensez à...")</label> <input value="" type="text" class="form-control" id="newInstructionVoice" placeholder="Texte de la voix" />
+				</fieldset>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+			  <button type="button" class="btn btn-info" onclick="CreateInstruction()">Sauvegarder</button>
 			</div> 
 		  </div>
 		</div>
@@ -391,7 +421,7 @@ include "includes/header.php";
 							<input type="text" title="Nom du sous mouvement composant le mouvement." class="input_shadow form-control" id="ss_mov_1" placeholder="nom du mouvement" />
 						</fieldset></div>
 						<div class="tab_vit"><fieldset class="form-group">
-							<input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 9 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speed_1" placeholder="vitesse" />
+							<input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 9 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible." class="input_shadow form-control" id="speed_1" placeholder="vitesse" />
 						</fieldset></div>
 						<div class="tab_pause"><fieldset class="form-group">
 							<input type="text" title="Décalage temporel entre le début du mouvement et le début du sous mouvement. L'unité est l'incrément (environ 0.25s en vitesse normale, cette valeur augmente si la vitesse diminue). Plus l'offset est grand, et plus le mouvement démarrera avec du retard." class="input_shadow form-control" id="offset_1" placeholder="offset" />
@@ -428,6 +458,15 @@ include "includes/header.php";
 					<div class="tab_nom"><input type="text" class="input_shadow form-control" id="nom_exo" placeholder="nom de l'exercice" /></div>
 				</fieldset>
 
+				<fieldset class="form-group">
+					<label>Consignes importantes</label> <button data-toggle="modal" data-target="#modal_create_instruction" >Créer instruction</button>
+					<div id="list_instructions">
+						<div class="form-check"></div>	
+					</div>
+<!-- 					<span class="instructions"><input type="checkbox" name="instructions" value="dos_droit">Dos droit</span>
+ -->				
+				</fieldset>
+
 				<!--partie dynamique pour ajouter un nombre n de move dans la concatenation-->
 				<table id="add_mov">
 					<tr>
@@ -438,7 +477,7 @@ include "includes/header.php";
 								<input type="text" title="Nom du mouvement composant l'exercice à créer." class="input_shadow form-control mvt_timeline" id="mov_1" placeholder="nom du mouvement" />
 							</fieldset></div>
 							<div class="tab_vit"><fieldset class="form-group">
-								<input type="text" title="Vitesse de lecture du mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedmov_1" placeholder="vitesse" />
+								<input type="text" title="Vitesse de lecture du mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible." class="input_shadow form-control" id="speedmov_1" placeholder="vitesse" />
 							</fieldset></div>
 							<div class="tab_pause"><fieldset class="form-group">
 								<input type="text" title="Correspond à la pause après le mouvement concerné. La pause est en secondes." class="input_shadow form-control pause_timeline" id="pausemov_1" placeholder="pause" />
@@ -492,10 +531,13 @@ include "includes/header.php";
 							<input type="text" title="Nom de l'exercice composant le fichier à créer." class="input_shadow form-control" id="exo_1" placeholder="nom de l'exercice" />
 						</fieldset></div>
 						<div class="tab_vit"><fieldset class="form-group">
-							<input type="text" title="Vitesse de lecture de l'exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedexo_1" placeholder="vitesse" />
+							<input type="text" title="Vitesse de lecture de l'exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible." class="input_shadow form-control" id="speedexo_1" placeholder="vitesse" />
+						</fieldset></div>
+						<div class="tab_repet"><fieldset class="form-group">
+							<input type="text" title="Nombre de répétitions de l'exercice par le sujet." class="input_shadow form-control" id="nb_repet_1" placeholder="répétitions" />
 						</fieldset></div>
 						<div class="tab_pause"><fieldset class="form-group">
-							<input type="text" title="Correspond à la pause après l'exercice concerné. La pause est en secondes." class="input_shadow form-control" id="pauseexo_1" placeholder="pause" />
+							<input type="text" title="Correspond à la pause après l'exercice concerné et entre les répétitions. La pause est en secondes." class="input_shadow form-control" id="pauseexo_1" placeholder="pause" />
 						</fieldset></div>
 						</td>
 							<!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td-->
@@ -739,7 +781,7 @@ include "includes/header.php";
 		nb_ss_mov = 1
 		function add_one_ss_mov(){
 			nb_ss_mov = nb_ss_mov+1;
-			$('#add_ss_mov').append('<tr><td><div><label for="nom_mov">sous-mouvement '+nb_ss_mov+'</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom du sous mouvement composant le mouvement." class="input_shadow form-control" id="ss_mov_'+nb_ss_mov+'" placeholder="nom du mouvement" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 9 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speed_'+nb_ss_mov+'" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Décalage temporel entre le début du mouvement et le début du sous mouvement. L\'unité est l\'incrément (environ 0.25s en vitesse normale, cette valeur augmente si la vitesse diminue). Plus l\'offset est grand, et plus le mouvement démarrera avec du retard." class="input_shadow form-control" id="offset_'+nb_ss_mov+'" placeholder="offset" /></fieldset></div><!--td class="pull-right"><fieldset class="form-group"><button class="btn btn-danger supp_ligne" title="Supprimer la ligne"><span class="glyphicon glyphicon-trash"></span></button></fieldset></td--></td></tr>');
+			$('#add_ss_mov').append('<tr><td><div><label for="nom_mov">sous-mouvement '+nb_ss_mov+'</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom du sous mouvement composant le mouvement." class="input_shadow form-control" id="ss_mov_'+nb_ss_mov+'" placeholder="nom du mouvement" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du sous mouvement, comprise entre 1 et 10. Une vitesse 9 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible." class="input_shadow form-control" id="speed_'+nb_ss_mov+'" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Décalage temporel entre le début du mouvement et le début du sous mouvement. L\'unité est l\'incrément (environ 0.25s en vitesse normale, cette valeur augmente si la vitesse diminue). Plus l\'offset est grand, et plus le mouvement démarrera avec du retard." class="input_shadow form-control" id="offset_'+nb_ss_mov+'" placeholder="offset" /></fieldset></div><!--td class="pull-right"><fieldset class="form-group"><button class="btn btn-danger supp_ligne" title="Supprimer la ligne"><span class="glyphicon glyphicon-trash"></span></button></fieldset></td--></td></tr>');
 			$('#ss_mov_'+nb_ss_mov).autocomplete({
 				source: moveTags
 			});
@@ -748,7 +790,7 @@ include "includes/header.php";
 		nb_mov = 1
 		function add_one_mov(){
 			nb_mov = nb_mov+1;
-			$('#add_mov').append('<tr><tr><td colspan="3"><div><label for="type_exo">mouvement '+nb_mov+'</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom du mouvement composant l\'exercice à créer." class="input_shadow form-control mvt_timeline" id="mov_'+nb_mov+'" placeholder="nom du mouvement" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedmov_'+nb_mov+'" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après le mouvement concerné. La pause est en secondes." class="input_shadow form-control pause_timeline" id="pausemov_'+nb_mov+'" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--><tr><td id="add_voice_'+nb_mov+'" colspan="3"></td></tr><tr><td><div class="tab_voix_vide"> </div><div class="tab_voix_button"><button type="button" class="btn btn-info" onclick="add_one_voice(\''+nb_mov+'\')">Voix</button></div></td></tr></tr></tr></tr>');
+			$('#add_mov').append('<tr><tr><td colspan="3"><div><label for="type_exo">mouvement '+nb_mov+'</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom du mouvement composant l\'exercice à créer." class="input_shadow form-control mvt_timeline" id="mov_'+nb_mov+'" placeholder="nom du mouvement" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture du mouvement, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible." class="input_shadow form-control" id="speedmov_'+nb_mov+'" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après le mouvement concerné. La pause est en secondes." class="input_shadow form-control pause_timeline" id="pausemov_'+nb_mov+'" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--><tr><td id="add_voice_'+nb_mov+'" colspan="3"></td></tr><tr><td><div class="tab_voix_vide"> </div><div class="tab_voix_button"><button type="button" class="btn btn-info" onclick="add_one_voice(\''+nb_mov+'\')">Voix</button></div></td></tr></tr></tr></tr>');
 			$('#mov_'+nb_mov).autocomplete({
 				source: moveTags
 			});
@@ -757,7 +799,7 @@ include "includes/header.php";
 		nb_exo = 1
 		function add_one_exo(){
 			nb_exo = nb_exo+1;
-			$('#add_exo').append('<tr><td colspan="3"><div><label for="type_exo">exercice '+nb_exo+'</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom de l exercice composant le fichier à créer." class="input_shadow form-control" id="exo_'+nb_exo+'" placeholder="nom de l exercice" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture de l exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible" class="input_shadow form-control" id="speedexo_'+nb_exo+'" placeholder="vitesse" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après l exercice concerné. La pause est en secondes." class="input_shadow form-control" id="pauseexo_'+nb_exo+'" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--></tr>');
+			$('#add_exo').append('<tr><td colspan="3"><div><label for="type_exo">exercice '+nb_exo+'</label></div><div class="tab_nom"><fieldset class="form-group"><input type="text" title="Nom de l\'exercice composant le fichier à créer." class="input_shadow form-control" id="exo_'+nb_exo+'" placeholder="nom de l exercice" /></fieldset></div><div class="tab_vit"><fieldset class="form-group"><input type="text" title="Vitesse de lecture de l exercice, comprise entre 1 et 10. Une vitesse 5 correspond à la vitesse normale. Plus la valeur est faible et plus la vitesse sera faible." class="input_shadow form-control" id="speedexo_'+nb_exo+'" placeholder="vitesse" /></fieldset></div><div class="tab_repet"><fieldset class="form-group"><input type="text" title="Nombre de répétitions de l\'exercice par le sujet." class="input_shadow form-control" id="nb_repet_'+nb_exo+'" placeholder="répétitions" /></fieldset></div><div class="tab_pause"><fieldset class="form-group"><input type="text" title="Correspond à la pause après l exercice concerné et entre les répétitions. La pause est en secondes." class="input_shadow form-control" id="pauseexo_'+nb_exo+'" placeholder="pause" /></fieldset></div></td><!--td class="pull-right"><fieldset class="form-group"><button title="Supprimer la ligne" class="btn btn-danger supp_ligne"><span class="glyphicon glyphicon-trash" ></span></button></fieldset></td--></tr>');
 			$('#exo_'+nb_exo).autocomplete({
 				source: exoTags
 			});
@@ -768,6 +810,14 @@ include "includes/header.php";
 			nb_voice = nb_voice+1;
 			$('#add_voice_'+moveId).append('<div class="tab_voix_vide">Voix '+nb_voice+'</div><div class="tab_voix_time"><fieldset class="form-group"><input type="text" title="Temps correspondant au début du commentaire oral." class="form-control voice_time" id="voice_time_'+nb_voice+'" placeholder="temps" /></fieldset></div><div class="tab_voix_com"><fieldset class="form-group"><input type="text" title="Texte du commentaire oral que dira le robot." class="form-control voice_texte" id="voice_texte_'+nb_voice+'" placeholder="commentaire oral" /></fieldset></div> <div class="tab_voix_test"><input type="button" class="btn btn-info" id="btn-test-tts" onclick="testTTS($(\'#voice_texte_'+nb_voice+'\').val());"/></div>');
 		};
+
+
+		//get instructions
+		$.get('./core/functions/moves.php?action=getInstructions').done(function(data){
+			$.each(data, function(i,o){
+				$('#list_instructions div').append('<label class="form-check-label instructions" title="Pensez à '+o["voice"]+'"><input class="form-check-input" type="checkbox" name="instructions" value="'+o["title"]+'">'+o["description"]+'</label>');
+			});
+		});
 	</script>
 
 	<script src="JS/functions.js"></script>
