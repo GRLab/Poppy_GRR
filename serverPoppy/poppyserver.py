@@ -26,6 +26,7 @@ with open('./CONFIG.json', 'r') as f:
 	wrists = True if config["wrists"]["value"] == "True" else False
 	creature = config["creature"]["value"]
 	seuil_bien = config["seuil_bien"]["value"]
+	seuil_nul = config["seuil_nul"]["value"]
 	nb_demo = config["nb_demo"]["value"]
 
 #arret http server
@@ -780,7 +781,7 @@ while not moteursInitialise:
 	logger.info("essai initialisation moteur "+str(moteursInitEssai))
 	try:
 		time.sleep(2)
-		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, nb_demo)
+		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, nb_demo)
 		moteursInitialise = True
 		logger.info("----- moteurs initialises -----")
 	except:

@@ -851,7 +851,7 @@ class PoppyGRR:
 		contains all the functions managing the robot and the motors
 	"""
 
-	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, nb_demo):
+	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, nb_demo):
 		#Creation de l'objet robot
 		self.creature = creature
 		if creature == "humanoid":
@@ -865,10 +865,12 @@ class PoppyGRR:
 		self.nb_demo = nb_demo
 		#feedbacks
 		self.SEUIL_BIEN = seuil_bien
+		self.SEUIL_NUL = seuil_nul
 		self.NUM_PHASE = 0
 		self.givingFeedback=False
 		self.previousFeedback=['','']
 		self.REPLAY=False
+		self.BAD=False
 		#variables moteurs
 		self.idmoteur=[m.id for m in self.Poppyboid.motors]	#variable ID
 		self.nbmoteurs=len(self.idmoteur)				#nombre de moteurs
@@ -1890,9 +1892,9 @@ class PoppyGRR:
 			self.MOVING_ENABLE = False
 
 	def sayDescription(self, num_phase, descriptionFile):
-		if self.kinectName!='none':
-			self.voice.play("./sound/sounds/feedbacks/segment"+str(num_phase)+".mp3")
-			self.waitVoice()
+		#if self.kinectName!='none':
+		#	self.voice.play("./sound/sounds/feedbacks/segment"+str(num_phase)+".mp3")
+		#	self.waitVoice()
 		self.voice.play("./sound/sounds/descriptions/"+descriptionFile)
 
 	def sayEndKinectObserv(self):
@@ -1961,7 +1963,7 @@ class PoppyGRR:
 		#playing normal
 		if self.kinectName!='none':
 			kinect_ok="nthg"
-			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect if patient moving while poppy is moving
+			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
 			if kinect_ok==200:
 				self.voice.play('./sound/sounds/kinect_error.mp3')
 				self.waitVoice()
@@ -2088,7 +2090,10 @@ class PoppyGRR:
 							sayInstr=0
 					if self.REPLAY:
 						#bad reproduction, do it again!
-						self.voice.play("./sound/sounds/feedbacks/replay.mp3")
+						if self.BAD:
+							self.voice.play("./sound/sounds/feedbacks/replay_bad.mp3")
+						else:
+							self.voice.play("./sound/sounds/feedbacks/replay.mp3")
 						self.waitVoice()
 						self.NUM_PHASE=0
 						self.EXO_ENABLE = True
@@ -2658,11 +2663,16 @@ class PoppyGRR:
 		return True
 #TODO: tester les feedbacks
 	def kinectFeedback(self, kiFeedback):
+		self.BAD=False
 		self.waitVoice()
 		self.givingFeedback=True
 		time.sleep(1)
 		if kiFeedback['score']>self.SEUIL_BIEN:
 			self.voice.play('./sound/sounds/feedbacks/bien.mp3')
+		#TODO: test et modifier si trop mauvais avec new version
+		elif kiFeedback['score']<self.SEUIL_NUL:
+			self.REPLAY=True
+			self.BAD=True
 		else:
 			if kiFeedback['error']==self.previousFeedback[0] and kiFeedback['error']==self.previousFeedback[1]:
 				self.REPLAY=True

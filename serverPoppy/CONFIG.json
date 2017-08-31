@@ -11,6 +11,10 @@
 		"value" : 3,
 		"descritpion" : "number of demonstrations by the robot before repetitions (useful if kinect exists)"
 	},
+	"seuil_nul" : { 
+		"value" : 30,
+		"descritpion" : "low threshold for the kinect feedback (useful if kinect exists)"
+	},
 	"seuil_bien" : { 
 		"value" : 80,
 		"descritpion" : "high threshold for the kinect feedback (useful if kinect exists)"
@@ -28,7 +32,7 @@
 		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
 	},
 	"Volume" : {
-		"value" : 1,
+		"value" : 0.5,
 		"description" : "volume of the Poppy voice [0-1]"
 	},
 	"internet" : {
@@ -38,9 +42,5 @@
 	"creature" : {
 		"value" : "humanoid",
 		"description" : "'humanoid' or 'torso'"
-	},
-	"repetitions" : {
-		"value" : "False",
-		"description" : "robot shows exercise while the user is moving or not (useful if kinect exists - not functional)"
 	}
 }
