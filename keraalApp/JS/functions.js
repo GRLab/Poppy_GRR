@@ -509,108 +509,110 @@ function Go(exoName) {
 	initSound();
 	var exo= document.getElementById('Go'+exoName).className;
 	if(exo=="play"){
-		StopExo();
-		$.ajax({
-			url: 'http://'+poppyName+':4567/?Submit=go&exoName='+exoName,
-			type:'POST',
-			dataType:'json',
-			statusCode: {
-				202: function(data) {		//mouvement
-					console.log(data.responseText);
-					partComp=true;
-					$('#compliant').bootstrapToggle("on");
-					if(document.getElementById('parts'+exoName).innerHTML.includes("T")){
+		if(confirm('Avez-vous pensé à mettre le robot en position initiale "chaise" ? Si oui, cliquez sur "OK".')==true){
+			StopExo();
+			$.ajax({
+				url: 'http://'+poppyName+':4567/?Submit=go&exoName='+exoName,
+				type:'POST',
+				dataType:'json',
+				statusCode: {
+					202: function(data) {		//mouvement
+						console.log(data.responseText);
 						partComp=true;
-						$('#compliantT').bootstrapToggle("on");
-                        partComp=false;
-					}
-					if(document.getElementById('parts'+exoName).innerHTML.includes("BrasG")){
-						partComp=true;
-						$('#compliantBG').bootstrapToggle("on");
-                        partComp=false;
-					}
-					if(document.getElementById('parts'+exoName).innerHTML.includes("BrasD")){
-						partComp=true;
-						$('#compliantBD').bootstrapToggle("on");
-                        partComp=false;
-					}
-					if(document.getElementById('parts'+exoName).innerHTML.includes("Col")){
-						partComp=true;
-						$('#compliantCol').bootstrapToggle("on");
-                        partComp=false;
-					}
-					if(document.getElementById('parts'+exoName).innerHTML.includes("JambeG")){
-						partComp=true;
-						$('#compliantJG').bootstrapToggle("on");
-                        partComp=false;
-					}
-					if(document.getElementById('parts'+exoName).innerHTML.includes("JambeD")){
-						partComp=true;
-						$('#compliantJD').bootstrapToggle("on");
-                        partComp=false;
-					}
-					document.getElementById('Go'+exoName).className = "pause";
-					activeMove = exoName;
-					fin_mov=0;
-					verifFinMov();          //A DECOMMENTER ! pour detecter fin mov. 
-				},
-				201: function(data) {		//exo ou seance
-					jsondata=data.responseText.replace("u'","\"");
-					while(jsondata.search("u'")!=-1){
-						jsondata=jsondata.replace("u'","\"");
-					}
-					while(jsondata.search("'")!=-1){
-						jsondata=jsondata.replace("'","\"");
-					}
-					jsondata=$.parseJSON(jsondata)
-					console.log(jsondata);
-					
-					$('#exoConfig').show();
-					$('#progressbar').progressbar('value', 0);
-					$("#progressbarlabel").html("0 %");
-					$("#progressbarlabel").nextAll().remove();
-					
-					$('#exoConfig').append('<div id="nom_seance_suivi">' + exoName + '</div>' );
-					for (i=1; i<=jsondata['nb_fichiers']; i++){
-						if (jsondata[i]['nb_fichiers'] >0){
-							if('repetition' in jsondata[i]){
-								nb_repet=jsondata[i]['repetition'];
+						$('#compliant').bootstrapToggle("on");
+						if(document.getElementById('parts'+exoName).innerHTML.includes("T")){
+							partComp=true;
+							$('#compliantT').bootstrapToggle("on");
+	                        partComp=false;
+						}
+						if(document.getElementById('parts'+exoName).innerHTML.includes("BrasG")){
+							partComp=true;
+							$('#compliantBG').bootstrapToggle("on");
+	                        partComp=false;
+						}
+						if(document.getElementById('parts'+exoName).innerHTML.includes("BrasD")){
+							partComp=true;
+							$('#compliantBD').bootstrapToggle("on");
+	                        partComp=false;
+						}
+						if(document.getElementById('parts'+exoName).innerHTML.includes("Col")){
+							partComp=true;
+							$('#compliantCol').bootstrapToggle("on");
+	                        partComp=false;
+						}
+						if(document.getElementById('parts'+exoName).innerHTML.includes("JambeG")){
+							partComp=true;
+							$('#compliantJG').bootstrapToggle("on");
+	                        partComp=false;
+						}
+						if(document.getElementById('parts'+exoName).innerHTML.includes("JambeD")){
+							partComp=true;
+							$('#compliantJD').bootstrapToggle("on");
+	                        partComp=false;
+						}
+						document.getElementById('Go'+exoName).className = "pause";
+						activeMove = exoName;
+						fin_mov=0;
+						verifFinMov();          //A DECOMMENTER ! pour detecter fin mov. 
+					},
+					201: function(data) {		//exo ou seance
+						jsondata=data.responseText.replace("u'","\"");
+						while(jsondata.search("u'")!=-1){
+							jsondata=jsondata.replace("u'","\"");
+						}
+						while(jsondata.search("'")!=-1){
+							jsondata=jsondata.replace("'","\"");
+						}
+						jsondata=$.parseJSON(jsondata)
+						console.log(jsondata);
+						
+						$('#exoConfig').show();
+						$('#progressbar').progressbar('value', 0);
+						$("#progressbarlabel").html("0 %");
+						$("#progressbarlabel").nextAll().remove();
+						
+						$('#exoConfig').append('<div id="nom_seance_suivi">' + exoName + '</div>' );
+						for (i=1; i<=jsondata['nb_fichiers']; i++){
+							if (jsondata[i]['nb_fichiers'] >0){
+								if('repetition' in jsondata[i]){
+									nb_repet=jsondata[i]['repetition'];
+								}
+								else{
+									nb_repet="1";
+								}
+								$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
+								var texte = "";
+								texte+= '<div class="containerMvts">';
+								for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
+									texte+='<div class="exo nom_mvt" id="exo_'+i+'_'+j+'">' + jsondata[i][j]+'</div>';
+								}
+								texte+='</div>';
+								$('#exoConfig').append(texte);	
 							}
 							else{
-								nb_repet="1";
+								$('#exoConfig').append('<div class="exo nom_mvt" id="mvt_'+i+'">' + jsondata[i]+"</div>");
 							}
-							$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
-							var texte = "";
-							texte+= '<div class="containerMvts">';
-							for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
-								texte+='<div class="exo nom_mvt" id="exo_'+i+'_'+j+'">' + jsondata[i][j]+'</div>';
-							}
-							texte+='</div>';
-							$('#exoConfig').append(texte);	
 						}
-						else{
-							$('#exoConfig').append('<div class="exo nom_mvt" id="mvt_'+i+'">' + jsondata[i]+"</div>");
-						}
+						$('.nom_exo').on ('click', clickFleche);
+						
+						partComp=true;
+						$('#compliant').bootstrapToggle("on");
+						
+						document.getElementById('Go'+exoName).className = "pause";
+						fin_exo=0;
+						activeMove = exoName;
+						verifFinExo();
+					},
+					200:function(data){
+						console.log(data.responseText);
+					},
+					0:function(data){		//error, not connected
+						console.log('error : Poppy is not connected');
+						document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 					}
-					$('.nom_exo').on ('click', clickFleche);
-					
-					partComp=true;
-					$('#compliant').bootstrapToggle("on");
-					
-					document.getElementById('Go'+exoName).className = "pause";
-					fin_exo=0;
-					activeMove = exoName;
-					verifFinExo();
-				},
-				200:function(data){
-					console.log(data.responseText);
-				},
-				0:function(data){		//error, not connected
-					console.log('error : Poppy is not connected');
-					document.getElementById('poppyConnected').src="includes/images/notconnected.png";
 				}
-			}
-		})
+			})
+		}
 	} 
 	else if (exo=='pause'){
 		$.ajax({
