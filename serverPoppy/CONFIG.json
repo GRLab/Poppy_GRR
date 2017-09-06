@@ -36,7 +36,7 @@
 		"description" : "volume of the Poppy voice [0-1]"
 	},
 	"internet" : {
-		"value" : "True",
+		"value" : "False",
 		"description" : "True if internet connection exists, False if no"
 	},
 	"creature" : {
