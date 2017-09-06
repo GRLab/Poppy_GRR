@@ -2706,7 +2706,7 @@ class PoppyGRR:
 
 	def waitVoice(self):
 		while pygame.mixer.music.get_busy():
-			time.sleep(0.05)
+			time.sleep(0.02)
 
 	def say(self, sentence):
 		sentence = json.loads(sentence)
@@ -2888,7 +2888,10 @@ class PoppyGRR:
 					self.Poppyboid.l_elbow_y.goto_position(value, 0.5, wait=False)
 
 	def stopAll(self):
-		self.waitVoice()
+		try:
+			self.waitVoice()
+		except:
+			pass
 		if self.face!='none':
 			self.stopFaceManager()
 			self.face.stop()
