@@ -372,7 +372,8 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 	    logger.info(IPclient+" RESPONSE - "+text)
 
 	if 'Submit' in params.keys() and "go" == params['Submit']:
-	    time.sleep(0.8) 	#le temps que le stop se fasse
+	    text = poppy.waitVoice()
+	    time.sleep(1) 	#le temps que le stop se fasse
 	    exoName=""
 	    if params['exoName']!="":
 			exoName = params['exoName']

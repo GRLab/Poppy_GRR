@@ -1,7 +1,7 @@
 {
     "nb_fichiers": 6, 
     "fichier2": {
-        "pause": 4, 
+        "pause": 6, 
         "vitesse": 6, 
         "namefile": "rotationTroncGSym"
     }, 
@@ -21,7 +21,7 @@
         "namefile": "ecarteBrasRev"
     }, 
     "fichier4": {
-        "pause": 5, 
+        "pause": 6, 
         "vitesse": 6, 
         "namefile": "rotationTroncG"
     }, 
@@ -31,15 +31,15 @@
         "namefile": "rotationTroncGRev"
     }, 
     "type": "exo", 
-    "nb_temps": 128,
+    "nb_temps": 130,
 	"description": {
 		"4": "ecarteBras.mp3",
 		"15": "inspire.mp3",
 		"19": "rotationTroncG.mp3",
-		"47": "derotationTronc.mp3",
-		"65": "rotationTroncD.mp3",
-		"91": "rotationTroncFin.mp3",
-		"115": "rotationTroncFin2.mp3"
+		"49": "derotationTronc.mp3",
+		"67": "rotationTroncD.mp3",
+		"95": "rotationTroncFin.mp3",
+		"118": "rotationTroncFin2.mp3"
 	},
 	"instructions":["hanches_fixes","dos_droit","fesses_plat","pieds_plat","respiration"]
 }

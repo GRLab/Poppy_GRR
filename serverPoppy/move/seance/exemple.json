@@ -1,23 +1,23 @@
 {
     "nb_fichiers": 3, 
     "fichier2": {
-        "pause": 1, 
-        "repetition": 3, 
-        "vitesse": 5, 
-        "namefile": "aaatest"
-    }, 
-    "fichier3": {
-        "pause": 0, 
+        "pause": 2, 
         "repetition": 2, 
         "vitesse": 5, 
-        "namefile": "aaatest"
+        "namefile": "rotationTroncKine"
+    }, 
+    "fichier3": {
+        "pause": 2, 
+        "repetition": 2, 
+        "vitesse": 5, 
+        "namefile": "cacheTeteKine"
     }, 
     "fichier1": {
         "pause": 2, 
-        "repetition": 1, 
+        "repetition": 2, 
         "vitesse": 5, 
-        "namefile": "aaatest"
+        "namefile": "etirementLaterauxKine"
     }, 
     "type": "seance", 
-    "nb_temps": 150
+    "nb_temps": 440
 }

@@ -1,26 +1,13 @@
 {
     "list_seance": {
-        "testons": [
-            "tete", 
-            "bras_gauche", 
-            "bras_droit", 
-            "colonne"
-        ], 
-        "aaseance": [
-            "bras_droit"
-        ], 
-        "instructSeance": [
-            "bras_gauche", 
-            "bras_droit"
-        ], 
-        "aseance": [
+        "exemple": [
             "bras_gauche", 
             "colonne", 
             "bras_droit", 
             "tete"
         ]
     }, 
-    "nb_seance": 4, 
+    "nb_seance": 1, 
     "nb_mov": 113, 
     "list_mov": {
         "elastiqueB": [
@@ -137,6 +124,12 @@
         "cacheTeteBras": [
             "bras_gauche", 
             "bras_droit"
+        ], 
+        "rotationTroncGRevSym": [
+            "tete", 
+            "bras_droit", 
+            "bras_gauche", 
+            "colonne"
         ], 
         "ecarteBras": [
             "bras_gauche", 
@@ -285,9 +278,6 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "kineCoucouGauche": [
-            "bras_gauche"
-        ], 
         "danseAssis": [
             "bras_gauche", 
             "bras_droit"
@@ -358,11 +348,8 @@
         "bonjour": [
             "bras_gauche"
         ], 
-        "rotationTroncGRevSym": [
-            "tete", 
-            "bras_droit", 
-            "bras_gauche", 
-            "colonne"
+        "kineCoucouGauche": [
+            "bras_gauche"
         ], 
         "s3exo2rotgSym": [
             "bras_droit", 

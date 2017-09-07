@@ -6,12 +6,12 @@
         "namefile": "etirementLateralGRev"
     }, 
     "fichier3": {
-        "pause": 6, 
+        "pause": 5, 
         "vitesse": 5, 
         "namefile": "etirementLateralGSym"
     }, 
     "fichier1": {
-        "pause": 7,
+        "pause": 5,
         "vitesse": 5, 
         "namefile": "etirementLateralG"
     }, 
@@ -21,14 +21,14 @@
         "namefile": "etirementLateralGRevSym"
     }, 
     "type": "exo", 
-    "nb_temps": 160,
+    "nb_temps": 157,
 	"description":{
 		"0": "leveBrasDroit.mp3",
-		"22": "etirementLateralD.mp3",
-		"52": "redresseEtBaisseBras.mp3",
-		"80": "leveBrasGauche.mp3",
-		"101": "etirementLateralG.mp3",
-		"139": "redresseEtBaisseBras.mp3"
+		"21": "etirementLateralD.mp3",
+		"49": "redresseEtBaisseBras.mp3",
+		"78": "leveBrasGauche.mp3",
+		"98": "etirementLateralG.mp3",
+		"127": "redresseEtBaisseBras.mp3"
 	},
-	"instructions":["hanches_fixes","fesses_plat","pieds_plat","respiration"]
+	"instructions":["hanches_fixes","fesses_plat","pieds_plat","respiration","tendre_bras_bas"]
 }

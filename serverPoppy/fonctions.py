@@ -1974,8 +1974,12 @@ class PoppyGRR:
 				self.voice.play("./sound/sounds/intro"+str(randint(1,2))+".mp3")
 				self.waitVoice()
 				time.sleep(1.5)
+				if self.EXO_STOPPED:
+					return
 				self.voice.play("./sound/sounds/demoSeance"+str(randint(1,3))+".mp3")
 				self.waitVoice()
+				if self.EXO_STOPPED:
+					return
 			elif 'instructions' in moveFile.keys():
 				self.voice.play("./sound/sounds/instructions/intro.mp3")
 				self.waitVoice()
@@ -1991,6 +1995,8 @@ class PoppyGRR:
 						return
 		while self.PLAYING_SEANCE or self.PLAYING_EXO or self.PLAYING_MOVE or self.EXO_SLEEP:
 			time.sleep(0.5)	
+		if self.EXO_STOPPED:
+			return
 		goExoPrimitive(self,moveName, moveType).start()
 		time.sleep(1)
 		self.logger.info("playing the exo/seance")
@@ -2030,6 +2036,8 @@ class PoppyGRR:
 						self.voice.play("./sound/sounds/instructions/"+instr+".mp3")
 						self.waitVoice()
 						time.sleep(0.1)
+						if self.EXO_STOPPED:
+							return
 				time.sleep(0.3)
 				#exo beginning
 				if self.nb_demo==1:
@@ -2037,6 +2045,8 @@ class PoppyGRR:
 				elif self.nb_demo>1:
 					self.voice.play("./sound/sounds/repet/demoInitSeveral.mp3")
 				self.waitVoice()
+				if self.EXO_STOPPED:
+					return
 				self.logger.info("----- going to play move "+str(i+1))
 				for nb_repet in range(self.nb_demo):
 					while self.EXO_SLEEP and not self.EXO_STOPPED:
@@ -2083,6 +2093,8 @@ class PoppyGRR:
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
 						#possible reminder of instruction during repetition
+						if self.EXO_STOPPED:
+							return
 						if sayInstr!=0:
 							sayInstr=randint(1,30)
 						if 'instructions' in exoFile.keys() and not self.givingFeedback and sayInstr==1:
