@@ -2089,6 +2089,11 @@ class PoppyGRR:
 						self.waitVoice()
 						self.EXO_TEMPS += moveFile['fichier'+str(i+1)]['temps_exo']*moveFile['fichier'+str(i+1)]['repetition']
 						break
+					elif kinect_ok==404:
+						self.voice.play("./sound/sounds/no_kinect.mp3")
+						self.waitVoice()
+						self.StopExo()
+						return
 					sayInstr=2
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
@@ -2141,22 +2146,29 @@ class PoppyGRR:
 		if self.kinectName != "none" and exoType == 'exo':
 			self.logger.info("give exoname : "+exoName+" to "+self.kinectName)
 			print "give exoname : "+exoName+" to "+self.kinectName
-			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=give+exoname&exoname="+exoName)
-			if kinect.status_code==200:
-				print "attention, la kinect ne connait pas l'exercice !"
-				self.logger.warning("kinect does not know the exercise !")
-			elif kinect.status_code==201:
-				print "kinect ok pour nom exo"
-				self.logger.info("kinect ok pour nom exo")
-				if typeRepet=='first':
-					self.voice.play('./sound/sounds/atoi.mp3')
-				elif typeRepet=='end':
-					self.voice.play('./sound/sounds/repet/repetEnd.mp3')
-				elif typeRepet=='preEnd':
-					self.voice.play('./sound/sounds/repet/repet'+str(randint(1,7))+'.mp3')
-				else:
-					self.voice.play('./sound/sounds/repet/repet'+str(randint(1,4))+'.mp3')
-				self.waitVoice()
+			try:
+				kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=give+exoname&exoname="+exoName)
+				if kinect.status_code==200:
+					print "attention, la kinect ne connait pas l'exercice !"
+					self.logger.warning("kinect does not know the exercise !")
+				elif kinect.status_code==201:
+					print "kinect ok pour nom exo"
+					self.logger.info("kinect ok pour nom exo")
+					if typeRepet=='first':
+						self.voice.play('./sound/sounds/atoi.mp3')
+					elif typeRepet=='end':
+						self.voice.play('./sound/sounds/repet/repetEnd.mp3')
+					elif typeRepet=='preEnd':
+						self.voice.play('./sound/sounds/repet/repet'+str(randint(1,7))+'.mp3')
+					else:
+						self.voice.play('./sound/sounds/repet/repet'+str(randint(1,4))+'.mp3')
+					self.waitVoice()
+			except requests.ConnectionError as e:
+				self.logger.warning("error when requests give+exoname "+str(e))
+				return 404
+			except requests.RequestException as e:
+				self.logger.warning("error when requests give+exoname "+str(e))
+				return 404
 			return kinect.status_code
 		return "not used"
 
