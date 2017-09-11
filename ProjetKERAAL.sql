@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 08, 2017 at 11:48 AM
+-- Generation Time: Sep 11, 2017 at 09:20 AM
 -- Server version: 5.5.55-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.21
 
@@ -43,8 +43,7 @@ INSERT INTO `instructions` (`id`, `title`, `description`, `voice`) VALUES
 (2, 'fesses_plat', 'Fesses à plat', 'ne pas soulever vos fesses de la chaise'),
 (3, 'hanches_fixes', 'Hanches fixes', 'ne pas bouger les hanches pendant tout l''exercice'),
 (4, 'pieds_plat', 'Pieds à plat', 'garder vos pieds bien à plat sur le sol'),
-(5, 'respiration', 'Respiration', 'bien suivre les consignes de respiration de l''exercice et à souffler avec le ventre.'),
-(6, 'tendre_bras_bas', 'bras tendu en bas', 'bien tendre le bras vers le bas quand je vous le dirai.');
+(5, 'respiration', 'Respiration', 'bien suivre les consignes de respiration de l''exercice et à souffler avec le ventre.');
 
 -- --------------------------------------------------------
 
