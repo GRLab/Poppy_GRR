@@ -107,7 +107,7 @@ include "includes/header.php";
 		<input type="button" value="volume" id="volume" onclick="setRobotVolume()" />
 		<input type="button" value="faceState" id="faceStateBtn"  data-toggle="modal" data-target="#modal_setFaceState" />
 		<input type="button" value="EyesDirection" id="EyesDirectionBtn" data-toggle="modal" data-target="#modal_setEyesDirection" />
-		<input type="button" value="Eteindre Poppy" id="stopPoppy" onclick="stopPoppy()" />
+		<input type="button" value="Arrêter l'application" id="stopPoppy" onclick="stopPoppy()" />
 		<br><br>
 	</div>
 </div>
