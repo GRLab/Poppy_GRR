@@ -766,7 +766,7 @@ logger.info('initializing poppy server')
 #initialisation de l ecran
 time.sleep(2)
 if screenOn:
-	face = Face(datapath="/home/poppy/poppy_dev/serverPoppy/eyes/", bgcolor=[180,180,225], fullscreen=fullScreen)
+	face = Face(datapath="./eyes/", bgcolor=[180,180,225], fullscreen=fullScreen)
 	print "ecran initialise"
 else:
 	face = 'none'

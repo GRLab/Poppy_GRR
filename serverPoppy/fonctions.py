@@ -1968,11 +1968,6 @@ class PoppyGRR:
 				self.waitVoice()
 				self.StopExo()
 				return
-			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
-			if kinect_ok==200:
-				self.voice.play('./sound/sounds/kinect_error.mp3')
-				self.waitVoice()
-				return
 			if moveType=='seance':
 				self.voice.play("./sound/sounds/bonjour.mp3")
 				self.waitVoice()
@@ -2002,6 +1997,12 @@ class PoppyGRR:
 			time.sleep(0.5)	
 		if self.EXO_STOPPED:
 			return
+		#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
+		if kinect_ok==200:
+			self.voice.play('./sound/sounds/kinect_error.mp3')
+			self.waitVoice()
+			return
+		time.sleep(1)
 		goExoPrimitive(self,moveName, moveType).start()
 		time.sleep(1)
 		self.logger.info("playing the exo/seance")
@@ -2151,6 +2152,8 @@ class PoppyGRR:
 			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=test+kinect")
 			if kinect.status_code==201:
 				return "ok"
+			else:
+				return 404
 		except requests.ConnectionError as e:
 			self.logger.warning("error when test+kinect "+str(e))
 			return 404
