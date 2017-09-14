@@ -1997,12 +1997,6 @@ class PoppyGRR:
 			time.sleep(0.5)	
 		if self.EXO_STOPPED:
 			return
-		goExoPrimitive(self,moveName, moveType).start()
-		time.sleep(1)
-		self.logger.info("playing the exo/seance")
-		while self.PLAYING_SEANCE or self.PLAYING_EXO or self.PLAYING_MOVE or self.EXO_SLEEP:
-			time.sleep(0.5)
-		self.logger.info("first demonstration of the seance done")
 		if self.kinectName!='none':
 			kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
 			if kinect_ok==200:
@@ -2010,6 +2004,12 @@ class PoppyGRR:
 				self.waitVoice()
 				return
 			time.sleep(1)
+		goExoPrimitive(self,moveName, moveType).start()
+		time.sleep(1)
+		self.logger.info("playing the exo/seance")
+		while self.PLAYING_SEANCE or self.PLAYING_EXO or self.PLAYING_MOVE or self.EXO_SLEEP:
+			time.sleep(0.5)
+		self.logger.info("first demonstration of the seance done")
 		if self.EXO_STOPPED:
 			return
 		#loop for each exo if seance
