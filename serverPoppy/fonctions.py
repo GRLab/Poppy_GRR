@@ -675,7 +675,7 @@ class goExoPrimitive(pypot.primitive.Primitive):
 					self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
 				elif self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO>=self.PoppyGRR.NUM_EXO_MAX:
 					self.PoppyGRR.PLAYING_SEANCE = False
-			elif self.PoppyGRR.NUM_EXO!=0:
+			elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
 				self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
 			time.sleep(2)
 			self.PoppyGRR.PLAYING_EXO = False
