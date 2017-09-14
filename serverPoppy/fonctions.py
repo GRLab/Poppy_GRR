@@ -2153,8 +2153,6 @@ class PoppyGRR:
 			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=test+kinect")
 			if kinect.status_code==201:
 				return "ok"
-			else:
-				return 404
 		except requests.ConnectionError as e:
 			self.logger.warning("error when test+kinect "+str(e))
 			return 404
@@ -2714,10 +2712,15 @@ class PoppyGRR:
 		time.sleep(1)
 		if kiFeedback['score']>self.SEUIL_BIEN:
 			self.voice.play('./sound/sounds/feedbacks/bien.mp3')
+			self.waitVoice()
+			self.givingFeedback=False
+			self.waitFeedback=False
 		#TODO: test et modifier si trop mauvais avec new version
 		elif kiFeedback['score']<self.SEUIL_NUL:
 			self.REPLAY=True
 			self.BAD=True
+			self.givingFeedback=False
+			self.waitFeedback=False
 		else:
 			if kiFeedback['error']==self.previousFeedback[0] and kiFeedback['error']==self.previousFeedback[1]:
 				self.REPLAY=True
