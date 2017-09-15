@@ -2866,9 +2866,9 @@ class PoppyGRR:
 			if not self.PLAYING_MOVE:
 				self.EyesDirection = self.RestEyesDirection
 			#eyes state
-			if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
-				self.face.update("forcing", self.EyesDirection)
-			elif "stop" in self.poppyPart_alert.values():
+			#if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
+			#	self.face.update("forcing", self.EyesDirection)
+			if "stop" in self.poppyPart_alert.values():
 				self.face.update("dead", self.EyesDirection)
 			else:
 				if self.poppyCompliant() and self.FaceState=='happy':
