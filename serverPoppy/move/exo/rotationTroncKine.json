@@ -31,7 +31,7 @@
         "namefile": "rotationTroncGRev"
     }, 
     "type": "exo", 
-    "nb_temps": 130,
+    "nb_temps": 131,
 	"description": {
 		"4": "ecarteBras.mp3",
 		"15": "inspire.mp3",

@@ -672,11 +672,12 @@ class goExoPrimitive(pypot.primitive.Primitive):
 			if self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
 				if self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO<self.PoppyGRR.NUM_EXO_MAX:
 					rand = randint(1,3)
-					self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
+					#TODO: uncomment #self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
 				elif self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO>=self.PoppyGRR.NUM_EXO_MAX:
 					self.PoppyGRR.PLAYING_SEANCE = False
-			elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
-				self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
+			#TODO : uncomment
+			#elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
+			#	self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
 			time.sleep(2)
 			self.PoppyGRR.PLAYING_EXO = False
 
@@ -918,12 +919,17 @@ class PoppyGRR:
 		self.waitFeedback = False				# attente que les feedbacks soient donnes
 
 		self.t0 = time.time()
-		if self.face!='none':
-			self.startFaceManager()					# demarre thread face managing
-		#ser=serial.Serial('/dev/ttyACM1', 9600)		#ouverture du port seriel pour mesure I
 		#configuration logs
 		self.logger = logging.getLogger('PoppyGRR_log')
 		time.sleep(1)
+		#TODO: carsat, uncomment 2 lines and delete 1st line
+		try:
+			self.face.stopAnimation()
+		except:
+			self.logger.info("no screen mode")
+		#if self.face!='none':
+		#	self.startFaceManager()					# demarre thread face managing
+		#ser=serial.Serial('/dev/ttyACM1', 9600)		#ouverture du port seriel pour mesure I
 		#primitives
 		self.Poppyboid.attach_primitive(scanMotorsLoop(self), 'scan')
 		self.Poppyboid.attach_primitive(positionPrimitive(self), 'scanPosition')
@@ -1887,8 +1893,8 @@ class PoppyGRR:
 				self.EXO_TEMPS += 1
 		self.PLAYING_MOVE = False
 		if endTime == moveFile["nb_temps"]:
-			print "MOVING_ENABLE = False "+moveName
-			self.logger.warning("MOVING_ENABLE = False "+moveName)
+			#print "MOVING_ENABLE = False "+moveName
+			#self.logger.warning("MOVING_ENABLE = False "+moveName)
 			self.MOVING_ENABLE = False
 
 	def sayDescription(self, num_phase, descriptionFile):
@@ -1961,8 +1967,8 @@ class PoppyGRR:
 
 	def GoExoSuite(self, moveType, moveName, moveFile):
 		#playing normal
+		kinect_ok="nthg"
 		if self.kinectName!='none':
-			kinect_ok="nthg"
 			if self.testKinect()==404:
 				self.voice.play("./sound/sounds/no_kinect.mp3")
 				self.waitVoice()
@@ -1998,7 +2004,8 @@ class PoppyGRR:
 		if self.EXO_STOPPED:
 			return
 		if self.kinectName!='none':
-			kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
+			kinect_ok='ok'
+			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
 			if kinect_ok==200:
 				self.voice.play('./sound/sounds/kinect_error.mp3')
 				self.waitVoice()
@@ -2042,7 +2049,7 @@ class PoppyGRR:
 						print "instruction : "+instr
 						self.voice.play("./sound/sounds/instructions/"+instr+".mp3")
 						self.waitVoice()
-						time.sleep(0.1)
+						time.sleep(0.5)
 						if self.EXO_STOPPED:
 							return
 				time.sleep(0.3)
@@ -2060,8 +2067,15 @@ class PoppyGRR:
 						time.sleep(0.5)
 					if self.EXO_STOPPED:
 						return
+					if nb_repet!=0:
+						try:
+							self.voice.play("./sound/sounds/repet/demoInit"+str(nb_repet+1)+".mp3")
+						except:
+							self.voice.play("./sound/sounds/repet/demoInitX.mp3")
+						self.waitVoice()
 					self.logger.info("allez, c'est parti pour la demo "+str(nb_repet+1))
 					self.NUM_PHASE=0
+					time.sleep(0.7)
 					self.EXO_ENABLE = True
 					goExoPrimitive(self,exoName, 'exo', moveFile['fichier'+str(i+1)]['pause']).start()
 					time.sleep(3)
@@ -2078,6 +2092,7 @@ class PoppyGRR:
 				self.NUM_MOV=0
 				self.logger.info("A toi de bouger !!!")
 				typeRepet = 'first'
+				nb_rand=5
 				for nb_repet in range(moveFile['fichier'+str(i+1)]['repetition']):
 					if nb_repet==int(moveFile['fichier'+str(i+1)]['repetition']-1) and nb_repet>=2:
 						typeRepet='end'
@@ -2101,17 +2116,8 @@ class PoppyGRR:
 						self.waitVoice()
 						self.StopExo()
 						return
-					sayInstr=2
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
-						#possible reminder of instruction during repetition
-						if self.EXO_STOPPED:
-							return
-						if sayInstr!=0:
-							sayInstr=randint(1,30)
-						if 'instructions' in exoFile.keys() and not self.givingFeedback and sayInstr==1:
-							self.sayRandInstr(exoFile['instructions'])
-							sayInstr=0
 					if self.REPLAY:
 						#bad reproduction, do it again!
 						if self.BAD:
@@ -2132,10 +2138,14 @@ class PoppyGRR:
 						self.NUM_MOV=0
 						self.EXO_TEMPS -= moveFile['fichier'+str(i+1)]['temps_exo']
 					#possible reminder of instruction between repetitions
-					if sayInstr!=0:
-						sayInstr=randint(1,5)
+					sayInstr=randint(1,nb_rand)
+					if sayInstr==1:
+						nb_rand=5
+					else:
+						nb_rand=nb_rand-1
 					if not self.EXO_STOPPED and sayInstr==1 and 'instructions' in exoFile.keys() and not self.REPLAY:
 						self.sayRandInstr(exoFile['instructions'])
+						time.sleep(1.5)	
 					self.EXO_TEMPS += moveFile['fichier'+str(i+1)]['temps_exo']
 					self.REPLAY=False
 			self.voice.play("./sound/sounds/finSeance.mp3")
@@ -2866,9 +2876,9 @@ class PoppyGRR:
 			if not self.PLAYING_MOVE:
 				self.EyesDirection = self.RestEyesDirection
 			#eyes state
-			#if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
-			#	self.face.update("forcing", self.EyesDirection)
-			if "stop" in self.poppyPart_alert.values():
+			if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
+				self.face.update("forcing", self.EyesDirection)
+			elif "stop" in self.poppyPart_alert.values():
 				self.face.update("dead", self.EyesDirection)
 			else:
 				if self.poppyCompliant() and self.FaceState=='happy':
