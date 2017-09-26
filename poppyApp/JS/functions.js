@@ -6,7 +6,7 @@ var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
 var init = false;
-var poppyName = "poppy.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppypi.local";//"poppygr.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
@@ -1686,6 +1686,29 @@ function setRobotVolume(){
 	console.log(volume)
 	$.ajax({
 		url: 'http://'+poppyName+':4567/?Submit=set+volume&volume='+volume,
+		type:'POST',
+		statusCode: {
+			200: function(data) {
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
+
+function setKinectThreshold(){
+	var thres = prompt('Veuillez renseigner le seuil de la Kinect (0-300)','50');
+	if (thres == null || thres == "") {
+		console.log("erreur valeur")
+		thres=50
+		return;
+	}
+	console.log(thres)
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=set+threshold+kinect&threshold='+thres,
 		type:'POST',
 		statusCode: {
 			200: function(data) {

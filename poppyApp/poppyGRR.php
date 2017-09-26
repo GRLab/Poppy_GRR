@@ -105,6 +105,7 @@ include "includes/header.php";
 		<input type="button" value="Mettre à jour le robot" id="majPoppy" onclick="majPoppy()" />
 		<input type="button" value="Mettre à jour la base" id="majBdD" onclick="majBdD()" />
 		<input type="button" value="volume" id="volume" onclick="setRobotVolume()" />
+		<input type="button" value="seuil kinect" id="kinect_seuil" onclick="setKinectThreshold()" />
 		<input type="button" value="faceState" id="faceStateBtn"  data-toggle="modal" data-target="#modal_setFaceState" />
 		<input type="button" value="EyesDirection" id="EyesDirectionBtn" data-toggle="modal" data-target="#modal_setEyesDirection" />
 		<input type="button" value="Arrêter l'application" id="stopPoppy" onclick="stopPoppy()" />
