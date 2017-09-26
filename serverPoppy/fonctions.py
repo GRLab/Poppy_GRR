@@ -672,12 +672,11 @@ class goExoPrimitive(pypot.primitive.Primitive):
 			if self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
 				if self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO<self.PoppyGRR.NUM_EXO_MAX:
 					rand = randint(1,3)
-					#TODO: uncomment #self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
+					self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
 				elif self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO>=self.PoppyGRR.NUM_EXO_MAX:
 					self.PoppyGRR.PLAYING_SEANCE = False
-			#TODO : uncomment
-			#elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
-			#	self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
+			elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
+				self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
 			time.sleep(2)
 			self.PoppyGRR.PLAYING_EXO = False
 
@@ -922,13 +921,8 @@ class PoppyGRR:
 		#configuration logs
 		self.logger = logging.getLogger('PoppyGRR_log')
 		time.sleep(1)
-		#TODO: carsat, uncomment 2 lines and delete 1st line
-		try:
-			self.face.stopAnimation()
-		except:
-			self.logger.info("no screen mode")
-		#if self.face!='none':
-		#	self.startFaceManager()					# demarre thread face managing
+		if self.face!='none':
+			self.startFaceManager()					# demarre thread face managing
 		#ser=serial.Serial('/dev/ttyACM1', 9600)		#ouverture du port seriel pour mesure I
 		#primitives
 		self.Poppyboid.attach_primitive(scanMotorsLoop(self), 'scan')
@@ -2005,7 +1999,7 @@ class PoppyGRR:
 			return
 		if self.kinectName!='none':
 			kinect_ok='ok'
-			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
+			kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
 			if kinect_ok==200:
 				self.voice.play('./sound/sounds/kinect_error.mp3')
 				self.waitVoice()
