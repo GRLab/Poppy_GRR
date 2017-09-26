@@ -1,26 +1,14 @@
 {
     "list_seance": {
-        "carsat": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit", 
-            "colonne"
-        ], 
         "exemple": [
             "bras_gauche", 
             "colonne", 
             "bras_droit", 
             "tete"
-        ], 
-        "carsatConcerto": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit", 
-            "colonne"
         ]
     }, 
-    "nb_seance": 3, 
-    "nb_mov": 120, 
+    "nb_seance": 1, 
+    "nb_mov": 117, 
     "list_mov": {
         "rotationTroncGSym": [
             "tete", 
@@ -83,10 +71,6 @@
             "bras_droit"
         ], 
         "coucou": [
-            "bras_gauche", 
-            "bras_droit"
-        ], 
-        "fin": [
             "bras_gauche", 
             "bras_droit"
         ], 
@@ -444,11 +428,6 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "intro": [
-            "bras_droit", 
-            "bras_gauche", 
-            "tete"
-        ], 
         "bowSym": [
             "bras_droit", 
             "bras_gauche", 
@@ -480,11 +459,7 @@
         "respi3": [
             "colonne", 
             "tete"
-        ], 
-        "finNoConcerto": [
-            "bras_gauche", 
-            "bras_droit"
-        ], 
+        ],
         "s3exo2rotgSymRev": [
             "bras_droit", 
             "bras_gauche", 
@@ -523,7 +498,7 @@
             "bras_droit"
         ]
     }, 
-    "nb_exo": 33, 
+    "nb_exo": 30, 
     "list_exo": {
         "coucouAssis": [
             "bras_gauche", 
@@ -589,11 +564,7 @@
             "tete", 
             "bras_gauche", 
             "bras_droit"
-        ], 
-        "fin_exo": [
-            "bras_gauche", 
-            "bras_droit"
-        ], 
+        ],
         "etirementLaterauxKine": [
             "bras_gauche", 
             "colonne", 
@@ -632,11 +603,7 @@
             "jambe_droite", 
             "jambe_gauche", 
             "bras_droit"
-        ], 
-        "fin_exo_NC": [
-            "bras_gauche", 
-            "bras_droit"
-        ], 
+        ],
         "demoAssis": [
             "tete", 
             "bras_gauche", 
@@ -647,11 +614,6 @@
             "bras_droit"
         ], 
         "salut2": [
-            "bras_gauche", 
-            "tete", 
-            "bras_droit"
-        ], 
-        "intro_exo": [
             "bras_gauche", 
             "tete", 
             "bras_droit"
