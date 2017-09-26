@@ -36,6 +36,7 @@ class Sound():
 		"""
 		self.frequence = frequence
 		pygame.mixer.quit()
+		time.sleep(0.5)
 		pygame.mixer.init(frequence)
 		pygame.mixer.music.set_volume(self.volume)
 

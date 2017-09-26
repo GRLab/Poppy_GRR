@@ -1,10 +1,13 @@
 {
 	"poppyName" : {
-		"value" : "poppy",
+		"value" : "poppypi",
 		"description" : "name of the poppy robot"
 	},
 	"kinectName" : { 
 		"value" : "none",
+		"value2" : "PC-EQI06687",
+		"valuefa" : "EQI06343",
+		"valueFake" : "192.168.1.101",
 		"descritpion" : "name of the kinect server, 'none' if no kinect"
 	},
 	"nb_demo" : { 
@@ -24,7 +27,7 @@
 		"description" : "articulated wrists : True/False"
 	},
 	"screenOn" : {
-		"value" : "True",
+		"value" : "False",
 		"description" : "activate the screen/eyes : True/False"
 	},
 	"fullScreen" : {
@@ -32,11 +35,11 @@
 		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
 	},
 	"Volume" : {
-		"value" : 0.5,
+		"value" : 0.1,
 		"description" : "volume of the Poppy voice [0-1]"
 	},
 	"internet" : {
-		"value" : "False",
+		"value" : "True",
 		"description" : "True if internet connection exists, False if no"
 	},
 	"creature" : {

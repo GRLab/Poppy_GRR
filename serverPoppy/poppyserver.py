@@ -13,6 +13,7 @@ from threading import Thread
 from eyes.eyes import *
 from sound.sound import Sound
 from fonctions import *
+import alsaaudio
 
 #importation des configurations
 with open('./CONFIG.json', 'r') as f:
@@ -520,6 +521,18 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		logger.info(IPclient+" RESPONSE - "+text)
 		print (text)
 
+	if 'Submit' in params.keys() and "set+threshold+kinect" == params['Submit']:
+		if params['threshold']!="":
+			threshold=params['threshold']
+		logger.info(IPclient+" REQUEST - set threshold "+str(threshold))
+		try:
+			text=poppy.setKinectThreshold(threshold)
+		except:
+			logger.exception("***** setKinectThreshold error *****")
+		self.send_headers()
+		logger.info(IPclient+" RESPONSE - "+str(text))
+		print (text)
+
 	if 'Submit' in params.keys() and "kinect+feedback" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - kinect feedback !")
 	    feedback = self.rfile.read(int(self.headers['Content-Length']))
@@ -771,6 +784,9 @@ if screenOn:
 else:
 	face = 'none'
 #initialisation du son
+m = alsaaudio.Mixer('PCM')
+m.setvolume(100)
+time.sleep(0.5)
 voice = Sound(frequence=29400,volume=Volume)
 voice.play("./sound/sounds/init.mp3")
 #attente avant initialisation, pour demarrage au boot RPi

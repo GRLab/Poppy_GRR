@@ -2105,7 +2105,7 @@ class PoppyGRR:
 					if self.EXO_STOPPED:
 						return
 					self.waitFeedback = True
-					kinect_ok=self.initKinect(exoName, 'exo', typeRepet)
+					kinect_ok=self.initKinect(exoName, 'exo',nb_repet, typeRepet)
 					if kinect_ok==200:
 						self.voice.play('./sound/sounds/kinect_error.mp3')
 						self.waitVoice()
@@ -2116,6 +2116,8 @@ class PoppyGRR:
 						self.waitVoice()
 						self.StopExo()
 						return
+					#TODO: test change freq voice
+					self.voice.setFrequence(self.voice.frequence-1800)
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
 					if self.REPLAY:
@@ -2170,13 +2172,19 @@ class PoppyGRR:
 			self.logger.warning("error when request test+kinect "+str(e))
 			return 404
 
-	def initKinect(self, exoName, exoType, typeRepet='first'):
+	def initKinect(self, exoName, exoType, nb_repet=0, typeRepet='first'):
 		#communication kinect si exo
 		if self.kinectName != "none" and exoType == 'exo':
 			self.logger.info("give exoname : "+exoName+" to "+self.kinectName)
 			print "give exoname : "+exoName+" to "+self.kinectName
 			try:
 				kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=give+exoname&exoname="+exoName)
+				if typeRepet!='first':
+					try:
+						self.voice.play('./sound/sounds/repet/etde'+str(nb_repet)+'.mp3')
+						self.waitVoice()
+					except:
+						self.logger.warning("etde"+str(nb_repet)+".mp3 does not exist")
 				if kinect.status_code==200:
 					print "attention, la kinect ne connait pas l'exercice !"
 					self.logger.warning("kinect does not know the exercise !")
@@ -2759,6 +2767,9 @@ class PoppyGRR:
 		except:
 			pass
 		time.sleep(0.5)
+		#TODO: test change freq voice
+		self.voice.setFrequence(self.voice.frequence+1800)
+		time.sleep(3)
 		self.givingFeedback=False
 		self.waitFeedback=False
 
@@ -2863,6 +2874,29 @@ class PoppyGRR:
 			return "error"
 		self.voice.setVolume(float(volume))
 		self.voice.play("./sound/sounds/fait.mp3")
+		return 'done'
+
+	def setKinectThreshold(self, threshold):
+		if not float(threshold)>=0:
+			return "error"
+		try:	
+			kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=set+threshold&threshold="+str(threshold))
+			if kinect.status_code==200:
+				print "attention, erreur dans la configuration kinect!"
+				self.logger.warning("kinect set threshold error !")
+				self.voice.play("./sound/sounds/kinect_threshold_error.mp3")
+			elif kinect.status_code==201:
+				print "set kinect threshold ok"
+				self.logger.info("set kinect threshold ok")
+				self.voice.play("./sound/sounds/fait.mp3")
+		except requests.ConnectionError as e:
+			self.logger.warning("error when requests set+threshold "+str(e))
+			self.voice.play("./sound/sounds/no_kinect.mp3")
+			return 404
+		except requests.RequestException as e:
+			self.logger.warning("error when requests set+threshold "+str(e))
+			self.voice.play("./sound/sounds/no_kinect.mp3")
+			return 404
 		return 'done'
 
 	def faceManager(self):
