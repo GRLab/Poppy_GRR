@@ -18,6 +18,4 @@
 	<link rel="stylesheet" type="text/css" href="includes/libraries/dataTables_bootstrap_min.css">
 	<script src="includes/libraries/bootstrap-toggle_min.js"></script>
 	<link href="includes/libraries/bootstrap-toggle_min.css" rel="stylesheet">
-	
-	<script type="text/javascript" src="JS/highlighting/jquery.maphilight.min.js"></script>
 </head>

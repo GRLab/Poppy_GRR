@@ -202,11 +202,12 @@ body {
     border-radius:5px;
 }
 #delete{
-	width:35px;
+	width:25px;
 	background-image: url(../includes/images/delete.png);
 	background-repeat: no-repeat;
 	background-position: center;
     border-radius:5px;
+    float: right;
 }
 .play{
 	width:40px;
@@ -382,19 +383,16 @@ aside {
 
 /* Bloc exoConfig */
 #exoConfig{
-	width:342px;
-	margin : auto;
-	height:auto;
-	overflow:auto;
+	width:350px;
 	background-color:white;
 	border-radius : 3px;
 	box-shadow: 1px 1px 1px lightgrey;
 	border: 1px solid lightsteelblue;
 	text-align : center;
-	padding-bottom : 10px;
-	font-size:14px;
 	display:none;
     z-index: 10;    /*au dessus des autres blocs (indice fort)*/
+    float: right;
+    margin-top: 10px;
 }
 #progressbar{
 	height : 10px;
@@ -418,13 +416,12 @@ aside {
 }
 
 .nom_exo{
-	font-size : 20px;
+	font-size : 16px;
 	font-weight : bold;
 	border-bottom: 1px solid #dcdcdc;
 	border-top: 1px solid #dcdcdc;
 	background-color : #f5f5f5;
 	padding : 5px;
-	cursor : pointer;
 }
 
 .nom_mvt{
@@ -576,4 +573,14 @@ area{
     height: 20px;
     color: red;
     cursor:pointer;
+}
+
+.slide{
+    width:100px !important;
+    margin: auto;
+}
+
+.mauto{
+    margin: auto;
+    margin-left: 0;
 }

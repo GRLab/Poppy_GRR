@@ -6,7 +6,7 @@ var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
 var init = false;
-var poppyName = "poppy.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppypi.local";//"poppygr.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
@@ -324,7 +324,6 @@ function CreateExo(type) {
 
 				nb_voice = 0;
 				tabTime = [];
-				majTimeline();
 			},
 			200:function(data){
 				console.log(data);
@@ -395,7 +394,7 @@ function verifFinExo(){
 		$('#exoConfig').hide();   //A mettre en commentaire si on veut garder le visuel apres la seance
 		$('#progressbar').progressbar('value', 100);
 		$("#progressbarlabel").html("TerminÃ© !");
-		document.getElementById('Go'+activeMove).className = "play";
+		//document.getElementById('Go'+activeMove).className = "play";
 		activeMove = "";
 		return;
 	}
@@ -492,18 +491,6 @@ function verifFinMov(){
 	setTimeout("verifFinMov()", 1000);
 }
 
-function clickFleche(){
-	if ($(this).hasClass('active')){
-		  $(this).next().slideToggle();		          
-		  $(this).children().html('&#9656;');    
-		  $(this).removeClass('active');
-	} else {
-		$(this).next().slideToggle();	
-		$(this).children().html('&#9662;');
-		$(this).addClass('active');
-	}  	
-}
-
 function GoRequest(exoName){
 	$.ajax({
 		url: 'http://'+poppyName+':4567/?Submit=go&exoName='+exoName,
@@ -512,38 +499,8 @@ function GoRequest(exoName){
 		statusCode: {
 			202: function(data) {		//mouvement
 				console.log(data.responseText);
-				partComp=true;
 				$('#compliant').bootstrapToggle("on");
-				if(document.getElementById('parts'+exoName).innerHTML.includes("T")){
-					partComp=true;
-					$('#compliantT').bootstrapToggle("on");
-                    partComp=false;
-				}
-				if(document.getElementById('parts'+exoName).innerHTML.includes("BrasG")){
-					partComp=true;
-					$('#compliantBG').bootstrapToggle("on");
-                    partComp=false;
-				}
-				if(document.getElementById('parts'+exoName).innerHTML.includes("BrasD")){
-					partComp=true;
-					$('#compliantBD').bootstrapToggle("on");
-                    partComp=false;
-				}
-				if(document.getElementById('parts'+exoName).innerHTML.includes("Col")){
-					partComp=true;
-					$('#compliantCol').bootstrapToggle("on");
-                    partComp=false;
-				}
-				if(document.getElementById('parts'+exoName).innerHTML.includes("JambeG")){
-					partComp=true;
-					$('#compliantJG').bootstrapToggle("on");
-                    partComp=false;
-				}
-				if(document.getElementById('parts'+exoName).innerHTML.includes("JambeD")){
-					partComp=true;
-					$('#compliantJD').bootstrapToggle("on");
-                    partComp=false;
-				}
+				partComp=true;
 				document.getElementById('Go'+exoName).className = "pause";
 				activeMove = exoName;
 				fin_mov=0;
@@ -574,20 +531,12 @@ function GoRequest(exoName){
 						else{
 							nb_repet="1";
 						}
-						$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
-						var texte = "";
-						texte+= '<div class="containerMvts">';
-						for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
-							texte+='<div class="exo nom_mvt" id="exo_'+i+'_'+j+'">' + jsondata[i][j]+'</div>';
-						}
-						texte+='</div>';
-						$('#exoConfig').append(texte);	
+						$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'">' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
 					}
 					else{
 						$('#exoConfig').append('<div class="exo nom_mvt" id="mvt_'+i+'">' + jsondata[i]+"</div>");
 					}
 				}
-				$('.nom_exo').on ('click', clickFleche);
 				
 				partComp=true;
 				$('#compliant').bootstrapToggle("on");
@@ -1188,8 +1137,8 @@ function AfficheMovelist(playerOnly = "false"){
 				exoTags.push(moveName);
 			}else if (data[key]["id_moveType"]=="3"){
 				texte += "<tr>";
-				texte += "<td>"+data[key]["moveName"]+"</td>";
-				texte += "<td class='player'><input type='button' title='play' onclick='Go(&quot;"+moveName+"&quot;)' id='Go"+moveName+"' class='play' style='color:#00ba00'/> <input type='button' title='stop' onclick='StopExo(&quot;"+moveName+"&quot;)' id='stop"+moveName+"' class='stop' style='color:#ea0000'/> </td>";
+				texte += "<td>"+data[key]["moveName"]+" <input type='button' title='delete' onclick='RemoveMove(&quot;"+moveName+"&quot;)' id='delete'/></td>";
+				texte += "<td class='player'><input type='button' title='play' onclick='Go(&quot;"+moveName+"&quot;)' id='Go"+moveName+"' class='play' style='color:#00ba00'/> <input type='button' title='stop' onclick='StopExo(&quot;"+moveName+"&quot;)' id='stop"+moveName+"' class='stop' style='color:#ea0000'/></td>";
 				texte += "</tr>";
 			}
 
@@ -1247,15 +1196,40 @@ function GetIP() {
 }
 
 function setRobotVolume(){
-	var volume = prompt('Please enter the volume (0-1)','0.5');
-	if (volume == null || volume == "") {
-		console.log("error volume")
+	var volume = $('#inputVolume').val();
+
+	if (volume == null || volume == "" || volume < 0 || volume > 1) {
+		console.log("error volume");
 		volume=0.5
 		return;
 	}
-	console.log(volume)
+
 	$.ajax({
 		url: 'http://'+poppyName+':4567/?Submit=set+volume&volume='+volume,
+		type:'POST',
+		statusCode: {
+			200: function(data) {
+				console.log(data);
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
+
+function setThresholdKinect(){
+	var threshold = $('#inputKinect').val();
+
+	if (threshold == null || threshold == "") {
+		console.log("error volume");
+		threshold=100;
+		return;
+	}
+
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=set+threshold+kinect&threshold='+threshold,
 		type:'POST',
 		statusCode: {
 			200: function(data) {
