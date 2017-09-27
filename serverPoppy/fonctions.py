@@ -672,11 +672,12 @@ class goExoPrimitive(pypot.primitive.Primitive):
 			if self.PoppyGRR.EXO_TEMPS<self.PoppyGRR.EXO_TEMPS_LIMITE:
 				if self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO<self.PoppyGRR.NUM_EXO_MAX:
 					rand = randint(1,3)
-					self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
+					#TODO: uncomment #self.PoppyGRR.voice.play("./sound/sounds/exerciceSuivant"+str(rand)+".mp3")
 				elif self.PoppyGRR.PLAYING_SEANCE and self.PoppyGRR.NUM_EXO>=self.PoppyGRR.NUM_EXO_MAX:
 					self.PoppyGRR.PLAYING_SEANCE = False
-			elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
-				self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
+			#TODO : uncomment
+			#elif self.PoppyGRR.NUM_EXO!=0 and self.PoppyGRR.kinectName!='none':
+			#	self.PoppyGRR.voice.play("./sound/sounds/finSeance.mp3")
 			time.sleep(2)
 			self.PoppyGRR.PLAYING_EXO = False
 
@@ -921,8 +922,13 @@ class PoppyGRR:
 		#configuration logs
 		self.logger = logging.getLogger('PoppyGRR_log')
 		time.sleep(1)
-		if self.face!='none':
-			self.startFaceManager()					# demarre thread face managing
+		#TODO: carsat, uncomment 2 lines and delete 1st line
+		try:
+			self.face.stopAnimation()
+		except:
+			self.logger.info("no screen mode")
+		#if self.face!='none':
+		#	self.startFaceManager()					# demarre thread face managing
 		#ser=serial.Serial('/dev/ttyACM1', 9600)		#ouverture du port seriel pour mesure I
 		#primitives
 		self.Poppyboid.attach_primitive(scanMotorsLoop(self), 'scan')
@@ -1999,7 +2005,7 @@ class PoppyGRR:
 			return
 		if self.kinectName!='none':
 			kinect_ok='ok'
-			kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
+			#kinect_ok=self.initKinect(moveName, moveType)	#TODO: Uncomment with real Kinect
 			if kinect_ok==200:
 				self.voice.play('./sound/sounds/kinect_error.mp3')
 				self.waitVoice()
@@ -2111,16 +2117,16 @@ class PoppyGRR:
 						self.StopExo()
 						return
 					#TODO: test change freq voice
-					self.voice.setFrequence(self.voice.frequence-1800)
+					#self.voice.setFrequence(self.voice.frequence-1800)
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
+					print("avant replay, apres feedback")
 					if self.REPLAY:
 						#bad reproduction, do it again!
-						if self.BAD:
-							self.voice.play("./sound/sounds/feedbacks/replay_bad.mp3")
-						else:
+						print("dans replay")
+						if not self.BAD:
 							self.voice.play("./sound/sounds/feedbacks/replay.mp3")
-						self.waitVoice()
+							self.waitVoice()
 						self.NUM_PHASE=0
 						self.EXO_ENABLE = True
 						goExoPrimitive(self,exoName, 'exo', moveFile['fichier'+str(i+1)]['pause']).start()
@@ -2716,7 +2722,7 @@ class PoppyGRR:
 		if self.Poppyboid.abs_z.compliant == False:
 			return False
 		return True
-#TODO: tester les feedbacks
+
 	def kinectFeedback(self, kiFeedback):
 		self.BAD=False
 		self.waitVoice()
@@ -2727,10 +2733,11 @@ class PoppyGRR:
 			self.waitVoice()
 			self.givingFeedback=False
 			self.waitFeedback=False
-		#TODO: test et modifier si trop mauvais avec new version
 		elif kiFeedback['score']<self.SEUIL_NUL:
 			self.REPLAY=True
 			self.BAD=True
+			self.voice.play("./sound/sounds/feedbacks/replay_bad.mp3")
+			self.waitVoice()
 			self.givingFeedback=False
 			self.waitFeedback=False
 		else:
@@ -2739,31 +2746,39 @@ class PoppyGRR:
 				self.previousFeedback[0]=''
 				self.previousFeedback[1]=''
 				self.logger.info("3 fois la meme erreur !! ouhlala!")
+			elif int(kiFeedback['error'])>=500 and int(kiFeedback['error'])<600:
+				self.REPLAY=True
+				self.BAD=True	
 			self.previousFeedback[0]=self.previousFeedback[1]
 			self.previousFeedback[1]=kiFeedback['error']
 			self.sayFeedback(kiFeedback)
 		return "ok"
 
 	def sayFeedback(self, feedback):
-		self.voice.play("./sound/sounds/feedbacks/intro"+str(randint(1,3))+".mp3")
-		self.waitVoice()
-		try:
-			self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+"a.mp3")
+		if int(feedback['error'])>=500 and int(feedback['error'])<=699:
+			self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+".mp3")
 			self.waitVoice()
-		except:
-			pass
-		if feedback['bodyPart']!='spine':
-			self.voice.play("./sound/sounds/feedbacks/"+feedback['bodyPart']+".mp3")
+		else:
+			self.voice.play("./sound/sounds/feedbacks/intro"+str(randint(1,3))+".mp3")
 			self.waitVoice()
-		try:
-			self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+"b.mp3")
-			self.waitVoice()
-		except:
-			pass
-		time.sleep(0.5)
+			try:
+				self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+"a.mp3")
+				self.waitVoice()
+			except:
+				pass
+			if feedback['bodyPart']!='spine':
+				self.voice.play("./sound/sounds/feedbacks/"+feedback['bodyPart']+".mp3")
+				self.waitVoice()
+			try:
+				self.voice.play("./sound/sounds/feedbacks/"+str(feedback['error'])+"b.mp3")
+				self.waitVoice()
+			except:
+				pass
+			time.sleep(0.5)
 		#TODO: test change freq voice
-		self.voice.setFrequence(self.voice.frequence+1800)
-		time.sleep(3)
+		#self.voice.setFrequence(self.voice.frequence+1800)
+		#time.sleep(4)
+		print("apres feedback, avant waitFeedback=False")
 		self.givingFeedback=False
 		self.waitFeedback=False
 
