@@ -78,6 +78,7 @@ include "includes/header.php";
 		</div>
 
 	</div>
+	<div id=contenu> </div>
 </div>
 	<!-- Modal -->
 	<div class="modal fade" id="modal_create_seance" role="dialog">
