@@ -871,6 +871,7 @@ class PoppyGRR:
 		self.previousFeedback=['','']
 		self.REPLAY=False
 		self.BAD=False
+		self.noEtDe=False
 		#variables moteurs
 		self.idmoteur=[m.id for m in self.Poppyboid.motors]	#variable ID
 		self.nbmoteurs=len(self.idmoteur)				#nombre de moteurs
@@ -2110,13 +2111,12 @@ class PoppyGRR:
 						self.waitVoice()
 						self.StopExo()
 						return
-					#TODO: test change freq voice
-					#self.voice.setFrequence(self.voice.frequence-1800)
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
 					print("avant replay, apres feedback")
 					if self.REPLAY:
 						#bad reproduction, do it again!
+						self.noEtDe=True
 						print("dans replay")
 						if not self.BAD:
 							self.voice.play("./sound/sounds/feedbacks/replay.mp3")
@@ -2134,14 +2134,15 @@ class PoppyGRR:
 						self.NUM_MOV=0
 						self.EXO_TEMPS -= moveFile['fichier'+str(i+1)]['temps_exo']
 					#possible reminder of instruction between repetitions
-					sayInstr=randint(1,nb_rand)
-					if sayInstr==1:
-						nb_rand=5
-					else:
-						nb_rand=nb_rand-1
-					if not self.EXO_STOPPED and sayInstr==1 and 'instructions' in exoFile.keys() and not self.REPLAY:
-						self.sayRandInstr(exoFile['instructions'])
-						time.sleep(1.5)	
+					if nb_repet==int(moveFile['fichier'+str(i+1)]['repetition']-1):
+						sayInstr=randint(1,nb_rand)
+						if sayInstr==1:
+							nb_rand=5
+						else:
+							nb_rand=nb_rand-1
+						if not self.EXO_STOPPED and sayInstr==1 and 'instructions' in exoFile.keys() and not self.REPLAY:
+							self.sayRandInstr(exoFile['instructions'])
+							time.sleep(1.5)	
 					self.EXO_TEMPS += moveFile['fichier'+str(i+1)]['temps_exo']
 					self.REPLAY=False
 			self.voice.play("./sound/sounds/finSeance.mp3")
@@ -2173,12 +2174,13 @@ class PoppyGRR:
 			print "give exoname : "+exoName+" to "+self.kinectName
 			try:
 				kinect = requests.post("http://"+self.kinectName+".local:4567/?Submit=give+exoname&exoname="+exoName)
-				if typeRepet!='first':
+				if typeRepet!='first' and not self.noEtDe:
 					try:
 						self.voice.play('./sound/sounds/repet/etde'+str(nb_repet)+'.mp3')
 						self.waitVoice()
 					except:
 						self.logger.warning("etde"+str(nb_repet)+".mp3 does not exist")
+				self.noEtDe=False
 				if kinect.status_code==200:
 					print "attention, la kinect ne connait pas l'exercice !"
 					self.logger.warning("kinect does not know the exercise !")
@@ -2769,9 +2771,6 @@ class PoppyGRR:
 			except:
 				pass
 			time.sleep(0.5)
-		#TODO: test change freq voice
-		#self.voice.setFrequence(self.voice.frequence+1800)
-		#time.sleep(4)
 		print("apres feedback, avant waitFeedback=False")
 		self.givingFeedback=False
 		self.waitFeedback=False
@@ -2913,8 +2912,8 @@ class PoppyGRR:
 			if not self.PLAYING_MOVE:
 				self.EyesDirection = self.RestEyesDirection
 			#eyes state
-			if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
-				self.face.update("forcing", self.EyesDirection)
+			#if "warning" in self.poppyPart_alert.values() and "stop" not in self.poppyPart_alert.values() and not self.poppyCompliant():
+			#	self.face.update("forcing", self.EyesDirection)
 			elif "stop" in self.poppyPart_alert.values():
 				self.face.update("dead", self.EyesDirection)
 			else:

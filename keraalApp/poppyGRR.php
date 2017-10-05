@@ -135,6 +135,7 @@ include "includes/header.php";
 
 	<script>
 		var tabTime = [];
+		
 		$(function(){
 			
 			var progressbar = $( "#progressbar" );
@@ -142,6 +143,11 @@ include "includes/header.php";
 			progressbar.progressbar({
 				value: 0
 			});
+
+		    $('#compliant').change(function() {
+		    	
+		    	Compliant();
+		    });
 
 			$(document).on('click', '.supp_ligne', function(){
 				$(this).closest("tr").remove();
