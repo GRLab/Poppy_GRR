@@ -261,6 +261,7 @@ function CreateExo(type) {
 	var nb_fichiers=0;
 	var vide = 0;
 	for (var iter = 1; iter < nb_compt+1; iter++){
+		console.log(filestype+'_'+iter);
 		var namefile = $('#'+filestype+'_'+iter).val();
 		if (namefile != "") {
 			exoConfig = exoConfig+',"fichier'+(iter-vide)+'":{"namefile":"'+namefile+'"';
@@ -432,8 +433,8 @@ function verifFinExo(){
 				if(jsondata["num_exo"] == 0){
 					$('#mvt_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
 				} else{
-					$('#exo_'+jsondata["num_exo"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
-					$('#exo_'+jsondata["num_exo"]+'_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+					$('#played_exo_'+jsondata["num_exo"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+					$('#played_exo_'+jsondata["num_exo"]+'_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
 				}
 				//maj etat en pause ou non de l'exercice/seance
 				if(jsondata["state"] == "pause"){
@@ -531,7 +532,7 @@ function GoRequest(exoName){
 						else{
 							nb_repet="1";
 						}
-						$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'">' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
+						$('#exoConfig').append('<div class="exo nom_exo active" id="played_exo_'+i+'">' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
 					}
 					else{
 						$('#exoConfig').append('<div class="exo nom_mvt" id="mvt_'+i+'">' + jsondata[i]+"</div>");

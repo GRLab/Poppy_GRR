@@ -747,8 +747,8 @@ function verifFinExo(){
 				if(jsondata["num_exo"] == 0){
 					$('#mvt_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
 				} else{
-					$('#exo_'+jsondata["num_exo"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
-					$('#exo_'+jsondata["num_exo"]+'_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+					$('#played_exo_'+jsondata["num_exo"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
+					$('#played_exo_'+jsondata["num_exo"]+'_'+jsondata["num_mov"]).css('background-color', 'rgba(0, 172, 193, 0.43)');
 				}
 				//maj etat en pause ou non de l'exercice/seance
 				if(jsondata["state"] == "pause"){
@@ -888,7 +888,7 @@ function GoRequest(exoName){
 						else{
 							nb_repet="1";
 						}
-						$('#exoConfig').append('<div class="exo nom_exo active" id="exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
+						$('#exoConfig').append('<div class="exo nom_exo active" id="played_exo_'+i+'"> <span class="flecheDeroul">&#9662;</span> ' + jsondata[i]['nom']+' ('+nb_repet+')'+'</div>');
 						var texte = "";
 						texte+= '<div class="containerMvts">';
 						for (j=1; j<=jsondata[i]['nb_fichiers']; j++){
