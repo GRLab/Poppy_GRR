@@ -565,7 +565,7 @@
             "bras_gauche", 
             "bras_droit"
         ],
-        "etirementLaterauxKine": [
+        "etirementLaterauxBPlie": [
             "bras_gauche", 
             "colonne", 
             "bras_droit"
@@ -638,7 +638,7 @@
             "bras_gauche", 
             "bras_droit"
         ], 
-        "etirementLaterauxBTendu": [
+        "etirementLaterauxKine": [
             "bras_gauche", 
             "colonne", 
             "bras_droit"
