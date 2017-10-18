@@ -8,7 +8,7 @@
 		"descritpion" : "name of the kinect server, 'none' if no kinect"
 	},
 	"nb_demo" : { 
-		"value" : 3,
+		"value" : 2,
 		"descritpion" : "number of demonstrations by the robot before repetitions (useful if kinect exists)"
 	},
 	"seuil_nul" : { 
@@ -30,6 +30,10 @@
 	"fullScreen" : {
 		"value" : "True",
 		"description" : "Eyes/face fullscreen mode : True/False (useful if screenOn=True)"
+	},
+	"first" : {
+		"value" : "False",
+		"description" : "first time session - play full seance first before repetition : True/False (useful if kinect exists)"
 	},
 	"Volume" : {
 		"value" : 0.5,

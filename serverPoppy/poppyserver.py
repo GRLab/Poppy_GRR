@@ -25,6 +25,7 @@ with open('./CONFIG.json', 'r') as f:
 	Volume = config["Volume"]["value"]
 	internet = True if config["internet"]["value"] == "True" else False
 	wrists = True if config["wrists"]["value"] == "True" else False
+	first = True if config["first"]["value"] == "True" else False
 	creature = config["creature"]["value"]
 	seuil_bien = config["seuil_bien"]["value"]
 	seuil_nul = config["seuil_nul"]["value"]
@@ -592,6 +593,19 @@ class RequestHandler (BaseHTTPServer.BaseHTTPRequestHandler):
 		    self.send_headers()
 	    logger.info(IPclient+" RESPONSE - "+text)
 
+	if 'Submit' in params.keys() and "set+first+mode" == params['Submit']:
+	    logger.info(IPclient+" REQUEST - set+first+mode")
+	    first=params['first']
+	    try:
+			text = poppy.setFirstMode(first)
+	    except:
+			logger.exception("***** set+first+mode error *****")
+	    if 'ok' in text:
+		    self.send_headers(201)
+	    else:
+		    self.send_headers()
+	    logger.info(IPclient+" RESPONSE - "+text)
+
 	if 'Submit' in params.keys() and "setFaceState" == params['Submit']:
 	    logger.info(IPclient+" REQUEST - setFaceState")
 	    faceState = self.rfile.read(int(self.headers['Content-Length']))
@@ -798,7 +812,7 @@ while not moteursInitialise:
 	logger.info("essai initialisation moteur "+str(moteursInitEssai))
 	try:
 		time.sleep(2)
-		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, nb_demo)
+		poppy=PoppyGRR(face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, nb_demo, first)
 		moteursInitialise = True
 		logger.info("----- moteurs initialises -----")
 	except:

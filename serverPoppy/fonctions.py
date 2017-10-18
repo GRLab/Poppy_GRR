@@ -774,9 +774,10 @@ class scanMotorsLoop(pypot.primitive.Primitive):
 			self.PoppyGRR.position[imoteur] = m.present_position
 			self.PoppyGRR.voltage[imoteur] = m.present_voltage
 			if m.present_temperature<60: 	#erreur de communication moteur sinon
+				relativeTemp = abs(self.PoppyGRR.temperature[imoteur]-m.present_temperature)
 				self.PoppyGRR.temperature[imoteur] = m.present_temperature
 			self.PoppyGRR.couple[imoteur] = m.present_load
-			if round(self.PoppyGRR.temperature[imoteur], 1)>=self.PoppyGRR.SEUIL_TEMP:
+			if round(self.PoppyGRR.temperature[imoteur], 1)>=self.PoppyGRR.SEUIL_TEMP and relativeTemp<4:
 				if self.PoppyGRR.creature == "humanoid":
 					if self.PoppyGRR.idmoteur[imoteur]>=11 and self.PoppyGRR.idmoteur[imoteur]<=19:
 						poppyPart = "JG"
@@ -851,7 +852,7 @@ class PoppyGRR:
 		contains all the functions managing the robot and the motors
 	"""
 
-	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, nb_demo):
+	def __init__(self, face, voice, kinectName, internet, creature, wrists, seuil_bien, seuil_nul, nb_demo, first):
 		#Creation de l'objet robot
 		self.creature = creature
 		if creature == "humanoid":
@@ -863,6 +864,7 @@ class PoppyGRR:
 		self.internet = internet
 		self.wrists = wrists
 		self.nb_demo = nb_demo
+		self.first = first
 		#feedbacks
 		self.SEUIL_BIEN = seuil_bien
 		self.SEUIL_NUL = seuil_nul
@@ -872,6 +874,9 @@ class PoppyGRR:
 		self.REPLAY=False
 		self.BAD=False
 		self.noEtDe=False
+		self.lastRepet=False
+		self.repet_done=0					#nb repet realisees
+		self.repet_total=0					#nb repet total de la seance
 		#variables moteurs
 		self.idmoteur=[m.id for m in self.Poppyboid.motors]	#variable ID
 		self.nbmoteurs=len(self.idmoteur)				#nombre de moteurs
@@ -922,6 +927,10 @@ class PoppyGRR:
 		#configuration logs
 		self.logger = logging.getLogger('PoppyGRR_log')
 		time.sleep(1)
+		try:
+			self.face.stopAnimation()
+		except:
+			self.logger.info("no screen mode")
 		if self.face!='none':
 			self.startFaceManager()					# demarre thread face managing
 		#ser=serial.Serial('/dev/ttyACM1', 9600)		#ouverture du port seriel pour mesure I
@@ -946,6 +955,7 @@ class PoppyGRR:
 		results["states"]["moving_enable"]=self.MOVING_ENABLE
 		results["states"]["playing_exo"]=self.PLAYING_EXO
 		results["states"]["exo_enable"]=self.EXO_ENABLE
+		results["states"]["first"]=self.first
 		results["position"]={}
 		results["voltage"]={}
 		results["temperature"]={}
@@ -1915,6 +1925,8 @@ class PoppyGRR:
 		self.NUM_EXO_MAX = 0
 		self.NUM_MOV = 0
 		self.NUM_PHASE = 0
+		self.repet_done = 0
+		self.repet_total = 0
 		exoType = self.directory(exoName)
 		if exoType == '':
 			if internet:
@@ -1927,7 +1939,10 @@ class PoppyGRR:
 		print ('preparing the file')
 		with open('./move/'+exoType+'/'+exoName+'.json', 'r') as f:
 			moveFile = json.load(f)
-		self.EXO_TEMPS_LIMITE = moveFile['nb_temps']
+		if exoType!="seance" or self.first:
+			self.EXO_TEMPS_LIMITE = moveFile['nb_temps']
+		else:
+			self.EXO_TEMPS_LIMITE = 0
 		#tous les fichiers existent ?
 		for i in range(int(moveFile['nb_fichiers'])):
 			if self.directory(moveFile['fichier'+str(i+1)]['namefile']) == '':
@@ -1977,13 +1992,15 @@ class PoppyGRR:
 				time.sleep(1.5)
 				if self.EXO_STOPPED:
 					return
-				self.voice.play("./sound/sounds/demoSeance"+str(randint(1,3))+".mp3")
+				if self.first:
+					self.voice.play("./sound/sounds/demoSeance"+str(randint(1,3))+".mp3")
 				self.waitVoice()
 				if self.EXO_STOPPED:
 					return
 			elif 'instructions' in moveFile.keys():
-				self.voice.play("./sound/sounds/instructions/intro.mp3")
-				self.waitVoice()
+				if not not moveFile['instructions'][0]:
+					self.voice.play("./sound/sounds/instructions/intro.mp3")
+					self.waitVoice()
 				for instr in moveFile['instructions']:
 					if instr == moveFile['instructions'][-1]:
 						self.voice.play("./sound/sounds/instructions/et.mp3")
@@ -2006,7 +2023,8 @@ class PoppyGRR:
 				self.waitVoice()
 				return
 			time.sleep(1)
-		goExoPrimitive(self,moveName, moveType).start()
+		if moveType!="seance" or self.first:
+			goExoPrimitive(self,moveName, moveType).start()
 		time.sleep(1)
 		self.logger.info("playing the exo/seance")
 		while self.PLAYING_SEANCE or self.PLAYING_EXO or self.PLAYING_MOVE or self.EXO_SLEEP:
@@ -2030,13 +2048,17 @@ class PoppyGRR:
 				with open('./move/exo/'+exoName+'.json', 'r') as f:
 					exoFile = json.load(f)
 				if i==0:
-					self.voice.play("./sound/sounds/repet/exo1_"+str(randint(1,3))+".mp3")
+					if moveType!="seance" or self.first:
+						self.voice.play("./sound/sounds/repet/exo1_"+str(randint(1,3))+".mp3")
+					else:
+						self.voice.play("./sound/sounds/repet/exo1_"+str(randint(1,2))+".mp3")
 				elif i>0:
 					self.voice.play("./sound/sounds/repet/exoNext"+str(randint(1,4))+".mp3")
 				self.waitVoice()
 				if 'instructions' in exoFile.keys():
-					self.voice.play("./sound/sounds/instructions/intro.mp3")
-					self.waitVoice()
+					if not not exoFile['instructions']:
+						self.voice.play("./sound/sounds/instructions/intro.mp3")
+						self.waitVoice()
 					for instr in exoFile['instructions']:
 						if instr == exoFile['instructions'][-1]:
 							self.voice.play("./sound/sounds/instructions/et.mp3")
@@ -2089,6 +2111,10 @@ class PoppyGRR:
 				typeRepet = 'first'
 				nb_rand=5
 				for nb_repet in range(moveFile['fichier'+str(i+1)]['repetition']):
+					if nb_repet==int(moveFile['fichier'+str(i+1)]['repetition']-1): 
+						self.lastRepet=True
+					else:
+						self.lastRepet=False
 					if nb_repet==int(moveFile['fichier'+str(i+1)]['repetition']-1) and nb_repet>=2:
 						typeRepet='end'
 					elif int(moveFile['fichier'+str(i+1)]['repetition']-1)-nb_repet<=5 and nb_repet>=4:
@@ -2111,6 +2137,8 @@ class PoppyGRR:
 						self.waitVoice()
 						self.StopExo()
 						return
+					#TODO: test change freq voice
+					#self.voice.setFrequence(self.voice.frequence-1800)
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
 					print("avant replay, apres feedback")
@@ -2134,14 +2162,15 @@ class PoppyGRR:
 						self.NUM_MOV=0
 						self.EXO_TEMPS -= moveFile['fichier'+str(i+1)]['temps_exo']
 					#possible reminder of instruction between repetitions
-					if nb_repet==int(moveFile['fichier'+str(i+1)]['repetition']-1):
+					if nb_repet!=int(moveFile['fichier'+str(i+1)]['repetition']-1):
 						sayInstr=randint(1,nb_rand)
 						if sayInstr==1:
 							nb_rand=5
 						else:
 							nb_rand=nb_rand-1
 						if not self.EXO_STOPPED and sayInstr==1 and 'instructions' in exoFile.keys() and not self.REPLAY:
-							self.sayRandInstr(exoFile['instructions'])
+							if not not exoFile['instructions']:
+								self.sayRandInstr(exoFile['instructions'])
 							time.sleep(1.5)	
 					self.EXO_TEMPS += moveFile['fichier'+str(i+1)]['temps_exo']
 					self.REPLAY=False
@@ -2187,6 +2216,8 @@ class PoppyGRR:
 				elif kinect.status_code==201:
 					print "kinect ok pour nom exo"
 					self.logger.info("kinect ok pour nom exo")
+					self.face.setBackgroundColor([60,225,60])
+					self.face.display()
 					if typeRepet=='first':
 						self.voice.play('./sound/sounds/atoi.mp3')
 					elif typeRepet=='end':
@@ -2264,6 +2295,8 @@ class PoppyGRR:
 			verif["state"] = "playing"
 		if self.EXO_ENABLE == False :
 			verif["info"]= "end"
+			verif["nb_repet_done"]=self.repet_done
+			verif["nb_repet_tot"]=self.repet_total
 		else:
 			verif["info"]= "moving " + str(self.EXO_TEMPS)+"/"+str(self.EXO_TEMPS_LIMITE)
 		verif["num_exo"]=str(self.NUM_EXO)
@@ -2721,6 +2754,11 @@ class PoppyGRR:
 
 	def kinectFeedback(self, kiFeedback):
 		self.BAD=False
+		self.face.setBackgroundColor([180,180,225])
+		self.face.display()
+		self.repet_total+=1
+		if kiFeedback['error']!="501":
+			self.repet_done+=1
 		self.waitVoice()
 		self.givingFeedback=True
 		time.sleep(1)
@@ -2730,21 +2768,31 @@ class PoppyGRR:
 			self.givingFeedback=False
 			self.waitFeedback=False
 		elif kiFeedback['score']<self.SEUIL_NUL:
-			self.REPLAY=True
-			self.BAD=True
-			self.voice.play("./sound/sounds/feedbacks/replay_bad.mp3")
+			if self.lastRepet:
+				self.voice.play("./sound/sounds/feedbacks/bad_no_replay.mp3")
+			else:
+				self.REPLAY=True
+				self.BAD=True
+				self.voice.play("./sound/sounds/feedbacks/replay_bad.mp3")
 			self.waitVoice()
 			self.givingFeedback=False
 			self.waitFeedback=False
 		else:
-			if kiFeedback['error']==self.previousFeedback[0] and kiFeedback['error']==self.previousFeedback[1]:
+			if kiFeedback['error']==self.previousFeedback[0] and kiFeedback['error']==self.previousFeedback[1] and not self.lastRepet:
 				self.REPLAY=True
 				self.previousFeedback[0]=''
 				self.previousFeedback[1]=''
 				self.logger.info("3 fois la meme erreur !! ouhlala!")
 			elif int(kiFeedback['error'])>=500 and int(kiFeedback['error'])<600:
-				self.REPLAY=True
-				self.BAD=True	
+				if not self.lastRepet:
+					self.REPLAY=True
+					self.BAD=True
+				else:
+					self.voice.play("./sound/sounds/feedbacks/bad_no_replay.mp3")
+					self.waitVoice()
+					self.givingFeedback=False
+					self.waitFeedback=False
+					return "ok"
 			self.previousFeedback[0]=self.previousFeedback[1]
 			self.previousFeedback[1]=kiFeedback['error']
 			self.sayFeedback(kiFeedback)
@@ -2771,6 +2819,9 @@ class PoppyGRR:
 			except:
 				pass
 			time.sleep(0.5)
+		#TODO: test change freq voice
+		#self.voice.setFrequence(self.voice.frequence+1800)
+		#time.sleep(4)
 		print("apres feedback, avant waitFeedback=False")
 		self.givingFeedback=False
 		self.waitFeedback=False
@@ -2877,6 +2928,15 @@ class PoppyGRR:
 		self.voice.setVolume(float(volume))
 		self.voice.play("./sound/sounds/fait.mp3")
 		return 'done'
+
+	def setFirstMode(self, firstMode):
+		if firstMode=='true':
+			self.first=True
+		elif firstMode=='false':
+			self.first=False
+		else:
+			return "error"
+		return 'ok'
 
 	def setKinectThreshold(self, threshold):
 		if not float(threshold)>=0:
