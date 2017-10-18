@@ -5,8 +5,9 @@ var jsondataBDD = "";
 var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
+var firstModeActive = true;
 var init = false;
-var poppyName = "poppypi.local";//"poppygr.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppy.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
@@ -156,6 +157,24 @@ function PartNonCompliant(poppyParts="") {
 	if(nbsemiNbParts!=0){
 		semiCompliant(semiPoppyParts);
 	}
+}
+
+function firstMode() {
+	firstModeActive=$('#firstModeCheckBox').prop('checked');
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=set+first+mode&first='+firstModeActive,
+		type:'POST',
+		statusCode: {
+			201: function() {
+				console.log("First mode set to "+firstModeActive);
+				initSound();
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
 }
 
 function GoInitPos(pos = "undefined") {
@@ -406,9 +425,21 @@ function verifFinExo(){
 		dataType : 'json',
 		statusCode: {
 			201: function(data) {
-				
-				console.log(jsondata);
 				$('#Go').val('start');
+				
+				jsondata=data.responseText.replace("u'","\"");
+				while(jsondata.search("u'")!=-1){
+					jsondata=jsondata.replace("u'","\"");
+				}
+				while(jsondata.search("'")!=-1){
+					jsondata=jsondata.replace("'","\"");
+				}
+				
+				jsondata = JSON.parse(jsondata);
+				nb_repet_done=jsondata["nb_repet_done"];
+				nb_repet_tot=jsondata["nb_repet_tot"];
+				console.log("nombre de repetitions (réalisées/total) : "+nb_repet_done+"/"+nb_repet_tot);
+				alert("nombre de repetitions (réalisées/total) : "+nb_repet_done+"/"+nb_repet_tot);
 				
 				fin_exo = 1
 			},
@@ -563,7 +594,7 @@ function Go(exoName) {
 	initSound();
 	var exo= document.getElementById('Go'+exoName).className;
 	if(exo=="play"){
-		if(confirm('Avez-vous pensé à mettre le robot en position initiale "chaise" ? Si oui, cliquez sur "OK".')==true){
+		if(confirm('Avez-vous mis le robot sur son tabouret en position initiale "chaise" ? \n\nSi oui, cliquez sur "OK", sinon cliquez sur "Cancel" et placez-le.')==true){
 			StopExo();
 			setTimeout('GoRequest("'+exoName+'")', 3000);
 		}
@@ -856,6 +887,12 @@ function ScanResults() {
 				else{
 					partComp=true;
 					!$('#compliantJG').prop('checked') ?$('#compliantJG').bootstrapToggle('on') : "";
+				}
+				if (data['states']['first']==false){
+					$('#firstModeCheckBox').prop('checked') ? $('#firstModeCheckBox').prop("checked", false) : "";
+				}
+				else{
+					!$('#firstModeCheckBox').prop('checked') ? $('#firstModeCheckBox').prop("checked", true) : "";
 				}
 				
 				//semi compliant

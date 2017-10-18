@@ -22,7 +22,6 @@ include "includes/header.php";
 	<div id='application'>
 		<div id="movelist">
 		</div>
-		<!-- TODO !!!!!!!!!! -->
 		<div id="boutons">
 			<div id="poppy">
 				<img src="includes/images/notconnected.png" id="poppyConnected" alt="Statut connection">
@@ -71,11 +70,13 @@ include "includes/header.php";
 			</tr>
 
 			</table>
-			<br><div> <span id="titlePosition">Position initiale :</span> 
+			<br><div> <span id="titlePosition">Position initiale :</span> <br>
 				<input type="button" value="debout" onclick='GoDebout()' id='goDebout' /> 
 				<input type="button" value="chaise" onclick='GoChaise()' id='goChaise' /> 
 				<input type="button" value="assis" onclick='GoAssis()' id='goAssis' /><br> 
 				</div>
+				<span id="firstMode">Mode débutant</span>
+				<span><input type="checkbox" id='firstModeCheckBox' name="first mode" value="first" ></span>
 			</div>
 			
 			<div class="poppyimage">
@@ -229,6 +230,10 @@ include "includes/header.php";
 		    $('#compliantJD').change(function() {
 		    	!checkActiveArea("JD") ? putHighlight("#actif_JD") : "";
 		      	PartNonCompliant();
+		    });
+
+		    $('#firstModeCheckBox').change(function() {
+		      	firstMode();
 		    });
 	    });
 

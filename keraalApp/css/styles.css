@@ -36,6 +36,13 @@ ul li input[type="text"], ul li input[type="password"] {
     width:200px;
 }
 
+#firstMode{
+    font-weight: bold;
+    color:#ffffff;
+    font-size:16px;
+    margin-right: 95px;
+}
+
 #text-decoration-line: {
 	color : #ffffff;
 	font-weight: bold;
@@ -121,6 +128,12 @@ h2 {
     color: #ffffff;
     font-weight: bold;
     font-size: 18px;
+    padding-right: 8px;
+}
+.title4{
+    color: #f1f1f1;
+    font-weight: bold;
+    font-size: 15px;
     padding-right: 8px;
 }
 

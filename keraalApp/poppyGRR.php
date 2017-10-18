@@ -32,21 +32,20 @@ include "includes/header.php";
 			<br>
 			<div class="power">
 				<div>
-					<span class="title2">Alimentation</span>  
+					<span class="title4">Alimentation</span>  
 					<input id='compliant' data-toggle="toggle" data-onstyle="warning" type="checkbox" data-size="mini" data-height="15">
 				</div>
 
 				<br>
 				
 				<div> 
-					<span class="title3">Position initiale</span>  
+					<span class="title4">Position initiale</span>  
 					<!--input type="button" value="debout" onclick='GoDebout()' id='goDebout' /--> 
 					<input type="button" value="chaise" onclick='GoChaise()' id='goChaise' /> 
 					<!--input type="button" value="assis" onclick='GoAssis()' id='goAssis' /--><br> <br>
 				</div>
-
 				<div style="display:flex"> 
-					<span class="title3 mauto">Volume Poppy</span>  
+					<span class="title4">Volume Poppy</span>  
 					<input type="range" min="0" max="1" step="0.05" class="slide" id="rangeVolume" value="0.5"/>
 					<input type="text" style="width:40px" class="mauto" value="0.5" id="inputVolume"/>
 					<input type="submit" value="OK" class="mauto" onclick="setRobotVolume()" />
@@ -55,13 +54,16 @@ include "includes/header.php";
 				<br />
 
 				<div style="display:flex"> 
-					<span class="title3 mauto">Seuil Kinect</span>  
+					<span class="title4">Seuil Kinect</span>  
 					<input type="range" min="0" max="300" step="10" class="slide" id="rangeKinect" value="150"/>
 					<input type="text" style="width:40px" class="mauto" value="150" id="inputKinect"/>
 					<input type="submit" value="OK" class="mauto" onclick="setThresholdKinect()" />
 					<br>
+				</div><br>
+				<div style="display:flex"> 
+					<span class="title4" style="margin-right: 40px;">Mode débutant</span>
+					<span><input type="checkbox" id='firstModeCheckBox' name="first mode" value="first" ></span>
 				</div>
-
 			</div>
 
 			<!--suivi avancement exercice/seance en cours-->
@@ -147,6 +149,10 @@ include "includes/header.php";
 		    $('#compliant').change(function() {
 		    	
 		    	Compliant();
+		    });
+
+		    $('#firstModeCheckBox').change(function() {
+		      	firstMode();
 		    });
 
 			$(document).on('click', '.supp_ligne', function(){

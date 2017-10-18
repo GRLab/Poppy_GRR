@@ -5,8 +5,9 @@ var jsondataBDD = "";
 var nb_tempsBDD = 0;
 var activeMove = "";
 var partComp = false;
+var firstModeActive = true;
 var init = false;
-var poppyName = "poppypi.local";//"poppygr.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppy.local";	//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
@@ -166,6 +167,24 @@ function semiCompliant(semiPoppyParts="") {
 		statusCode: {
 			200: function() {
 				console.log("Poppy is semi-compliant" );
+				initSound();
+			},
+			0:function(data){		//error, not connected
+				console.log('error : Poppy is not connected');
+				document.getElementById('poppyConnected').src="includes/images/notconnected.png";
+			}
+		}
+	});
+}
+
+function firstMode() {
+	firstModeActive=$('#firstModeCheckBox').prop('checked');
+	$.ajax({
+		url: 'http://'+poppyName+':4567/?Submit=set+first+mode&first='+firstModeActive,
+		type:'POST',
+		statusCode: {
+			201: function() {
+				console.log("First mode set to "+firstModeActive);
 				initSound();
 			},
 			0:function(data){		//error, not connected
@@ -720,9 +739,21 @@ function verifFinExo(){
 		dataType : 'json',
 		statusCode: {
 			201: function(data) {
-				
-				console.log(jsondata);
 				$('#Go').val('start');
+
+				jsondata=data.responseText.replace("u'","\"");
+				while(jsondata.search("u'")!=-1){
+					jsondata=jsondata.replace("u'","\"");
+				}
+				while(jsondata.search("'")!=-1){
+					jsondata=jsondata.replace("'","\"");
+				}
+				
+				jsondata = JSON.parse(jsondata);
+				nb_repet_done=jsondata["nb_repet_done"];
+				nb_repet_tot=jsondata["nb_repet_tot"];
+				console.log("nombre de repetitions (réalisées/total) : "+nb_repet_done+"/"+nb_repet_tot);
+				alert("nombre de repetitions (réalisées/total) : "+nb_repet_done+"/"+nb_repet_tot);
 				
 				fin_exo = 1
 			},
@@ -1296,6 +1327,12 @@ function ScanResults() {
 				else{
 					partComp=true;
 					!$('#compliantJG').prop('checked') ?$('#compliantJG').bootstrapToggle('on') : "";
+				}
+				if (data['states']['first']==false){
+					$('#firstModeCheckBox').prop('checked') ? $('#firstModeCheckBox').prop("checked", false) : "";
+				}
+				else{
+					!$('#firstModeCheckBox').prop('checked') ? $('#firstModeCheckBox').prop("checked", true) : "";
 				}
 				
 				//semi compliant
