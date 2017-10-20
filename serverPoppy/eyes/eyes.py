@@ -221,7 +221,7 @@ class Face:
 			plays a random animation
 		"""
 		if self.state == 'happy':
-			animChoice = random.randint(1,6)
+			animChoice = random.randint(1,5)
 			if animChoice == 1:
 				self.blink('left')
 			elif animChoice == 2:
@@ -232,8 +232,8 @@ class Face:
 				self.lookAround('top')
 			elif animChoice == 5:
 				self.lookAround('bottom')
-			elif animChoice == 6:
-				self.squint()
+			#elif animChoice == 6:
+			#	self.squint()
 		
 		elif self.state == 'angry':
 			animChoice = random.randint(1,1)

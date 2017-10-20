@@ -927,10 +927,10 @@ class PoppyGRR:
 		#configuration logs
 		self.logger = logging.getLogger('PoppyGRR_log')
 		time.sleep(1)
-		try:
-			self.face.stopAnimation()
-		except:
-			self.logger.info("no screen mode")
+		#try:
+		#	self.face.stopAnimation()
+		#except:
+		#	self.logger.info("no screen mode")
 		if self.face!='none':
 			self.startFaceManager()					# demarre thread face managing
 		#ser=serial.Serial('/dev/ttyACM1', 9600)		#ouverture du port seriel pour mesure I
@@ -2137,8 +2137,6 @@ class PoppyGRR:
 						self.waitVoice()
 						self.StopExo()
 						return
-					#TODO: test change freq voice
-					#self.voice.setFrequence(self.voice.frequence-1800)
 					while self.waitFeedback and not self.EXO_STOPPED:
 						time.sleep(1)
 					print("avant replay, apres feedback")
@@ -2819,9 +2817,6 @@ class PoppyGRR:
 			except:
 				pass
 			time.sleep(0.5)
-		#TODO: test change freq voice
-		#self.voice.setFrequence(self.voice.frequence+1800)
-		#time.sleep(4)
 		print("apres feedback, avant waitFeedback=False")
 		self.givingFeedback=False
 		self.waitFeedback=False
@@ -2964,7 +2959,7 @@ class PoppyGRR:
 	def faceManager(self):
 		while self.FACE_MANAGING_ENABLE:
 			#animation mode
-			if self.PLAYING_MOVE or self.PLAYING_EXO or self.kinectName!='none':
+			if self.PLAYING_MOVE or self.PLAYING_EXO or self.PLAYING_SEANCE:
 				self.face.stopAnimation()
 			else:
 				self.face.startAnimation()
