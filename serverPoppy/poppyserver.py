@@ -26,6 +26,8 @@ with open('./CONFIG.json', 'r') as f:
 	internet = True if config["internet"]["value"] == "True" else False
 	wrists = True if config["wrists"]["value"] == "True" else False
 	first = True if config["first"]["value"] == "True" else False
+	if kinectName=='none':
+		first = True
 	creature = config["creature"]["value"]
 	seuil_bien = config["seuil_bien"]["value"]
 	seuil_nul = config["seuil_nul"]["value"]
