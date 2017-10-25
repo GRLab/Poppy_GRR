@@ -2761,7 +2761,7 @@ class PoppyGRR:
 		self.givingFeedback=True
 		time.sleep(1)
 		if kiFeedback['score']>self.SEUIL_BIEN:
-			self.voice.play('./sound/sounds/feedbacks/bien.mp3')
+			self.voice.play('./sound/sounds/feedbacks/bien'+str(randint(1,5))+'.mp3')
 			self.waitVoice()
 			self.givingFeedback=False
 			self.waitFeedback=False
