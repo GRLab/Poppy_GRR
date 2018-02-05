@@ -7,12 +7,13 @@ var activeMove = "";
 var partComp = false;
 var firstModeActive = true;
 var init = false;
-var poppyName = "poppy.local";	//nom du robot poppy ou adresse IP
+var poppyName = "poppy.local";//nom du robot poppy ou adresse IP
 var uptodate = true;
 var seuilTemp = 55;				//seuil d'alerte de surchauffe moteur
 var player = "";				// son lors fin d'enregistrement mouvement
 var playerWarning = "";			// son lors surchauffe robot (warning avant mode securite)
 var playerAlert = "";			// son lors de l'activation mode securite du robot (surchauffe)
+var sendingGoRequest = 0;
 
 function majPoppyName(){
 	poppyName = $('#poppyName').val();
@@ -951,6 +952,7 @@ function GoRequest(exoName){
 			}
 		}
 	})
+	sendingGoRequest=0;
 }
 
 
@@ -959,7 +961,13 @@ function Go(exoName) {
 	var exo= document.getElementById('Go'+exoName).className;
 	if(exo=="play"){
 		StopExo();
-		setTimeout('GoRequest("'+exoName+'")', 3000);
+		if(sendingGoRequest==0){
+				sendingGoRequest=1;
+				setTimeout('GoRequest("'+exoName+'")', 3000);
+			}
+			else{
+				console.log('error: already sending a go request');
+			}
 	} 
 	else if (exo=='pause'){
 		$.ajax({
